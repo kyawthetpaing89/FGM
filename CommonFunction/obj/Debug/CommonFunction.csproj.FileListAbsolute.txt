@@ -1,0 +1,9 @@
+E:\Projects\FGM\FGM\CommonFunction\bin\Debug\CommonFunction.dll
+E:\Projects\FGM\FGM\CommonFunction\bin\Debug\CommonFunction.pdb
+E:\Projects\FGM\FGM\CommonFunction\bin\Debug\Newtonsoft.Json.dll
+E:\Projects\FGM\FGM\CommonFunction\bin\Debug\Newtonsoft.Json.xml
+E:\Projects\FGM\FGM\CommonFunction\obj\Debug\CommonFunction.csprojAssemblyReference.cache
+E:\Projects\FGM\FGM\CommonFunction\obj\Debug\CommonFunction.csproj.CoreCompileInputs.cache
+E:\Projects\FGM\FGM\CommonFunction\obj\Debug\CommonFunction.csproj.CopyComplete
+E:\Projects\FGM\FGM\CommonFunction\obj\Debug\CommonFunction.dll
+E:\Projects\FGM\FGM\CommonFunction\obj\Debug\CommonFunction.pdb
