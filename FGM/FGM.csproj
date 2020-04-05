@@ -125,6 +125,7 @@
     <Compile Include="Controllers\CompetitionController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1864,6 +1865,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Country\CountryList.cshtml" />
     <Content Include="Views\Competition\CompetitionList.cshtml" />
+    <Content Include="Views\Team\TeamList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1904,6 +1906,10 @@
     <ProjectReference Include="..\FGM_Model\FGM_Model.csproj">
       <Project>{abd67284-f94a-4bff-914d-e45a2b139e62}</Project>
       <Name>FGM_Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Team_BL\Team_BL.csproj">
+      <Project>{cff2c541-9cb5-406a-91b1-e6a8225bfc85}</Project>
+      <Name>Team_BL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -4,3 +4,9 @@ E:\Projects\FGM\FGM\FGM_DL\obj\Debug\FGM_DL.csprojAssemblyReference.cache
 E:\Projects\FGM\FGM\FGM_DL\obj\Debug\FGM_DL.csproj.CoreCompileInputs.cache
 E:\Projects\FGM\FGM\FGM_DL\obj\Debug\FGM_DL.dll
 E:\Projects\FGM\FGM\FGM_DL\obj\Debug\FGM_DL.pdb
+D:\Project\kyawthetpaing89\FGM\FGM_DL\bin\Debug\FGM_DL.dll
+D:\Project\kyawthetpaing89\FGM\FGM_DL\bin\Debug\FGM_DL.pdb
+D:\Project\kyawthetpaing89\FGM\FGM_DL\obj\Debug\FGM_DL.csprojAssemblyReference.cache
+D:\Project\kyawthetpaing89\FGM\FGM_DL\obj\Debug\FGM_DL.csproj.CoreCompileInputs.cache
+D:\Project\kyawthetpaing89\FGM\FGM_DL\obj\Debug\FGM_DL.dll
+D:\Project\kyawthetpaing89\FGM\FGM_DL\obj\Debug\FGM_DL.pdb
