@@ -1909,6 +1909,10 @@
       <Project>{abd67284-f94a-4bff-914d-e45a2b139e62}</Project>
       <Name>FGM_Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Team_BL\Team_BL.csproj">
+      <Project>{cff2c541-9cb5-406a-91b1-e6a8225bfc85}</Project>
+      <Name>Team_BL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

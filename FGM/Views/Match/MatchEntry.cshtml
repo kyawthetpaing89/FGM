@@ -5,6 +5,8 @@
 }
 
 @section Styles {
+    <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css")" rel="stylesheet" type="text/css" />
 }
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -26,7 +28,7 @@
 <section class="content">
     <div class="form-row">
         <div class="form-group col-xl-2 col-md-4">
-            <label for="StaffID">ပြသသည့်ရက်</label>
+            <label for="showdate">နေ့စွဲ</label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
@@ -34,33 +36,103 @@
                 <input type="text" class="form-control float-right" id="showdate">
             </div>
         </div>
-        <div class="form-group col-xl-2 col-md-4">
-            <label for="StaffID">ဇာတ်ကား</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text text-custom2" id="basic-addon1"><i class="fas fa-film"></i></span>
-                </div>
-
-                @Html.DropDownListFor(cim => cim.MovieID, new SelectList(Enumerable.Empty<SelectListItem>(), "", ""), "---Select---",new
-                {
-                    @class = "form-control select2bs4 input-sm",
-                    @id = "ddlMovie",
-                    @tabindex = "15",
-                })
-            </div>
-        </div>
     </div>
-    <div id="CinemaList">
+    <div id="TeamList">
     </div>
+    <table id="tblTeam" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+        </tfoot>
+    </table>
 </section>
 
 
 @section Scripts{
+    <script src="@Url.Content("~/plugins/daterangepicker/moment.min.js")"></script>
+    <script src="@Url.Content("~/plugins/daterangepicker/daterangepicker.js")"></script>
+    <script src="@Url.Content("~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js")"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            
+            GetTeam();
+
+            $('#showdate').daterangepicker({
+                timePicker: false, //<==MAKE THE CHANGE HERE
+                singleDatePicker: true, //<==MAKE THE CHANGE HERE
+                locale: {
+                    format: 'DD-MM-YYYY'
+                }
+            });
         });
 
+        function Add(btn, teamid) {
+            $(btn).removeClass('btn-default');
+            $(btn).addClass('btn-danger')
+        }
+
+        function GetTeam() {
+            $.ajax({
+                url: '@Url.Action("GetTeam", "Team")',
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    CreateCardByCountry(res);
+                }
+            })
+        }
+
+        function CreateCardByCountry(res) {
+            var cl = $("#TeamList");
+            cl.empty();
+            var e = '';
+            var countryID = '';
+            var competitionID = '';
+            for (var i = 0; i < res.length; i++) {
+                if (countryID != res[i].CountryID) {
+                    if (countryID) {
+                        e = e + '</div>' +
+                            '</div>';
+                    }
+
+                    e = e + '<div class="card collapsed-card" id="card' + res[i].CountryID + '">' +
+                        '<div class="card-header bg-cyan">' +
+                        '<h3 class="card-title">' + res[i].CountryNameMM + '</h3>' +
+                        '<div class="card-tools">' +
+                        '<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">' +
+                        '<i class="fas fa-plus"></i>' +
+                        '</button>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="card-body">' +
+                        '<div class="row mb-1"><b>' + res[i].CompetitionNameMM + '</b></div>' +
+                        '<button type="button" id="' + res[i].TeamID + '" onclick="Add(this,' + res[i].TeamID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                        res[i].TeamNameMM +
+                        '</button>'
+                }
+                else {
+                    if (competitionID != res[i].CompetitionID) {
+                        e = e + '<div class="row mb-1"><b>' + res[i].CompetitionNameMM + '</b></div>' +
+                            '<button type="button" id="' + res[i].TeamID + '" onclick="Add(this,' + res[i].TeamID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                            res[i].CinemaName +
+                            '</button>'
+                    }
+                    else {
+                        e = e + '<button type="button" id="' + res[i].TeamID + '" onclick="Add(this,' + res[i].TeamID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                            res[i].TeamNameMM +
+                            '</button>'
+                    }
+                }
+                countryID = res[i].CountryID;
+                competitionID = res[i].CompetitionID;
+
+            }
+            cl.append(e);
+        }
     </script>
 }
 
