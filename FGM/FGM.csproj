@@ -126,6 +126,7 @@
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1866,6 +1867,7 @@
     <Content Include="Views\Country\CountryList.cshtml" />
     <Content Include="Views\Competition\CompetitionList.cshtml" />
     <Content Include="Views\Match\MatchEntry.cshtml" />
+    <Content Include="Views\Team\TeamList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
