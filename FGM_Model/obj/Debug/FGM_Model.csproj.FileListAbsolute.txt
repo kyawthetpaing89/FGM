@@ -16,3 +16,9 @@ E:\Projects\FGM_Master\FGM\FGM_Model\obj\Debug\FGM_Model.csprojAssemblyReference
 E:\Projects\FGM_Master\FGM\FGM_Model\obj\Debug\FGM_Model.csproj.CoreCompileInputs.cache
 E:\Projects\FGM_Master\FGM\FGM_Model\obj\Debug\FGM_Model.dll
 E:\Projects\FGM_Master\FGM\FGM_Model\obj\Debug\FGM_Model.pdb
+D:\Project\FGM\FGM_Model\bin\Debug\FGM_Model.dll
+D:\Project\FGM\FGM_Model\bin\Debug\FGM_Model.pdb
+D:\Project\FGM\FGM_Model\obj\Debug\FGM_Model.csprojAssemblyReference.cache
+D:\Project\FGM\FGM_Model\obj\Debug\FGM_Model.csproj.CoreCompileInputs.cache
+D:\Project\FGM\FGM_Model\obj\Debug\FGM_Model.dll
+D:\Project\FGM\FGM_Model\obj\Debug\FGM_Model.pdb
