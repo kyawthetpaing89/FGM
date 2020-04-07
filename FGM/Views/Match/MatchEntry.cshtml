@@ -39,16 +39,27 @@
     </div>
     <div id="TeamList">
     </div>
-    <table id="tblTeam" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tfoot>
-        </tfoot>
-    </table>
+    <div class="card">
+        <div class="card-body">
+            <table id="tblTeam" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th style="width:30%">ပွဲချိန်</th>
+                        <th style="display: none">HomeID</th>
+                        <th style="width:30%">Home</th>
+                        <th style="display: none">AwayID</th>
+                        <th style="width:30%">Away</th>
+                        <th style="width:10%"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    
+    <input id="tdPlace" type="hidden" value="1" />
 </section>
 
 
@@ -57,9 +68,9 @@
     <script src="@Url.Content("~/plugins/daterangepicker/daterangepicker.js")"></script>
     <script src="@Url.Content("~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js")"></script>
     <script type="text/javascript">
+
         $(document).ready(function () {
             GetTeam();
-
             $('#showdate').daterangepicker({
                 timePicker: false, //<==MAKE THE CHANGE HERE
                 singleDatePicker: true, //<==MAKE THE CHANGE HERE
@@ -69,9 +80,55 @@
             });
         });
 
+        function Delete(btn) {
+            var trow = $(btn).closest('tr');
+            var btn1 = "#btn" +trow.find('td:eq(1)').html();
+            if (trow.find('td:eq(1)').html()) {
+                $(btn1).removeClass('btn-danger');
+                $(btn1).addClass('btn-default');
+            }
+
+            var btn2 = "#btn" + trow.find('td:eq(3)').html();
+            if (trow.find('td:eq(3)').html()) {
+                $(btn2).removeClass('btn-danger');
+                $(btn2).addClass('btn-default');
+            }
+
+            $(btn).closest('tr').remove();
+
+            $("#tdPlace").val(1);
+        }
+
         function Add(btn, teamid) {
             $(btn).removeClass('btn-default');
             $(btn).addClass('btn-danger')
+
+            if ($("#tdPlace").val() == 1) {
+                var trow = '<tr><td>'
+                    +'<div class="input-group date" id="timepicker'+teamid+'" data-target-input="nearest">' 
+                    +'<input type="text" id="ShowTime6" class="form-control datetimepicker-input" data-target="#timepicker'+teamid+'" />' 
+                    +'<div class="input-group-append" data-target="#timepicker'+teamid+'" data-toggle="datetimepicker">' 
+                    +'<div class="input-group-text"><i class="far fa-clock"></i></div>' 
+                    +'</div>' 
+                    +'</div>'
+                    + '</td><td style="display: none">' + teamid + '</td><td>' + $(btn).text() 
+                    +'</td><td style="display: none"></td><td></td><td><button type="button" id="btnDelete" onclick="Delete(this);" class="btn btn-block btn-danger">ဖျက်မည်</button></td></tr>';
+                var tableBody = $("#tblTeam tbody");
+                tableBody.append(trow);
+
+                $("#tdPlace").val(2);
+
+                $('#timepicker'+teamid).datetimepicker({
+                    format: 'LT'
+                })
+            }
+            else {
+                $('#tblTeam tr:last td:nth-child(4)').html(teamid);
+                $('#tblTeam tr:last td:nth-child(5)').html($(btn).text());
+
+                $("#tdPlace").val(1);
+            }
+            
         }
 
         function GetTeam() {
@@ -110,19 +167,19 @@
                         '</div>' +
                         '<div class="card-body">' +
                         '<div class="row mb-1"><b>' + res[i].CompetitionNameMM + '</b></div>' +
-                        '<button type="button" id="' + res[i].TeamID + '" onclick="Add(this,' + res[i].TeamID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                        '<button type="button" id="btn' + res[i].TeamID + '" onclick="Add(this,' + res[i].TeamID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
                         res[i].TeamNameMM +
                         '</button>'
                 }
                 else {
                     if (competitionID != res[i].CompetitionID) {
                         e = e + '<div class="row mb-1"><b>' + res[i].CompetitionNameMM + '</b></div>' +
-                            '<button type="button" id="' + res[i].TeamID + '" onclick="Add(this,' + res[i].TeamID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                            '<button type="button" id="btn' + res[i].TeamID + '" onclick="Add(this,' + res[i].TeamID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
                             res[i].CinemaName +
                             '</button>'
                     }
                     else {
-                        e = e + '<button type="button" id="' + res[i].TeamID + '" onclick="Add(this,' + res[i].TeamID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                        e = e + '<button type="button" id="btn' + res[i].TeamID + '" onclick="Add(this,' + res[i].TeamID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
                             res[i].TeamNameMM +
                             '</button>'
                     }
