@@ -10,9 +10,9 @@ D:\Project\kyawthetpaing89\FGM\FGM_DL\obj\Debug\FGM_DL.csprojAssemblyReference.c
 D:\Project\kyawthetpaing89\FGM\FGM_DL\obj\Debug\FGM_DL.csproj.CoreCompileInputs.cache
 D:\Project\kyawthetpaing89\FGM\FGM_DL\obj\Debug\FGM_DL.dll
 D:\Project\kyawthetpaing89\FGM\FGM_DL\obj\Debug\FGM_DL.pdb
-D:\Project\kyawthetpaing89\FGM_system\FGM_DL\bin\Debug\FGM_DL.dll
-D:\Project\kyawthetpaing89\FGM_system\FGM_DL\bin\Debug\FGM_DL.pdb
-D:\Project\kyawthetpaing89\FGM_system\FGM_DL\obj\Debug\FGM_DL.csprojAssemblyReference.cache
-D:\Project\kyawthetpaing89\FGM_system\FGM_DL\obj\Debug\FGM_DL.csproj.CoreCompileInputs.cache
-D:\Project\kyawthetpaing89\FGM_system\FGM_DL\obj\Debug\FGM_DL.dll
-D:\Project\kyawthetpaing89\FGM_system\FGM_DL\obj\Debug\FGM_DL.pdb
+D:\Project\FGM\FGM_DL\bin\Debug\FGM_DL.dll
+D:\Project\FGM\FGM_DL\bin\Debug\FGM_DL.pdb
+D:\Project\FGM\FGM_DL\obj\Debug\FGM_DL.csprojAssemblyReference.cache
+D:\Project\FGM\FGM_DL\obj\Debug\FGM_DL.csproj.CoreCompileInputs.cache
+D:\Project\FGM\FGM_DL\obj\Debug\FGM_DL.dll
+D:\Project\FGM\FGM_DL\obj\Debug\FGM_DL.pdb
