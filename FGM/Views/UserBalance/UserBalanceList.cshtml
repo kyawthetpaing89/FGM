@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Styles {
+    
 
 }
 <!-- Content Header (Page header) -->
@@ -61,46 +62,28 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-row">
-                        <div class="form-group col-xl-12 col-md-12">
-                            <label for="UserName">အမည်</label><label style="color:red">*</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-layer-group"></i></span>
+                        <div class="form-row">
+                            <div class="form-group col-xl-12 col-md-12">
+                                <label for="UserName">အမည်</label><label style="color:red">*</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-layer-group"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control float-right" id="UserName">
                                 </div>
-                                <input type="text" class="form-control float-right" id="UserName">
                             </div>
                         </div>
-                    </div>
-                        <table id="tblUBDetailList" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ChangeDate</th>
-                                    <th>Balance</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        @*<div class="form-row">
-                <div class="form-group col-xl-12 col-md-12">
-                    <label for="UserName">အမည်</label><label style="color:red">*</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-layer-group"></i></span>
+                        <div style="height:200px;overflow-y:scroll;">
+                            <table id="tblUBDetailList" class="table table-bordered table-striped" >
+                                <thead>
+                                    <tr>
+                                        <th>ChangeDate</th>
+                                        <th>Balance</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
-                        <input type="text" class="form-control float-right" id="UserName">
-                    </div>
-                </div>
-                <div class="form-group col-xl-12 col-md-12">
-                    <label for="Balance">Balanceအခြေအနေ</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-layer-group"></i></span>
-                        </div>
-                        <input type="text" class="form-control float-right" id="Balance">
-                    </div>
-                </div>
-            </div>*@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         @*<div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -151,12 +134,16 @@
                 }
             );
         }
-
+        function Test()
+        {
+            $("#tblUBDetailList").scrollLeft($("#tblUBDetailList").width());
+        }
         function ChangeMode(value) {
             if (value) {
                 var splitted = value.split("_");
                 var UserID = $("#UserID").val(splitted[0]);
                 var UserName = $("#UserName").val(splitted[1]);
+                
 
                 var table = $('#tblUBDetailList').DataTable(
                     {
