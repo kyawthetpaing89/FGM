@@ -127,6 +127,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Controllers\UserBalanceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1850,7 +1851,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1868,6 +1871,7 @@
     <Content Include="Views\Competition\CompetitionList.cshtml" />
     <Content Include="Views\Match\MatchEntry.cshtml" />
     <Content Include="Views\Team\TeamList.cshtml" />
+    <Content Include="Views\UserBalance\UserBalanceList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1912,6 +1916,10 @@
     <ProjectReference Include="..\Team_BL\Team_BL.csproj">
       <Project>{cff2c541-9cb5-406a-91b1-e6a8225bfc85}</Project>
       <Name>Team_BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserBalance_BL\UserBalance_BL.csproj">
+      <Project>{93721bc4-da1d-453e-9d0a-1be18bfb7499}</Project>
+      <Name>UserBalance_BL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

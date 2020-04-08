@@ -1,0 +1,194 @@
+﻿
+@{
+    ViewBag.Title = "UserBalanceList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles {
+
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>UserBalance List</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">UserBalance List</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">UserBalance List</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="tblUserBalance" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>UserName</th>
+                        <th>Balance</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Details List</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-xl-12 col-md-12">
+                            <label for="UserName">အမည်</label><label style="color:red">*</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-layer-group"></i></span>
+                                </div>
+                                <input type="text" class="form-control float-right" id="UserName">
+                            </div>
+                        </div>
+                    </div>
+                        <table id="tblUBDetailList" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ChangeDate</th>
+                                    <th>Balance</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        @*<div class="form-row">
+                <div class="form-group col-xl-12 col-md-12">
+                    <label for="UserName">အမည်</label><label style="color:red">*</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-layer-group"></i></span>
+                        </div>
+                        <input type="text" class="form-control float-right" id="UserName">
+                    </div>
+                </div>
+                <div class="form-group col-xl-12 col-md-12">
+                    <label for="Balance">Balanceအခြေအနေ</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-layer-group"></i></span>
+                        </div>
+                        <input type="text" class="form-control float-right" id="Balance">
+                    </div>
+                </div>
+            </div>*@
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        @*<div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<button type="button" onclick="Save();" class="btn btn-success">သိမ်းဆည်းမည်</button>
+            </div>*@
+                  
+                    <!-- /.modal-content -->
+                </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div></section>
+<!-- /.content -->
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ShowUserBalanceList();
+        });
+
+        function ShowUserBalanceList() {
+            var table = $('#tblUserBalance').DataTable(
+                {
+                    "language": {
+                        "info": "Display _START_ to _END_ of _TOTAL_ records",
+                    },
+                    "oLanguage": {
+                        "sLengthMenu": "Display _MENU_ records",
+                    },                    
+                    "ajax": {
+                        "url": '@Url.Action("GetUserBalance", "UserBalance")',
+                        "type": "GET",
+                        "datatype": "json",
+                        "dataSrc": ""
+                    },
+                    "responsive": true,
+                    "order": [[1, "desc"]],
+                    "autoWidth": false,
+                    "destroy": "true",
+                    "columns": [
+                        {
+                            "data": "", "render": function (data, type, row) {
+                                return '<button type="button" onclick="ChangeMode(\'' + row.UserID + '_' + row.UserName + '\');"  class="btn btn-primary" data-toggle="modal" data-target="#modal-default">Details</button >';
+                            }, "width": "15%"
+                        },
+                        { "data": "UserName", "width": "45%" },
+                        { "data": "Balance", "width": "40%" },
+                    ],
+                }
+            );
+        }
+
+        function ChangeMode(value) {
+            if (value) {
+                var splitted = value.split("_");
+                var UserID = $("#UserID").val(splitted[0]);
+                var UserName = $("#UserName").val(splitted[1]);
+
+                var table = $('#tblUBDetailList').DataTable(
+                    {
+                        "language": {
+                            "info": "Display _START_ to _END_ of _TOTAL_ records",
+                        },
+                        "oLanguage": {
+                            "sLengthMenu": "Display _MENU_ records",
+                        },
+                        "ajax": {
+                            "url": '@Url.Action("GetUserBalanceByDetailDate", "UserBalance")?id=' + value + '',
+                            "type": "POST",
+                            "datatype": "json",
+                            "dataSrc": ""
+                        },
+                        "responsive": true,
+                        "order": [[1, "desc"]],
+                        "autoWidth": false,
+                        "destroy": "true",
+                        "columns": [
+                            { "data": "ChangeDate", "width": "25%" },
+                            { "data": "Balance", "width": "35%" },
+                            { "data": "Amount", "width": "40%" },
+                        ],
+                    }
+                );
+            }
+            else {
+                $("#UserName").val('');
+                $("#Balance").val('');
+            }
+
+        }
+    </script>
+}

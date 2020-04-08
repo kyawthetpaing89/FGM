@@ -46,6 +46,7 @@
     <Compile Include="CountryModel.cs" />
     <Compile Include="MatchModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserBalanceModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
