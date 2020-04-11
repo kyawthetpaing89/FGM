@@ -126,6 +126,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Controllers\UserBalanceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1970,6 +1971,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\UserBalance\UserBalanceList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2011,6 +2013,10 @@
     <ProjectReference Include="..\Team_BL\Team_BL.csproj">
       <Project>{cff2c541-9cb5-406a-91b1-e6a8225bfc85}</Project>
       <Name>Team_BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserBalance_BL\UserBalance_BL.csproj">
+      <Project>{93721bc4-da1d-453e-9d0a-1be18bfb7499}</Project>
+      <Name>UserBalance_BL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

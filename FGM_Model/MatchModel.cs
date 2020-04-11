@@ -12,7 +12,6 @@ namespace FGM_Model
         public string MatchTime { get; set; }
         public string TeamID1 { get; set; }
         public string TeamID2 { get; set; }
-
         public string MatchJson { get; set; }
     }
 }
