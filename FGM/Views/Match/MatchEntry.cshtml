@@ -28,12 +28,12 @@
 <section class="content">
     <div class="form-row">
         <div class="form-group col-xl-2 col-md-4">
-            <label for="showdate">နေ့စွဲ</label>
+            <label for="matchdate">နေ့စွဲ</label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
                 </div>
-                <input type="text" class="form-control float-right" id="showdate">
+                <input type="text" class="form-control float-right" id="matchdate">
             </div>
         </div>
     </div>
@@ -44,12 +44,12 @@
             <table id="tblTeam" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th style="width:30%">ပွဲချိန်</th>
+                        <th style="width:22%">ပွဲချိန်</th>
                         <th style="display: none">HomeID</th>
                         <th style="width:30%">Home</th>
                         <th style="display: none">AwayID</th>
                         <th style="width:30%">Away</th>
-                        <th style="width:10%"></th>
+                        <th style="width:18%"></th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -57,8 +57,13 @@
                 </tfoot>
             </table>
         </div>
+        <div class="card-footer">
+            <div style="text-align:center;">
+                <button type="button" id="btnSave" onclick="Save();" class="btn btn-success">Save</button>
+            </div>
+        </div>
     </div>
-    
+
     <input id="tdPlace" type="hidden" value="1" />
 </section>
 
@@ -71,7 +76,7 @@
 
         $(document).ready(function () {
             GetTeam();
-            $('#showdate').daterangepicker({
+            $('#matchdate').daterangepicker({
                 timePicker: false, //<==MAKE THE CHANGE HERE
                 singleDatePicker: true, //<==MAKE THE CHANGE HERE
                 locale: {
@@ -79,6 +84,63 @@
                 }
             });
         });
+
+        function ShowMessage(msg, status) {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                type: status,
+                title: msg
+            });
+        }
+
+        function Save() {
+            var catchError = false;
+
+            var rows = [];
+            $('#tblTeam tbody tr').each(function (i, n) {
+                var $row = $(n);
+                if (!$row.find('.datetimepicker-input').val()) {
+                    ShowMessage('ပွဲချိန် ဖြည့်သွင်း ပေးပါ', 'error');
+                    catchError = true;
+                    return false;
+                }
+                else if (!$row.find('td:eq(3)').text()) {
+                    ShowMessage('ကန်မည့် ၂သင်းလုံး ထည့်သွင်းပေးပါ', 'error');
+                    catchError = true;
+                    return false;
+                }
+
+                rows.push({
+                    MatchTime: $row.find('.datetimepicker-input').val(),
+                    Team1: $row.find('td:eq(1)').text(),
+                    Team2: $row.find('td:eq(3)').text()
+                });
+            });
+
+            if (!catchError) {
+                $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '@Url.Action("Match_Save", "Match")?MatchDate='+$("#matchdate").val()+'',
+                data: { Table: JSON.stringify(rows) },
+                success: function (res) {
+                        if (res == true) {
+                            ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
+                        }
+                        else {
+                            ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                        }
+                    }
+                });
+            } 
+        }
 
         function Delete(btn) {
             var trow = $(btn).closest('tr');
@@ -100,34 +162,38 @@
         }
 
         function Add(btn, teamid) {
-            $(btn).removeClass('btn-default');
-            $(btn).addClass('btn-danger')
 
-            if ($("#tdPlace").val() == 1) {
-                var trow = '<tr><td>'
-                    +'<div class="input-group date" id="timepicker'+teamid+'" data-target-input="nearest">' 
-                    +'<input type="text" id="ShowTime6" class="form-control datetimepicker-input" data-target="#timepicker'+teamid+'" />' 
-                    +'<div class="input-group-append" data-target="#timepicker'+teamid+'" data-toggle="datetimepicker">' 
-                    +'<div class="input-group-text"><i class="far fa-clock"></i></div>' 
-                    +'</div>' 
-                    +'</div>'
-                    + '</td><td style="display: none">' + teamid + '</td><td>' + $(btn).text() 
-                    +'</td><td style="display: none"></td><td></td><td><button type="button" id="btnDelete" onclick="Delete(this);" class="btn btn-block btn-danger">ဖျက်မည်</button></td></tr>';
-                var tableBody = $("#tblTeam tbody");
-                tableBody.append(trow);
+            if (!$(btn).hasClass('btn-danger')) {
+                $(btn).removeClass('btn-default');
+                $(btn).addClass('btn-danger')
 
-                $("#tdPlace").val(2);
+                if ($("#tdPlace").val() == 1) {
+                    var trow = '<tr><td>'
+                        + '<div class="input-group date" id="timepicker' + teamid + '" data-target-input="nearest">'
+                        + '<input type="text" id="ShowTime6" class="form-control datetimepicker-input" data-target="#timepicker' + teamid + '" />'
+                        + '<div class="input-group-append" data-target="#timepicker' + teamid + '" data-toggle="datetimepicker">'
+                        + '<div class="input-group-text"><i class="far fa-clock"></i></div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</td><td style="display: none">' + teamid + '</td><td>' + $(btn).text()
+                        + '</td><td style="display: none"></td><td></td><td><button type="button" id="btnDelete" onclick="Delete(this);" class="btn btn-block btn-danger">ဖျက်မည်</button></td></tr>';
+                    var tableBody = $("#tblTeam tbody");
+                    tableBody.append(trow);
 
-                $('#timepicker'+teamid).datetimepicker({
-                    format: 'LT'
-                })
+                    $("#tdPlace").val(2);
+
+                    $('#timepicker' + teamid).datetimepicker({
+                        format: 'LT'
+                    })
+                }
+                else {
+                    $('#tblTeam tr:last td:nth-child(4)').html(teamid);
+                    $('#tblTeam tr:last td:nth-child(5)').html($(btn).text());
+
+                    $("#tdPlace").val(1);
+                }
             }
-            else {
-                $('#tblTeam tr:last td:nth-child(4)').html(teamid);
-                $('#tblTeam tr:last td:nth-child(5)').html($(btn).text());
-
-                $("#tdPlace").val(1);
-            }
+            
             
         }
 

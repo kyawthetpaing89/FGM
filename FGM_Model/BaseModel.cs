@@ -11,5 +11,7 @@ namespace FGM_Model
         public string CountryID { get; set; }
 
         public string CompetitionID { get; set; }
+
+        public string UserID { get; set; }
     }
 }

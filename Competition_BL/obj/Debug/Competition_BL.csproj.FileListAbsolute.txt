@@ -58,3 +58,4 @@ D:\Project\FGM\Competition_BL\obj\Debug\Competition_BL.csproj.CoreCompileInputs.
 D:\Project\FGM\Competition_BL\obj\Debug\Competition_BL.csproj.CopyComplete
 D:\Project\FGM\Competition_BL\obj\Debug\Competition_BL.dll
 D:\Project\FGM\Competition_BL\obj\Debug\Competition_BL.pdb
+D:\Project\FGM\Competition_BL\bin\Debug\FGM_DL.dll.config

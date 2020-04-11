@@ -58,3 +58,4 @@ D:\Project\FGM\Country_BL\obj\Debug\Country_BL.csproj.CoreCompileInputs.cache
 D:\Project\FGM\Country_BL\obj\Debug\Country_BL.csproj.CopyComplete
 D:\Project\FGM\Country_BL\obj\Debug\Country_BL.dll
 D:\Project\FGM\Country_BL\obj\Debug\Country_BL.pdb
+D:\Project\FGM\Country_BL\bin\Debug\FGM_DL.dll.config

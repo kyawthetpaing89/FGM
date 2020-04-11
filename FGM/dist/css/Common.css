@@ -10,6 +10,10 @@
     background-color:ghostwhite;
 }
 
+.table td{
+    vertical-align:middle;
+}
+
 .input-numeral1, .input-numeral2, .input-numeral3,
 .input-numeral4, .input-numeral5, .input-numeral6,
 .input-numeral7, .input-numeral8, .input-numeral9,
