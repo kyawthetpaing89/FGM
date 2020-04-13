@@ -13,6 +13,11 @@ namespace FGM.Controllers
             return View();
         }
 
+        public ActionResult BookieOddsEntry()
+        {
+            return View();
+        }
+
         [HttpPost]
         public string Match_Save(string Table, string MatchDate)
         {
@@ -28,6 +33,15 @@ namespace FGM.Controllers
             MModel.UserID = userInfo.Split('_')[0];
 
             return MBL.Match_Save(MModel);        
+        }
+
+        [HttpGet]
+        public string GetMatch(string MatchDate)
+        {
+            MatchBL MBL = new MatchBL();
+            MatchModel MModel = new MatchModel();
+            MModel.MatchDate = MatchDate;
+            return MBL.GetMatch(MModel);
         }
     }
 }

@@ -359,3 +359,5 @@ D:\Project\FGM\FGM\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.
 D:\Project\FGM\FGM\bin\roslyn\System.Threading.Tasks.Extensions.dll
 D:\Project\FGM\FGM\bin\EntityFramework.SqlServer.dll
 D:\Project\FGM\FGM\bin\EntityFramework.SqlServer.xml
+D:\Project\FGM\FGM\bin\UserBalance_BL.dll
+D:\Project\FGM\FGM\bin\UserBalance_BL.pdb

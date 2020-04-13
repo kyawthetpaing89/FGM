@@ -26,17 +26,21 @@
 </section>
 <!-- Main content -->
 <section class="content">
-    <div class="form-row">
-        <div class="form-group col-xl-2 col-md-4">
-            <label for="matchdate">နေ့စွဲ</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
+    <div class="card">
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-xl-2 col-md-4">
+                    <label for="matchdate">ပွဲကစားမည့်နေ့</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
+                        </div>
+                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate" onchange="DateChange();">
+                    </div>
                 </div>
-                <input type="text" class="form-control float-right" id="matchdate">
             </div>
         </div>
-    </div>
+    </div>  
     <div id="TeamList">
     </div>
     <div class="card">
@@ -59,7 +63,7 @@
         </div>
         <div class="card-footer">
             <div style="text-align:center;">
-                <button type="button" id="btnSave" onclick="Save();" class="btn btn-success">Save</button>
+                <button type="button" id="btnSave" onclick="Save();" class="btn btn-success">သိမ်းဆည်းမည်</button>
             </div>
         </div>
     </div>
@@ -75,7 +79,6 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            GetTeam();
             $('#matchdate').daterangepicker({
                 timePicker: false, //<==MAKE THE CHANGE HERE
                 singleDatePicker: true, //<==MAKE THE CHANGE HERE
@@ -83,7 +86,54 @@
                     format: 'DD-MM-YYYY'
                 }
             });
+
+
+            GetTeam();
         });
+
+        function DateChange() {
+            $(".btn-danger").each(function () {
+                $(this).removeClass('btn-danger'); 
+                $(this).addClass('btn-default')
+            });
+
+            BindMatch();
+        }
+
+        function BindMatch() {
+            $.ajax({
+                url: '@Url.Action("GetMatch", "Match")?MatchDate='+$("#matchdate").val()+'',
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    BindToTable(res)
+                }
+            })
+        }
+
+        function BindToTable(res) {
+            $("#tblTeam").find("tr:gt(0)").remove();
+
+            $.each(res, function (key, value) {
+                $("#tdPlace").val(1);
+                Add($("#btn" + value.TeamID1),value.TeamID1)
+                Add($("#btn" + value.TeamID2), value.TeamID2)              
+                $('#ShowTime' + value.TeamID1).val(value.MatchTime)
+            });
+        }
+
+        function GetTeam() {
+            $.ajax({
+                url: '@Url.Action("GetTeam", "Team")',
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    CreateCardByCountry(res);
+                }
+            })
+        }
 
         function ShowMessage(msg, status) {
 
@@ -162,15 +212,14 @@
         }
 
         function Add(btn, teamid) {
-
             if (!$(btn).hasClass('btn-danger')) {
                 $(btn).removeClass('btn-default');
                 $(btn).addClass('btn-danger')
-
+                
                 if ($("#tdPlace").val() == 1) {
                     var trow = '<tr><td>'
                         + '<div class="input-group date" id="timepicker' + teamid + '" data-target-input="nearest">'
-                        + '<input type="text" id="ShowTime6" class="form-control datetimepicker-input" data-target="#timepicker' + teamid + '" />'
+                        + '<input type="text" id="ShowTime'+ teamid + '" class="form-control datetimepicker-input" data-target="#timepicker' + teamid + '" />'
                         + '<div class="input-group-append" data-target="#timepicker' + teamid + '" data-toggle="datetimepicker">'
                         + '<div class="input-group-text"><i class="far fa-clock"></i></div>'
                         + '</div>'
@@ -196,19 +245,7 @@
             
             
         }
-
-        function GetTeam() {
-            $.ajax({
-                url: '@Url.Action("GetTeam", "Team")',
-                type: "GET",
-                dataType: "JSON",
-                dataSrc: '',
-                success: function (res) {
-                    CreateCardByCountry(res);
-                }
-            })
-        }
-
+       
         function CreateCardByCountry(res) {
             var cl = $("#TeamList");
             cl.empty();
@@ -241,7 +278,7 @@
                     if (competitionID != res[i].CompetitionID) {
                         e = e + '<div class="row mb-1"><b>' + res[i].CompetitionNameMM + '</b></div>' +
                             '<button type="button" id="btn' + res[i].TeamID + '" onclick="Add(this,' + res[i].TeamID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
-                            res[i].CinemaName +
+                            res[i].TeamNameMM +
                             '</button>'
                     }
                     else {

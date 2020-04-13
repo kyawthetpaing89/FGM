@@ -211,8 +211,8 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
-                        <li class="nav-header">Cinema</li>
+        with font-awesome or any other icon font library -->
+                        <li class="nav-header">ရုပ်ရှင်</li>
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-building text-info"></i>
@@ -292,7 +292,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-header">ဘောလုံးပွဲ နှင့် ပတ်သက်သော</li>
+                        <li class="nav-header" style="padding:.5rem">ဘောလုံးပွဲ</li>
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-building text-info"></i>
@@ -303,15 +303,32 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("MatchList","Match")" class="nav-link">
-                                        <i class="far fa-check-circle nav-icon text-info"></i>
-                                        <p>ပွဲစဉ် List</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="@Url.Action("MatchEntry","Match")" class="nav-link">
                                         <i class="far fa-check-circle nav-icon text-info"></i>
                                         <p>ပွဲစဉ်များ ဖြည့်သွင်းရန်</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("BookieOddsEntry","Match")" class="nav-link">
+                                        <i class="far fa-check-circle nav-icon text-info"></i>
+                                        <p>လောင်းကြေးများ ဖြည့်သွင်းရန်</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-building text-info"></i>
+                                <p>
+                                    စာရင်းချုပ်
+                                    <i class="right fas fa-angle-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("UserBalanceList","UserBalance")" class="nav-link">
+                                        <i class="far fa-check-circle nav-icon text-info"></i>
+                                        <p>လက်ကျန်စာရင်း</p>
                                     </a>
                                 </li>
                             </ul>
