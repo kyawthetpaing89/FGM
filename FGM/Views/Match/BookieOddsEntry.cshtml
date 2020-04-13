@@ -43,13 +43,15 @@
             <table id="tblMatch" class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>ပွဲချိန်</th>
+                        <th></th>
                         <th>ဘော်ဒီကြေး</th>
-                        <th>HomeID</th>
                         <th>Home</th>
-                        <th>AwayID</th>
                         <th>Away</th>
+                        <th></th>
                         <th>ဘော်ဒီကြေး</th>
+                        <th></th>
                         <th>ဂိုးပေါင်း</th>
                     </tr>
                 </thead>
@@ -75,7 +77,22 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <input id="BodyOddsId" type="hidden" value="" />
+                        <label class="col-xl-1 md-1">ဘော်ဒီ</label>
+                        <label id="lblBodyOdds" class="col-xl-1 md-1"></label>
+                    </div>
+                    <div class="row">
+                        <input id="GoalOddsId" type="hidden" value="" />
+                        <label class="col-xl-1 md-1">ဂိုးပေါင်း</label>
+                        <label id="lblGoalOdds" class="col-xl-1 md-1"></label>
+                    </div>
                     <div id="OddsList">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <button type="button" id="btnSave" onclick="Save();" class="btn btn-success">အတည်ပြုမည်</button>
                     </div>
                 </div>
             </div>
@@ -105,6 +122,8 @@
                     //alert(this.innerText);
                 });
 
+            GetOdds();
+
         });
 
         function GetOdds() {
@@ -119,14 +138,54 @@
             })
         }
 
+        function RemoveBtnColor(OddsTypeID) {
+            $("#card"+OddsTypeID+ " .btn-danger").each(function () {
+                $(this).removeClass('btn-danger');
+                $(this).addClass('btn-default')
+            });
+        }
+
+        function Add(btn, OddsId, OddsTitleID, OddsTypeID) {
+            RemoveBtnColor(OddsTypeID)
+
+            if (!$(btn).hasClass('btn-danger')) {
+                $(btn).removeClass('btn-default');
+                $(btn).addClass('btn-danger');
+
+                if (OddsTypeID == 1) {
+                    $("#lblBodyOdds").html($(btn).html());
+                    $("#BodyOddsId").val(OddsId);
+
+                    $('#card1').CardWidget('collapse');
+                    $('#card2').CardWidget('expand');
+                }
+                else if (OddsTypeID == 2) {
+                    $("#lblGoalOdds").html($(btn).html());
+                    $("#GoalOddsId").val(OddsId);
+
+                    $('#card2').CardWidget('collapse');
+                }
+            }
+            else {
+                $(btn).removeClass('btn-danger');
+                $(btn).addClass('btn-default');
+                if (OddsTypeID == 1) {
+                    $("#lblBodyOdds").html('');
+                }
+                else if (OddsTypeID == 2) {
+                    $("#lblGoalOdds").html('');
+                }
+            }            
+        }
+
         function BindOdds(res) {
             var cl = $("#OddsList");
             cl.empty();
             var e = '';
-            var countryID = '';
-            var competitionID = '';
+            var OddsTypeID = '';
+            var OddsTitleID = '';
             for (var i = 0; i < res.length; i++) {
-                if (countryID != res[i].OddsTypeID) {
+                if (OddsTypeID != res[i].OddsTypeID) {
                     if (OddsTypeID) {
                         e = e + '</div>' +
                             '</div>';
@@ -143,25 +202,25 @@
                         '</div>' +
                         '<div class="card-body">' +
                         '<div class="row mb-1"><b>' + res[i].OddsTitle + '</b></div>' +
-                        '<button type="button" id="btn' + res[i].OddsID + '" onclick="Add(this,' + res[i].OddsID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                        '<button type="button" id="btn' + res[i].OddsID + '" onclick="Add(this,' + res[i].OddsID + ',' + res[i].OddsTitleID + ',' + res[i].OddsTypeID +')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
                         res[i].OddsName +
                         '</button>'
                 }
                 else {
-                    if (competitionID != res[i].CompetitionID) {
+                    if (OddsTitleID != res[i].OddsTitleID) {
                         e = e + '<div class="row mb-1"><b>' + res[i].OddsTitle + '</b></div>' +
-                            '<button type="button" id="btn' + res[i].OddsID + '" onclick="Add(this,' + res[i].OddsID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                            '<button type="button" id="btn' + res[i].OddsID + '" onclick="Add(this,' + res[i].OddsID + ',' + res[i].OddsTitleID + ',' + res[i].OddsTypeID +')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
                             res[i].OddsName +
                             '</button>'
                     }
                     else {
-                        e = e + '<button type="button" id="btn' + res[i].OddsID + '" onclick="Add(this,' + res[i].OddsID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                        e = e + '<button type="button" id="btn' + res[i].OddsID + '" onclick="Add(this,' + res[i].OddsID + ',' + res[i].OddsTitleID + ',' + res[i].OddsTypeID +')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
                             res[i].OddsName +
                             '</button>'
                     }
                 }
-                countryID = res[i].CountryID;
-                competitionID = res[i].CompetitionID;
+                OddsTypeID = res[i].OddsTypeID;
+                OddsTitleID = res[i].OddsTitleID;
 
             }
             cl.append(e);
@@ -186,24 +245,27 @@
                         "datatype": "json",
                         "dataSrc": ""
                     },
+                    "searching": false,
                     "responsive": true,
                     "order": [[1, "desc"]],
                     "autoWidth": false,
                     "destroy": "true",
                     "paging": false,
                     "columns": [
+                        { "data": "MatchID" },
                         { "data": "MatchTime" },
-                        {"data":"Team1Odds"},
-                        { "data": "OddsID1"},
+                        { "data":"Team1OddsID"},
+                        { "data": "Team1Odds"},
                         { "data": "Home"},
-                        { "data": "OddsID2"},
                         { "data": "Away"},
+                        { "data": "Team2OddsID"},
                         { "data": "Team2Odds" },
+                        { "data": "GoalOddsID" },
                         { "data": "GoalOdds" },
                     ],
                     "columnDefs": [
                         {
-                            "targets": [2,4],
+                            "targets": [0,2,6,8],
                             "visible": false,
                             "searchable": false
                         },
