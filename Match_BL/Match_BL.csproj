@@ -58,6 +58,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonFunction\CommonFunction.csproj">
+      <Project>{c0c9d960-f3d6-4eb8-a603-ecf41efa1fda}</Project>
+      <Name>CommonFunction</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FGM_DL\FGM_DL.csproj">
       <Project>{da6f6100-1758-4df2-8c49-320a4ecc404d}</Project>
       <Name>FGM_DL</Name>

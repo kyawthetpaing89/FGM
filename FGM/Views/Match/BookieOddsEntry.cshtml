@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "BookieOddsEntry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>လောင်းကြေးများ ဖြည့်သွင်းရန်</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Match Entry</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div id="TeamList">
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-xl-2 col-md-4">
+                    <label for="matchdate">ပွဲကစားမည့်နေ့</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
+                        </div>
+                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate" onchange="DateChange();">
+                    </div>
+                </div>
+            </div>
+            <table id="tblMatch" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ပွဲချိန်</th>
+                        <th>ဘော်ဒီကြေး</th>
+                        <th>HomeID</th>
+                        <th>Home</th>
+                        <th>AwayID</th>
+                        <th>Away</th>
+                        <th>ဘော်ဒီကြေး</th>
+                        <th>ဂိုးပေါင်း</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div style="text-align:center;">
+                <button type="button" id="btnSave" onclick="Save();" class="btn btn-success">သိမ်းဆည်းမည်</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">ကြေးရွေးချယ်ရန်</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="OddsList">
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>
+
+@section Scripts{
+    <script src="@Url.Content("~/plugins/daterangepicker/moment.min.js")"></script>
+    <script src="@Url.Content("~/plugins/daterangepicker/daterangepicker.js")"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#matchdate').daterangepicker({
+                timePicker: false, //<==MAKE THE CHANGE HERE
+                singleDatePicker: true, //<==MAKE THE CHANGE HERE
+                locale: {
+                    format: 'DD-MM-YYYY'
+                }
+            });
+
+            $("tbody", "#tblMatch").on("click", "td:eq(1),td:eq(4)",
+                function () {
+                    $('#modal-default').modal('show')
+                    //alert(this.innerText);
+                });
+
+        });
+
+        function GetOdds() {
+            $.ajax({
+                url: '@Url.Action("GetOdds", "Odds")',
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    BindOdds(res);
+                }
+            })
+        }
+
+        function BindOdds(res) {
+            var cl = $("#OddsList");
+            cl.empty();
+            var e = '';
+            var countryID = '';
+            var competitionID = '';
+            for (var i = 0; i < res.length; i++) {
+                if (countryID != res[i].OddsTypeID) {
+                    if (OddsTypeID) {
+                        e = e + '</div>' +
+                            '</div>';
+                    }
+
+                    e = e + '<div class="card collapsed-card" id="card' + res[i].OddsTypeID + '">' +
+                        '<div class="card-header bg-cyan">' +
+                        '<h3 class="card-title">' + res[i].OddsTypeName + '</h3>' +
+                        '<div class="card-tools">' +
+                        '<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">' +
+                        '<i class="fas fa-plus"></i>' +
+                        '</button>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="card-body">' +
+                        '<div class="row mb-1"><b>' + res[i].OddsTitle + '</b></div>' +
+                        '<button type="button" id="btn' + res[i].OddsID + '" onclick="Add(this,' + res[i].OddsID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                        res[i].OddsName +
+                        '</button>'
+                }
+                else {
+                    if (competitionID != res[i].CompetitionID) {
+                        e = e + '<div class="row mb-1"><b>' + res[i].OddsTitle + '</b></div>' +
+                            '<button type="button" id="btn' + res[i].OddsID + '" onclick="Add(this,' + res[i].OddsID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                            res[i].OddsName +
+                            '</button>'
+                    }
+                    else {
+                        e = e + '<button type="button" id="btn' + res[i].OddsID + '" onclick="Add(this,' + res[i].OddsID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                            res[i].OddsName +
+                            '</button>'
+                    }
+                }
+                countryID = res[i].CountryID;
+                competitionID = res[i].CompetitionID;
+
+            }
+            cl.append(e);
+        }
+
+        function DateChange() {          
+            BindMatch();
+        }
+
+        function BindMatch() {
+            var table = $('#tblMatch').DataTable(
+                {
+                    "language": {
+                        "info": "Display _START_ to _END_ of _TOTAL_ records",
+                    },
+                    "oLanguage": {
+                        "sLengthMenu": "Display _MENU_ records",
+                    },
+                    "ajax": {
+                        "url": '@Url.Action("GetMatch", "Match")?MatchDate='+$("#matchdate").val()+'',
+                        "type": "GET",
+                        "datatype": "json",
+                        "dataSrc": ""
+                    },
+                    "responsive": true,
+                    "order": [[1, "desc"]],
+                    "autoWidth": false,
+                    "destroy": "true",
+                    "paging": false,
+                    "columns": [
+                        { "data": "MatchTime" },
+                        {"data":"Team1Odds"},
+                        { "data": "OddsID1"},
+                        { "data": "Home"},
+                        { "data": "OddsID2"},
+                        { "data": "Away"},
+                        { "data": "Team2Odds" },
+                        { "data": "GoalOdds" },
+                    ],
+                    "columnDefs": [
+                        {
+                            "targets": [2,4],
+                            "visible": false,
+                            "searchable": false
+                        },
+                    ]
+                }
+            );
+        }
+    </script>
+}

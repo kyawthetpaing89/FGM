@@ -125,6 +125,7 @@
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
+    <Compile Include="Controllers\OddsController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserBalanceController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1974,11 +1975,12 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\UserBalance\UserBalanceList.cshtml" />
-    <Content Include="Views\UserBalance\DaliyUserBalanceList.cshtml" />
+    <Content Include="Views\Match\BookieOddsEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Odds\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -2012,6 +2014,10 @@
     <ProjectReference Include="..\Match_BL\Match_BL.csproj">
       <Project>{4afc2a41-36f8-4543-bb2a-5ebcc1d76fcd}</Project>
       <Name>Match_BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Odds_BL\Odds_BL.csproj">
+      <Project>{db3f8926-7737-4398-acd2-ea2aaf32bbc1}</Project>
+      <Name>Odds_BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Team_BL\Team_BL.csproj">
       <Project>{cff2c541-9cb5-406a-91b1-e6a8225bfc85}</Project>

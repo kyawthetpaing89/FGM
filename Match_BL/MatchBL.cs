@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using FGM_Model;
 using System;
 using System.Globalization;
+using CommonFunction;
 
 namespace Match_BL
 {
@@ -21,6 +22,17 @@ namespace Match_BL
             if (bdl.InsertUpdateDeleteData("M_Match_Insert", prms))
                 return "true";
             return "false";
+        }
+
+        public string GetMatch(MatchModel MModel)
+        {
+            BaseDL bdl = new BaseDL();
+            Function fun = new Function();
+            DateTime dt = DateTime.ParseExact(MModel.MatchDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.GetCultureInfo("en-us"));
+            SqlParameter[] prms = new SqlParameter[1];
+            prms[0] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
+            DataTable DTMatch = bdl.SelectData("M_Match_Select", prms);
+            return fun.DataTableToJSONWithJSONNet(DTMatch);
         }
     }
 }

@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Match_BL", "Match_BL\Match_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserBalance_BL", "UserBalance_BL\UserBalance_BL.csproj", "{93721BC4-DA1D-453E-9D0A-1BE18BFB7499}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Odds_BL", "Odds_BL\Odds_BL.csproj", "{DB3F8926-7737-4398-ACD2-EA2AAF32BBC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{93721BC4-DA1D-453E-9D0A-1BE18BFB7499}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93721BC4-DA1D-453E-9D0A-1BE18BFB7499}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93721BC4-DA1D-453E-9D0A-1BE18BFB7499}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB3F8926-7737-4398-ACD2-EA2AAF32BBC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB3F8926-7737-4398-ACD2-EA2AAF32BBC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB3F8926-7737-4398-ACD2-EA2AAF32BBC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB3F8926-7737-4398-ACD2-EA2AAF32BBC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

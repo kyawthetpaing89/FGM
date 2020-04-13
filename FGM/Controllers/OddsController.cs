@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Team_BL;
+using Odds_BL;
 
 namespace FGM.Controllers
 {
-    public class TeamController : Controller
+    public class OddsController : Controller
     {
-        // GET: Team
-        public ActionResult TeamList()
+        // GET: Odds
+        public ActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
-        public string GetTeam()
+        public string GetOdds()
         {
-            TeamBL TBL = new TeamBL();
-            return TBL.GetTeam();
+            OddsBL OBL = new OddsBL();
+            return OBL.GetOdds();
         }
     }
 }
