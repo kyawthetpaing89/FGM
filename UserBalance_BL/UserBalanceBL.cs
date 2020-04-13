@@ -24,7 +24,7 @@ namespace UserBalance_BL
             Function fun = new Function();
             SqlParameter[] prms = new SqlParameter[1];
             prms[0] = new SqlParameter("@UserID", SqlDbType.VarChar) { Value = string.IsNullOrWhiteSpace(UBModel.UserID) ? (object)DBNull.Value : UBModel.UserID };
-            DataTable DtCinemaIncome = bdl.SelectData("UserBalance_SelectByDetailDate", prms);
+            DataTable DtCinemaIncome = bdl.SelectData("M_UserBalance_DetailSelect", prms);
             return fun.DataTableToJSONWithJSONNet(DtCinemaIncome);
         }
 
@@ -33,7 +33,7 @@ namespace UserBalance_BL
             BaseDL BDL = new BaseDL();
             Function FUN = new Function();
             SqlParameter[] prms = new SqlParameter[0];
-            DataTable DtUserSelect = BDL.SelectData("DailyUserBalance_UserSelectBind", prms);
+            DataTable DtUserSelect = BDL.SelectData("M_UserBalance_Select", prms);
             return FUN.DataTableToJSONWithJSONNet(DtUserSelect);
         }
 
@@ -43,7 +43,7 @@ namespace UserBalance_BL
             Function FUN = new Function();
             SqlParameter[] prms = new SqlParameter[1];
             prms[0] = new SqlParameter("@UserID", SqlDbType.VarChar) { Value = string.IsNullOrWhiteSpace(UBModel.UserID) ? (object)DBNull.Value : UBModel.UserID };
-            DataTable DtBLList = BDL.SelectData("DUB_BalanceList", prms);
+            DataTable DtBLList = BDL.SelectData("M_UserBalance_BalanceSelect", prms);
             return FUN.DataTableToJSONWithJSONNet(DtBLList);
         }
     }
