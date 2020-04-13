@@ -1872,6 +1872,7 @@
     <Content Include="Views\Match\MatchEntry.cshtml" />
     <Content Include="Views\Team\TeamList.cshtml" />
     <Content Include="Views\UserBalance\UserBalanceList.cshtml" />
+    <Content Include="Views\UserBalance\DaliyUserBalanceList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

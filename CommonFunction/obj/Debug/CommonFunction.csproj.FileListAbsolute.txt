@@ -25,3 +25,12 @@ D:\Project\FGM\CommonFunction\obj\Debug\CommonFunction.csproj.CoreCompileInputs.
 D:\Project\FGM\CommonFunction\obj\Debug\CommonFunction.csproj.CopyComplete
 D:\Project\FGM\CommonFunction\obj\Debug\CommonFunction.dll
 D:\Project\FGM\CommonFunction\obj\Debug\CommonFunction.pdb
+D:\Project\kyawthetpaing89\FGM_system\CommonFunction\bin\Debug\CommonFunction.dll
+D:\Project\kyawthetpaing89\FGM_system\CommonFunction\bin\Debug\CommonFunction.pdb
+D:\Project\kyawthetpaing89\FGM_system\CommonFunction\bin\Debug\Newtonsoft.Json.dll
+D:\Project\kyawthetpaing89\FGM_system\CommonFunction\bin\Debug\Newtonsoft.Json.xml
+D:\Project\kyawthetpaing89\FGM_system\CommonFunction\obj\Debug\CommonFunction.csprojAssemblyReference.cache
+D:\Project\kyawthetpaing89\FGM_system\CommonFunction\obj\Debug\CommonFunction.csproj.CoreCompileInputs.cache
+D:\Project\kyawthetpaing89\FGM_system\CommonFunction\obj\Debug\CommonFunction.csproj.CopyComplete
+D:\Project\kyawthetpaing89\FGM_system\CommonFunction\obj\Debug\CommonFunction.dll
+D:\Project\kyawthetpaing89\FGM_system\CommonFunction\obj\Debug\CommonFunction.pdb

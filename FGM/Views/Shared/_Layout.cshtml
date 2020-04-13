@@ -1,23 +1,36 @@
 ﻿<!DOCTYPE html>
 @{
     /**/
-    string loginID = "";
-    string UserName = "";
-    //var ControllerName = ViewContext.RouteData.Values["controller"].ToString();
-    //var ViewPageName = ViewContext.RouteData.Values["action"].ToString();
-    //var time = Session.Timeout;
-    //string loginID = string.Empty;
-    //string UserName = string.Empty;
-    //if (Session["UserInfo"] != null)
-    //{
-    //    loginID = Session["UserInfo"].ToString().Split('_')[0];
-    //    UserName = Session["UserInfo"].ToString().Split('_')[1];
-    //}
+    var ControllerName = ViewContext.RouteData.Values["controller"].ToString();
+    var ViewPageName = ViewContext.RouteData.Values["action"].ToString();
+    var time = Session.Timeout;
+    string loginID = string.Empty;
+    string UserName = string.Empty;
+    string UserType = string.Empty;
 
-    //else
-    //{
-    //    Context.Response.Redirect("~/User/Login");
-    //}
+
+    if (System.Diagnostics.Debugger.IsAttached)
+    {
+
+        loginID = "admin";
+        UserName = "Administrator";
+        UserType = "1";
+
+        Session["UserInfo"] = loginID + '_' + UserName;
+    }
+    else
+    {
+        if (Session["UserInfo"] != null)
+        {
+            loginID = Session["UserInfo"].ToString().Split('_')[0];
+            UserName = Session["UserInfo"].ToString().Split('_')[1];
+        }
+
+        //else
+        //{
+        //    Context.Response.Redirect("~/Country/CountryList");
+        //}
+    }
 }
 <html>
 <head>
@@ -221,9 +234,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("TownShipList","Cinema")" class="nav-link">
+                                    <a href="@Url.Action("DaliyUserBalanceList","UserBalance")" class="nav-link">
                                         <i class="far fa-check-circle nav-icon text-info"></i>
-                                        <p>မြို့ List</p>
+                                        <p>DailyUserBalance List</p>
                                     </a>
                                 </li>
                             </ul>
