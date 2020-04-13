@@ -16,6 +16,11 @@ namespace FGM.Controllers
             return View();
         }
 
+        public ActionResult DaliyUserBalanceList()
+        {
+            return View();
+        }
+
         [HttpGet]
         public string GetUserBalance()
         {
@@ -30,6 +35,28 @@ namespace FGM.Controllers
             UserBalanceModel UBM = new UserBalanceModel();
             UBM.UserID = id.Split('_')[0];
             return ubbl.GetUserBalanceByDetailDate(UBM);
+        }
+        [HttpPost]
+        public string GetUserBalanceUser()
+        {
+            if (Session["UserInfo"] == null)
+                return "false";
+
+            string userInfo = Session["UserInfo"] as string;
+            string UserID= userInfo.Split('_')[0];
+            string UserName= userInfo.Split('_')[1];
+            
+
+            UserBalanceBL ubbl = new UserBalanceBL();
+            return ubbl.DailyUserBalance_UserSelectBind();
+        }
+        [HttpPost]
+        public string GetDailyUserBalance_List(string UserID)
+        {
+            UserBalanceModel ubm = new UserBalanceModel();
+            ubm.UserID = UserID.ToString();
+            UserBalanceBL ubbl = new UserBalanceBL();
+            return ubbl.GetDailyUserBalance_List(ubm);
         }
     }
 }
