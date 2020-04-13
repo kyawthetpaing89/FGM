@@ -26,10 +26,10 @@
             UserName = Session["UserInfo"].ToString().Split('_')[1];
         }
 
-        //else
-        //{
-        //    Context.Response.Redirect("~/Country/CountryList");
-        //}
+        else
+        {
+            Context.Response.Redirect("~/User/Login");
+        }
     }
 }
 <html>
@@ -211,7 +211,8 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
+                        <li class="nav-header">Cinema</li>
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-building text-info"></i>
@@ -222,9 +223,9 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("TeamList","Team")" class="nav-link">
+                                    <a href="@Url.Action("CinemaList","Cinema")" class="nav-link">
                                         <i class="far fa-check-circle nav-icon text-info"></i>
-                                        <p>အသင်းအဖွဲ့ List</p>
+                                        <p>ရုပ်ရှင်ရုံ List</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -234,9 +235,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("DaliyUserBalanceList","UserBalance")" class="nav-link">
+                                    <a href="@Url.Action("TownShipList","Cinema")" class="nav-link">
                                         <i class="far fa-check-circle nav-icon text-info"></i>
-                                        <p>DailyUserBalance List</p>
+                                        <p>မြို့ List</p>
                                     </a>
                                 </li>
                             </ul>
@@ -291,7 +292,30 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-header">EXAMPLES</li>
+                        <li class="nav-header">ဘောလုံးပွဲ နှင့် ပတ်သက်သော</li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-building text-info"></i>
+                                <p>
+                                    ပွဲစဉ်များ
+                                    <i class="right fas fa-angle-right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("MatchList","Match")" class="nav-link">
+                                        <i class="far fa-check-circle nav-icon text-info"></i>
+                                        <p>ပွဲစဉ် List</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("MatchEntry","Match")" class="nav-link">
+                                        <i class="far fa-check-circle nav-icon text-info"></i>
+                                        <p>ပွဲစဉ်များ ဖြည့်သွင်းရန်</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
