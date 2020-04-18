@@ -35,6 +35,23 @@ namespace FGM.Controllers
             return MBL.Match_Save(MModel);        
         }
 
+        [HttpPost]
+        public string Match_OddsUpdate(string Table, string MatchDate)
+        {
+            if (Session["UserInfo"] == null)
+                return "false";
+
+            string userInfo = Session["UserInfo"] as string;
+
+            MatchBL MBL = new MatchBL();
+            MatchModel MModel = new MatchModel();
+            MModel.MatchDate = MatchDate;
+            MModel.MatchJson = Table;
+            MModel.UserID = userInfo.Split('_')[0];
+
+            return MBL.Match_OddsUpdate(MModel);
+        }
+     
         [HttpGet]
         public string GetMatch(string MatchDate)
         {

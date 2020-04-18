@@ -43,16 +43,16 @@
             <table id="tblMatch" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th style="display:none"></th>
                         <th>ပွဲချိန်</th>
-                        <th></th>
+                        <th style="display:none"></th>
                         <th>ဘော်ဒီကြေး</th>
                         <th>Home</th>
                         <th>Away</th>
-                        <th></th>
+                        <th style="display:none"></th>
                         <th>ဘော်ဒီကြေး</th>
-                        <th></th>
-                        <th>ဂိုးပေါင်း</th>
+                        <th style="display:none"></th>
+                        <th>ဂိုးပေါင်းကြေး</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="modal-footer">
                     <div>
-                        <button type="button" id="btnSave" onclick="Save();" class="btn btn-success">အတည်ပြုမည်</button>
+                        <button type="button" id="btnConfirm" onclick="Confirm();" class="btn btn-success">အတည်ပြုမည်</button>
                     </div>
                 </div>
             </div>
@@ -107,6 +107,11 @@
     <script src="@Url.Content("~/plugins/daterangepicker/daterangepicker.js")"></script>
 
     <script type="text/javascript">
+        var OddsID;
+        var Odds;
+        var GoalOddsID;
+        var GoalOdds;      
+        
         $(document).ready(function () {
             $('#matchdate').daterangepicker({
                 timePicker: false, //<==MAKE THE CHANGE HERE
@@ -116,15 +121,89 @@
                 }
             });
 
-            $("tbody", "#tblMatch").on("click", "td:eq(1),td:eq(4)",
+            $("tbody", "#tblMatch").on("click", "td",
                 function () {
-                    $('#modal-default').modal('show')
-                    //alert(this.innerText);
+
+                    if ($(this).hasClass("t1Odds") || $(this).hasClass("t2Odds")) {
+
+                        if ($(this).hasClass("t1Odds")) {
+                            OddsID = $(this).closest('tr').find(".t1OddsID");
+                        }
+                        else {
+                            OddsID = $(this).closest('tr').find(".t2OddsID");
+                        }
+                      
+                        Odds = this;
+                        GoalOddsID = $(this).closest('tr').find('.tdGoalOddsID');
+                        GoalOdds = $(this).closest('tr').find('.tdGoalOdds');
+
+                        RemoveBtnColor(1);
+                        RemoveBtnColor(2);
+
+                        $("#BodyOddsId").val($(OddsID).html());
+                        $("#lblBodyOdds").html($(this).html());
+
+                        $("#GoalOddsId").val($(GoalOddsID).html());
+                        $("#lblGoalOdds").html($(GoalOdds).html());
+
+                        $('#modal-default').modal('show');
+                    }                                                         
                 });
 
             GetOdds();
 
         });
+
+        function Confirm() {
+            $(Odds).closest('tr').find('.t1OddsID').html('');
+            $(Odds).closest('tr').find('.t1Odds').html('');
+            $(Odds).closest('tr').find('.t2OddsID').html('');
+            $(Odds).closest('tr').find('.t2Odds').html('');
+            $(Odds).closest('tr').find('.tdGoalOddsID').html('');
+            $(Odds).closest('tr').find('.tdGoalOdds').html('');
+
+
+            $(Odds).html($("#lblBodyOdds").html());
+            $(OddsID).html($("#BodyOddsId").val());
+
+            $(GoalOdds).html($("#lblGoalOdds").html());
+            $(GoalOddsID).html($("#GoalOddsId").val());
+
+            $('#modal-default').modal('hide');
+        }
+
+        function Save() {
+            var catchError = false;
+
+            var rows = [];
+            $('#tblMatch tbody tr').each(function (i, n) {
+                var $row = $(n);
+
+                rows.push({
+                    MatchID: $row.find('td:eq(0)').text(),
+                    Team1OddsID: $row.find('td:eq(2)').text(),
+                    Team2OddsID: $row.find('td:eq(6)').text(),
+                    GoalOddsID: $row.find('td:eq(8)').text()
+                });
+            });
+
+            if (!catchError) {
+                $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '@Url.Action("Match_OddsUpdate", "Match")?MatchDate='+$("#matchdate").val()+'',
+                data: { Table: JSON.stringify(rows) },
+                success: function (res) {
+                        if (res == true) {
+                            ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
+                        }
+                        else {
+                            ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                        }
+                    }
+                });
+            } 
+        }
 
         function GetOdds() {
             $.ajax({
@@ -230,6 +309,21 @@
             BindMatch();
         }
 
+        function ShowMessage(msg, status) {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                type: status,
+                title: msg
+            });
+        }
+
         function BindMatch() {
             var table = $('#tblMatch').DataTable(
                 {
@@ -252,24 +346,17 @@
                     "destroy": "true",
                     "paging": false,
                     "columns": [
-                        { "data": "MatchID" },
+                        { "data": "MatchID","className":"displayNone" },
                         { "data": "MatchTime" },
-                        { "data":"Team1OddsID"},
-                        { "data": "Team1Odds"},
+                        { "data": "Team1OddsID", "className":"t1OddsID displayNone"},
+                        { "data": "Team1Odds","className":"t1Odds"},
                         { "data": "Home"},
                         { "data": "Away"},
-                        { "data": "Team2OddsID"},
-                        { "data": "Team2Odds" },
-                        { "data": "GoalOddsID" },
-                        { "data": "GoalOdds" },
+                        { "data": "Team2OddsID", "className":"t2OddsID displayNone"},
+                        { "data": "Team2Odds","className":"t2Odds" },
+                        { "data": "GoalOddsID", "className": "tdGoalOddsID displayNone" },
+                        { "data": "GoalOdds", "className":"tdGoalOdds"},
                     ],
-                    "columnDefs": [
-                        {
-                            "targets": [0,2,6,8],
-                            "visible": false,
-                            "searchable": false
-                        },
-                    ]
                 }
             );
         }
