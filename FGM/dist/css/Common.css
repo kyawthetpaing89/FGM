@@ -1,4 +1,8 @@
-﻿.table{
+﻿.displayNone{
+    display:none;
+}
+
+.table{
     text-align:center;
 }
 

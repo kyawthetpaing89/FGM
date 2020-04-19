@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using FGM_Model;
 using Match_BL;
+using UserGambling_BL;
 
 namespace FGM.Controllers
 {
@@ -14,6 +15,11 @@ namespace FGM.Controllers
         }
 
         public ActionResult BookieOddsEntry()
+        {
+            return View();
+        }
+
+        public ActionResult UserOddsEntry()
         {
             return View();
         }
@@ -35,6 +41,23 @@ namespace FGM.Controllers
             return MBL.Match_Save(MModel);        
         }
 
+        [HttpPost]
+        public string Match_OddsUpdate(string Table, string MatchDate)
+        {
+            if (Session["UserInfo"] == null)
+                return "false";
+
+            string userInfo = Session["UserInfo"] as string;
+
+            MatchBL MBL = new MatchBL();
+            MatchModel MModel = new MatchModel();
+            MModel.MatchDate = MatchDate;
+            MModel.MatchJson = Table;
+            MModel.UserID = userInfo.Split('_')[0];
+
+            return MBL.Match_OddsUpdate(MModel);
+        }
+     
         [HttpGet]
         public string GetMatch(string MatchDate)
         {
@@ -42,6 +65,15 @@ namespace FGM.Controllers
             MatchModel MModel = new MatchModel();
             MModel.MatchDate = MatchDate;
             return MBL.GetMatch(MModel);
+        }
+
+        [HttpGet]
+        public string GetMatch_UserGambling(string MatchDate)
+        {
+            UserGamblingBL UGBL = new UserGamblingBL();
+            MatchModel MModel = new MatchModel();
+            MModel.MatchDate = MatchDate;
+            return UGBL.GetUserGambling(MModel);
         }
     }
 }

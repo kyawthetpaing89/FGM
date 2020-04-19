@@ -24,6 +24,20 @@ namespace Match_BL
             return "false";
         }
 
+        public string Match_OddsUpdate(MatchModel MModel)
+        {
+            BaseDL bdl = new BaseDL();
+            DateTime dt = DateTime.ParseExact(MModel.MatchDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.GetCultureInfo("en-us"));
+            SqlParameter[] prms = new SqlParameter[3];
+            prms[0] = new SqlParameter("@UserID", SqlDbType.VarChar) { Value = MModel.UserID };
+            prms[1] = new SqlParameter("@MatchJson", SqlDbType.VarChar) { Value = MModel.MatchJson };
+            prms[2] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
+
+            if (bdl.InsertUpdateDeleteData("M_Match_OddsUpdate", prms))
+                return "true";
+            return "false";
+        }     
+
         public string GetMatch(MatchModel MModel)
         {
             BaseDL bdl = new BaseDL();

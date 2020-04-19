@@ -361,3 +361,7 @@ D:\Project\FGM\FGM\bin\EntityFramework.SqlServer.dll
 D:\Project\FGM\FGM\bin\EntityFramework.SqlServer.xml
 D:\Project\FGM\FGM\bin\UserBalance_BL.dll
 D:\Project\FGM\FGM\bin\UserBalance_BL.pdb
+D:\Project\FGM\FGM\bin\Odds_BL.dll
+D:\Project\FGM\FGM\bin\Odds_BL.pdb
+D:\Project\FGM\FGM\bin\UserGambling_BL.dll
+D:\Project\FGM\FGM\bin\UserGambling_BL.pdb
