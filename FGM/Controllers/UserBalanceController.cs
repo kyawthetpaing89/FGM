@@ -21,13 +21,22 @@ namespace FGM.Controllers
             return View();
         }
 
+        public ActionResult UserTransitionEntry()
+        {
+            return View();
+        }
         [HttpGet]
         public string GetUserBalance()
         {
             UserBalanceBL ubbl = new UserBalanceBL();
             return ubbl.GetUserBalance();
         }
-
+        [HttpGet]
+        public string GetUser()
+        {
+            UserBalanceBL ubbl = new UserBalanceBL();
+            return ubbl.GetUser();
+        }
         [HttpPost]
         public string GetUserBalanceByDetailDate(string id)
         {

@@ -18,6 +18,15 @@ namespace UserBalance_BL
             return FUN.DataTableToJSONWithJSONNet(DtUserBalance);
         }
 
+        public string GetUser()
+        {
+            BaseDL BDL = new BaseDL();
+            Function FUN = new Function();
+            SqlParameter[] prms = new SqlParameter[0];
+            DataTable DtUser = BDL.SelectData("M_User_Select", prms);
+            return FUN.DataTableToJSONWithJSONNet(DtUser);
+        }
+
         public string GetUserBalanceByDetailDate(UserBalanceModel UBModel)
         {
             BaseDL bdl = new BaseDL();
