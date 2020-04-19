@@ -1,0 +1,213 @@
+﻿
+@{
+    ViewBag.Title = "UserTransitionEntry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css")" rel="stylesheet" type="text/css" />
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>UserTransition Entry</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">UserTransition Entry</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="card">
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-xl-2 col-md-3">
+                    <label for="TransDate">Date:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
+                        </div>
+                        <input readonly="readonly" type="text" class="form-control float-right" id="TransDate" onchange="DateChange();">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="UserList">
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-xl-2 col-md-3">
+                    <label for="TransDate">Transition Type:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
+                        </div>
+                        @Html.DropDownList("ddlWeekly", new List<SelectListItem>
+                     {
+                         new SelectListItem{ Text="---Select---", Value = "" },
+                         new SelectListItem{ Text="Input", Value = "1" },
+                         new SelectListItem{ Text="Output", Value = "2" },
+                     }, new
+                     {
+                         @class = "form-control select2bs4 input-sm",
+                         @id = "ddlTranType",
+                         @tabindex = "15"
+                     })
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-xl-2 col-md-3">
+                    <label for="TransDate">Balance:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
+                        </div>
+                        <input type="text" class="form-control float-right" id="Balance">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div style="text-align:center;">
+                <button type="button" id="btnSave" onclick="Save();" class="btn btn-success">သိမ်းဆည်းမည်</button>
+            </div>
+        </div>
+    </div>
+    <input id="tdPlace" type="hidden" value="1" />
+</section>
+
+@section Scripts{
+    <script src="@Url.Content("~/plugins/daterangepicker/moment.min.js")"></script>
+    <script src="@Url.Content("~/plugins/daterangepicker/daterangepicker.js")"></script>
+    <script src="@Url.Content("~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js")"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#TransDate').daterangepicker({
+                timePicker: false, //<==MAKE THE CHANGE HERE
+                singleDatePicker: true, //<==MAKE THE CHANGE HERE
+                locale: {
+                    format: 'DD-MM-YYYY'
+                }
+            });
+            GetUser();
+        });
+
+        function DateChange() {
+            $(".btn-danger").each(function () {
+                $(this).removeClass('btn-danger');
+                $(this).addClass('btn-default')
+            });
+
+        }
+
+          function GetUser() {
+             $.ajax({
+                url: '@Url.Action("GetUser", "UserBalance")',
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                 success: function (res) {
+                     CreateCardByUser(res);
+                 }
+             })
+        }      
+
+        function CreateCardByUser(res) {
+            var ul = $("#UserList");
+            ul.empty();
+            var e = '';
+            var UserID = '';
+            e = e + '<div class="card collapsed-card" id="card">' +
+                '<div class="card-header bg-cyan">' +
+                '<h3 class="card-title">' + 'UserName' + '</h3>' +
+                '<div class="card-tools">' +
+                '<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">' +
+                '<i class="fas fa-plus"></i>' +
+                '</button>' +
+                '</div>' +
+                '</div>' +
+                '<div class="card-body">' 
+           
+            for (var i = 0; i < res.length; i++) {             
+                if (UserID != res[i].UserID) {                  
+                    if (UserID) {
+                        e = e + '</div>' +
+                            '</div>';
+                    }
+                    e = e +
+                        //'<div class="card-body">' +
+                        //'<div class="row mb-1"><b>' + 'UserName'+ '</b></div>' +
+                        '<button type="button" id="btn' + res[i].UserID + '" onclick="Add(this,' + res[i].UserID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
+                        res[i].UserName +
+                        '</button>'
+                }
+                //UserID = res[i].UserID;
+                //countryID = res[i].CountryID;
+            }
+            ul.append(e);
+        }
+
+        function Add(btn, userid) {
+            if (!$(btn).hasClass('btn-danger')) {
+                $(btn).removeClass('btn-default');
+                $(btn).addClass('btn-danger')
+                if ($("#tdPlace").val() == 1) {
+                    var trow = '<tr><td>'
+                        + '<div class="input-group date" id="timepicker' + userid + '" data-target-input="nearest">'
+                        + '<input type="text" id="ShowTime' + userid + '" class="form-control datetimepicker-input" data-target="#timepicker' + userid + '" />'
+                        + '<div class="input-group-append" data-target="#timepicker' + userid + '" data-toggle="datetimepicker">'
+                        + '<div class="input-group-text"><i class="far fa-clock"></i></div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</td><td style="display: none">' + userid + '</td><td>' + $(btn).text()
+                        + '</td><td style="display: none"></td><td></td><td><button type="button" id="btnDelete" onclick="Delete(this);" class="btn btn-block btn-danger">ဖျက်မည်</button></td></tr>';
+                    var tableBody = $("#tblUser tbody");
+                    tableBody.append(trow);
+
+                    $("#tdPlace").val(2);
+
+                    $('#timepicker' + teamid).datetimepicker({
+                        format: 'LT'
+                    })
+                }
+                else {
+                    $('#tblUser tr:last td:nth-child(4)').html(teamid);
+                    $('#tblUser tr:last td:nth-child(5)').html($(btn).text());
+
+                    $("#tdPlace").val(1);
+                }
+            }
+        }
+        function Delete(btn) {
+            var trow = $(btn).closest('tr');
+            var btn1 = "#btn" + trow.find('td:eq(1)').html();
+            if (trow.find('td:eq(1)').html()) {
+                $(btn1).removeClass('btn-danger');
+                $(btn1).addClass('btn-default');
+            }
+
+            var btn2 = "#btn" + trow.find('td:eq(3)').html();
+            if (trow.find('td:eq(3)').html()) {
+                $(btn2).removeClass('btn-danger');
+                $(btn2).addClass('btn-default');
+            }
+
+            $(btn).closest('tr').remove();
+
+            $("#tdPlace").val(1);
+        }
+        </script>
+}

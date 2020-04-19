@@ -1978,6 +1978,8 @@
     <Content Include="Views\UserBalance\UserBalanceList.cshtml" />
     <Content Include="Views\Match\BookieOddsEntry.cshtml" />
     <Content Include="Views\Match\UserOddsEntry.cshtml" />
+    <Content Include="Views\UserBalance\DaliyUserBalanceList.cshtml" />
+    <Content Include="Views\UserBalance\UserTransitionEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
