@@ -263,51 +263,48 @@
 
             $("tbody", "#tblMatch").on("click", "td",
                 function () {
+                    tgName = this;
+                    tgAmt = $(this).closest('tr').find('.tgAmt');
+                    tggType = $(this).closest('tr').find('.tggType');
+                    tggAmt = $(this).closest('tr').find('.tggAmt');
+                    gambling = $(this).closest('tr').find('.gambling');
+                    t1ID = $(this).closest('tr').find(".t1ID");           
+                    t2ID = $(this).closest('tr').find(".t2ID");     
+                    tgid = $(this).closest('tr').find(".tgID");     
 
-                    if ($(this).hasClass("Home") || $(this).hasClass("Away")) {
+                    if ($(this).hasClass("Home") || $(this).hasClass("Away")) {   
 
-
-
-                        if ($(this).hasClass("Home")) {
-                            t1ID = $(this).closest('tr').find(".t1ID");
-                            tgid = t1ID;
-
-                            if (t1ID == $("#tgid").val()) {
-                                $("#tgid").val($(tgid).html());
-                                $("#tgAmt").val($(tgAmt).html());
-                            }
-                            else {
-                                $("#tgid").val('');
-                                $("#tgAmt").val('');
-                            }
+                        if ($(this).hasClass("Home")) {                                             
+                            $("#tgid").val($(t1ID).html());
                         }
                         else {
-                            t2ID = $(this).closest('tr').find(".t2ID");
-                            tgid = t2ID;
-
-                            if (t2ID == $("#tgid").val()) {
-                                $("#tgid").val($(tgid).html());
-                                $("#tgAmt").val($(tgAmt).html());
-                            }
-                            else {
-                                $("#tgid").val('');
-                                $("#tgAmt").val('');
-                            }
-                        }
-
-                        tgName = this;
-                        tgAmt = $(this).closest('tr').find('.tgAmt');
-                        tggType = $(this).closest('tr').find('.tggtype');
-                        tggAmt = $(this).closest('tr').find('.tggAmt');
-                        gambling = $(this).closest('tr').find('.gambling');
-
+                            $("#tgid").val($(t2ID).html());
+                        }                       
+                        
                         RemoveBtnColor(1);
                         RemoveBtnColor(2);
                         RemoveBtnColor(3);
 
+                        $("#lbltgAmt").html($(tgAmt).html());
+ 
+                            
+                        if ($(tggType).html()) {
+                            $("#tggType").val($(tggType).html());
+                            if ($(tggType).html() == 1) {
+                                $("#lbltggType").html("↑");
+                            }
+                            else {
+                                $("#lbltggType").html("↓");
+                            }
+                        }
+                        else {
+                            $("#tggType").val('');
+                            $("#lbltggType").html("");
+                        }
                         
-                        $("#tggType").val($(tggType).html());
-                        $("#tggAmt").val($(tggAmt).html());
+
+
+                        $("#lbltggAmt").val($(tggAmt).html());
 
                         if ($(tgName).html()) {
                             $("#lbltgName").html($(tgName).html());
@@ -354,7 +351,7 @@
         }
 
         function BtnBodyClick(btn, val) {
-            alert($(btn));
+
             RemoveBtnColor(1);
             $(btn).removeClass('btn-default');
             $(btn).addClass('btn-danger');
@@ -370,11 +367,11 @@
             $(btn).addClass('btn-danger');
             if (type == 1) {
                 $("#lbltggType").html("↑");
-                $(tggType).html("1");
+                $("#tggType").val("1");
             }
             else {
                 $("#lbltggType").html("↓");
-                $(tggType).html("2");
+                $("#tggType").val("2");
             }
             
             $("#lbltggAmt").html($(btn).html());
@@ -389,11 +386,10 @@
             $(tggType).html('');
             $(tggAmt).html('');
             $(gambling).html('');
-
             $(tgid).html($("#tgid").val());
-            $(tgAmt).html($("#tgAmt").val());
+            $(tgAmt).html($("#lbltgAmt").html());
             $(tggType).html($("#tggType").val());
-            $(tggAmt).html($("#tggAmt").val());
+            $(tggAmt).html($("#lbltggAmt").html());
             $(gambling).html($("#lbltgName").html() + ' - ' + $("#lbltgAmt").html() + ' ' + $("#lbltggType").html() + $("#lbltggAmt").html());
 
             $('#modal-default').modal('hide');
@@ -514,7 +510,7 @@
                     "columns": [
                         { "data": "MatchTime" ,"width":"7%"},
                         { "data": "MatchID","className":"displayNone" },                        
-                        { "data": "GTeamID", "className": "tgid displayNone" },
+                        { "data": "GTeamID", "className": "tgID displayNone" },
                         { "data": "BodyAmount", "className": "tgAmt displayNone" },
                         { "data": "GoalType", "className": "tggType displayNone" },
                         { "data": "GoalAmount", "className": "tggAmt displayNone" },
