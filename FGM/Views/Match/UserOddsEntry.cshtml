@@ -40,6 +40,20 @@
                     </div>
                 </div>
             </div>
+            <div class="card" id="card4">
+                <div class="card-header bg-cyan">
+                    <h3 class="card-title">လောင်းသူအမည်</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="divUser" class="row">
+                    </div>
+                </div>
+            </div>
             <table id="tblMatch" class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -85,7 +99,7 @@
                         <input id="tggType" type="hidden">
                         <label style="padding-right:20px">ရွေးချယ်မှု</label>
                         <label id="lbltgName"></label> -
-                        <label id="lbltgAmt" style="padding-right:10px;"></label> 
+                        <label id="lbltgAmt" style="padding-right:10px;"></label>
                         <label id="lbltggType"></label>
                         <label id="lbltggAmt"></label>
                     </div>
@@ -102,31 +116,31 @@
                             <div class="card-body">
                                 <div class="row">
                                     <button type="button" id="btnBody30" onclick="BtnBodyClick(this,30)" class="btn btn-default col-md-1 col-xl-1 mb-1">30</button>
-                                    <button type="button" id="btnBody50"  onclick="BtnBodyClick(this,50)" class="btn btn-default col-md-1 col-xl-1 mb-1">50</button>
-                                    <button type="button" id="btnBody100" onclick="BtnBodyClick(this,100)"  class="btn btn-default col-md-1 col-xl-1 mb-1">100</button>
-                                    <button type="button" id="btnBody150" onclick="BtnBodyClick(this,150)"  class="btn btn-default col-md-1 col-xl-1 mb-1">150</button>
-                                    <button type="button" id="btnBody200" onclick="BtnBodyClick(this,200)"  class="btn btn-default col-md-1 col-xl-1 mb-1">200</button>
-                                    <button type="button" id="btnBody250" onclick="BtnBodyClick(this,250)"  class="btn btn-default col-md-1 col-xl-1 mb-1">250</button>
-                                    <button type="button" id="btnBody300" onclick="BtnBodyClick(this,300)"  class="btn btn-default col-md-1 col-xl-1 mb-1">300</button>
-                                    <button type="button" id="btnBody350" onclick="BtnBodyClick(this,350)"  class="btn btn-default col-md-1 col-xl-1 mb-1">350</button>
-                                    <button type="button" id="btnBody400" onclick="BtnBodyClick(this,400)"  class="btn btn-default col-md-1 col-xl-1 mb-1">400</button>
-                                    <button type="button" id="btnBody450" onclick="BtnBodyClick(this,450)"  class="btn btn-default col-md-1 col-xl-1 mb-1">450</button>
-                                    <button type="button" id="btnBody500" onclick="BtnBodyClick(this,500)"  class="btn btn-default col-md-1 col-xl-1 mb-1">500</button>
-                                    <button type="button" id="btnBody550" onclick="BtnBodyClick(this,550)"  class="btn btn-default col-md-1 col-xl-1 mb-1">550</button>
-                                    <button type="button" id="btnBody600" onclick="BtnBodyClick(this,600)"  class="btn btn-default col-md-1 col-xl-1 mb-1">600</button>
-                                    <button type="button" id="btnBody650" onclick="BtnBodyClick(this,650)"  class="btn btn-default col-md-1 col-xl-1 mb-1">650</button>
-                                    <button type="button" id="btnBody700" onclick="BtnBodyClick(this,700)"  class="btn btn-default col-md-1 col-xl-1 mb-1">700</button>
+                                    <button type="button" id="btnBody50" onclick="BtnBodyClick(this,50)" class="btn btn-default col-md-1 col-xl-1 mb-1">50</button>
+                                    <button type="button" id="btnBody100" onclick="BtnBodyClick(this,100)" class="btn btn-default col-md-1 col-xl-1 mb-1">100</button>
+                                    <button type="button" id="btnBody150" onclick="BtnBodyClick(this,150)" class="btn btn-default col-md-1 col-xl-1 mb-1">150</button>
+                                    <button type="button" id="btnBody200" onclick="BtnBodyClick(this,200)" class="btn btn-default col-md-1 col-xl-1 mb-1">200</button>
+                                    <button type="button" id="btnBody250" onclick="BtnBodyClick(this,250)" class="btn btn-default col-md-1 col-xl-1 mb-1">250</button>
+                                    <button type="button" id="btnBody300" onclick="BtnBodyClick(this,300)" class="btn btn-default col-md-1 col-xl-1 mb-1">300</button>
+                                    <button type="button" id="btnBody350" onclick="BtnBodyClick(this,350)" class="btn btn-default col-md-1 col-xl-1 mb-1">350</button>
+                                    <button type="button" id="btnBody400" onclick="BtnBodyClick(this,400)" class="btn btn-default col-md-1 col-xl-1 mb-1">400</button>
+                                    <button type="button" id="btnBody450" onclick="BtnBodyClick(this,450)" class="btn btn-default col-md-1 col-xl-1 mb-1">450</button>
+                                    <button type="button" id="btnBody500" onclick="BtnBodyClick(this,500)" class="btn btn-default col-md-1 col-xl-1 mb-1">500</button>
+                                    <button type="button" id="btnBody550" onclick="BtnBodyClick(this,550)" class="btn btn-default col-md-1 col-xl-1 mb-1">550</button>
+                                    <button type="button" id="btnBody600" onclick="BtnBodyClick(this,600)" class="btn btn-default col-md-1 col-xl-1 mb-1">600</button>
+                                    <button type="button" id="btnBody650" onclick="BtnBodyClick(this,650)" class="btn btn-default col-md-1 col-xl-1 mb-1">650</button>
+                                    <button type="button" id="btnBody700" onclick="BtnBodyClick(this,700)" class="btn btn-default col-md-1 col-xl-1 mb-1">700</button>
                                     <button type="button" id="btnBody750" onclick="BtnBodyClick(this,750)" class="btn btn-default col-md-1 col-xl-1 mb-1">750</button>
                                     <button type="button" id="btnBody800" onclick="BtnBodyClick(this,800)" class="btn btn-default col-md-1 col-xl-1 mb-1">800</button>
                                     <button type="button" id="btnBody850" onclick="BtnBodyClick(this,850)" class="btn btn-default col-md-1 col-xl-1 mb-1">850</button>
                                     <button type="button" id="btnBody900" onclick="BtnBodyClick(this,900)" class="btn btn-default col-md-1 col-xl-1 mb-1">900</button>
                                     <button type="button" id="btnBody950" onclick="BtnBodyClick(this,950)" class="btn btn-default col-md-1 col-xl-1 mb-1">950</button>
-                                    <button type="button" id="btnBody1000"onclick="BtnBodyClick(this,1000)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1000</button>
-                                    <button type="button" id="btnBody1100"onclick="BtnBodyClick(this,1100)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1100</button>
-                                    <button type="button" id="btnBody1200"onclick="BtnBodyClick(this,1200)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1200</button>
-                                    <button type="button" id="btnBody1300"onclick="BtnBodyClick(this,1300)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1300</button>
-                                    <button type="button" id="btnBody1400"onclick="BtnBodyClick(this,1400)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1400</button>
-                                    <button type="button" id="btnBody1500"onclick="BtnBodyClick(this,1500)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1500</button>
+                                    <button type="button" id="btnBody1000" onclick="BtnBodyClick(this,1000)" class="btn btn-default col-md-1 col-xl-1 mb-1">1000</button>
+                                    <button type="button" id="btnBody1100" onclick="BtnBodyClick(this,1100)" class="btn btn-default col-md-1 col-xl-1 mb-1">1100</button>
+                                    <button type="button" id="btnBody1200" onclick="BtnBodyClick(this,1200)" class="btn btn-default col-md-1 col-xl-1 mb-1">1200</button>
+                                    <button type="button" id="btnBody1300" onclick="BtnBodyClick(this,1300)" class="btn btn-default col-md-1 col-xl-1 mb-1">1300</button>
+                                    <button type="button" id="btnBody1400" onclick="BtnBodyClick(this,1400)" class="btn btn-default col-md-1 col-xl-1 mb-1">1400</button>
+                                    <button type="button" id="btnBody1500" onclick="BtnBodyClick(this,1500)" class="btn btn-default col-md-1 col-xl-1 mb-1">1500</button>
                                 </div>
                             </div>
                         </div>
@@ -245,6 +259,8 @@
                 }
             });
 
+            GetUser();
+
             $("tbody", "#tblMatch").on("click", "td",
                 function () {
 
@@ -285,10 +301,43 @@
                         $('#modal-default').modal('show');
                     }
                 });
+
+            
         });
 
-        function BtnBodyClick(btn,val) {
-            RemoveBtnColor(1)
+        function GetUser() {
+            $.ajax({
+                url: '@Url.Action("Get_User", "User")',
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    BindUser(res);
+                }
+            })
+        }
+
+        function BindUser(res) {
+            var val = $("#LoginUserID").val();
+            var cl = $("#divUser");
+            cl.empty();
+            var e = '';
+            for (var i = 0; i < res.length; i++) {
+                e = e + '<button type="button" id="btn' + res[i].UserID + '" onclick="BtnUser(this,' + res[i].UserID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">'
+                      +  res[i].UserName +
+                        '</button>'
+            }
+            
+            cl.append(e);
+
+            $("#btn" + val).removeClass("btn-default");
+            $("#btn" + val).addClass("btn-danger");
+        }
+
+        function BtnBodyClick(btn, val) {
+            alert($(btn));
+            RemoveBtnColor(1);
+            $(btn).removeClass('btn-default');
             $(btn).addClass('btn-danger');
             $("#lbltgAmt").html($(btn).html());
             $('#card1').CardWidget('collapse');
@@ -316,19 +365,17 @@
         }
 
         function Confirm() {
-            $(Odds).closest('tr').find('.t1OddsID').html('');
-            $(Odds).closest('tr').find('.t1Odds').html('');
-            $(Odds).closest('tr').find('.t2OddsID').html('');
-            $(Odds).closest('tr').find('.t2Odds').html('');
-            $(Odds).closest('tr').find('.tdGoalOddsID').html('');
-            $(Odds).closest('tr').find('.tdGoalOdds').html('');
+            $(tgid).html('');
+            $(tgAmt).html('');
+            $(tggType).html('');
+            $(tggAmt).html('');
+            $(gambling).html('');
 
-
-            $(Odds).html($("#lblBodyOdds").html());
-            $(OddsID).html($("#BodyOddsId").val());
-
-            $(GoalOdds).html($("#lblGoalOdds").html());
-            $(GoalOddsID).html($("#GoalOddsId").val());
+            $(tgid).html($("#tgid").val());
+            $(tgAmt).html($("#tgAmt").val());
+            $(tggType).html($("#tggType").val());
+            $(tggAmt).html($("#tggAmt").val());
+            $(gambling).html($("#lbltgName").html() + ' - ' + $("#lbltgAmt").html() + ' ' + $("#lbltggType").html() + $("#lbltggAmt").html());
 
             $('#modal-default').modal('hide');
         }
@@ -367,7 +414,7 @@
         }
 
         function RemoveBtnColor(CardID) {
-            $("#card"+CardID+ " .btn-danger").each(function () {
+            $("#card"+CardID+ ".btn-danger").each(function () {
                 $(this).removeClass('btn-danger');
                 $(this).addClass('btn-default')
             });
