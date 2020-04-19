@@ -1976,6 +1976,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\UserBalance\UserBalanceList.cshtml" />
     <Content Include="Views\Match\BookieOddsEntry.cshtml" />
+    <Content Include="Views\Match\UserOddsEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2026,6 +2027,10 @@
     <ProjectReference Include="..\UserBalance_BL\UserBalance_BL.csproj">
       <Project>{93721bc4-da1d-453e-9d0a-1be18bfb7499}</Project>
       <Name>UserBalance_BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserGambling_BL\UserGambling_BL.csproj">
+      <Project>{666c82fc-92b9-490b-aadc-34c435848bb8}</Project>
+      <Name>UserGambling_BL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

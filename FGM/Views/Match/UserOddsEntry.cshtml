@@ -1,0 +1,470 @@
+﻿
+@{
+    ViewBag.Title = "UserOddsEntry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>လောင်းရန်</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Match Entry</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <div id="TeamList">
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-xl-2 col-md-3">
+                    <label for="matchdate">ပွဲကစားမည့်နေ့</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
+                        </div>
+                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate" onchange="DateChange();">
+                    </div>
+                </div>
+            </div>
+            <table id="tblMatch" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ပွဲချိန်</th>
+                        <th style="display:none"></th>
+                        <th style="display:none"></th>
+                        <th style="display:none"></th>
+                        <th style="display:none"></th>
+                        <th style="display:none"></th>
+                        <th style="display:none"></th>
+                        <th style="display:none"></th>
+                        <th>လောင်းမည်</th>
+                        <th>ဘော်ဒီကြေး</th>
+                        <th>Home</th>
+                        <th>Away</th>
+                        <th>ဘော်ဒီကြေး</th>
+                        <th>ဂိုးပေါင်းကြေး</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div style="text-align:center;">
+                <button type="button" id="btnSave" onclick="Save();" class="btn btn-success">သိမ်းဆည်းမည်</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade show" id="modal-default">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">ကြေးရွေးချယ်ရန်</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input id="tgid" type="hidden">
+                        <input id="tggType" type="hidden">
+                        <label style="padding-right:20px">ရွေးချယ်မှု</label>
+                        <label id="lbltgName"></label> -
+                        <label id="lbltgAmt" style="padding-right:10px;"></label> 
+                        <label id="lbltggType"></label>
+                        <label id="lbltggAmt"></label>
+                    </div>
+                    <div id="OddsList">
+                        <div class="card" id="card1">
+                            <div class="card-header bg-cyan">
+                                <h3 class="card-title">ဘော်ဒီ</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <button type="button" id="btnBody30" onclick="BtnBodyClick(this,30)" class="btn btn-default col-md-1 col-xl-1 mb-1">30</button>
+                                    <button type="button" id="btnBody50"  onclick="BtnBodyClick(this,50)" class="btn btn-default col-md-1 col-xl-1 mb-1">50</button>
+                                    <button type="button" id="btnBody100" onclick="BtnBodyClick(this,100)"  class="btn btn-default col-md-1 col-xl-1 mb-1">100</button>
+                                    <button type="button" id="btnBody150" onclick="BtnBodyClick(this,150)"  class="btn btn-default col-md-1 col-xl-1 mb-1">150</button>
+                                    <button type="button" id="btnBody200" onclick="BtnBodyClick(this,200)"  class="btn btn-default col-md-1 col-xl-1 mb-1">200</button>
+                                    <button type="button" id="btnBody250" onclick="BtnBodyClick(this,250)"  class="btn btn-default col-md-1 col-xl-1 mb-1">250</button>
+                                    <button type="button" id="btnBody300" onclick="BtnBodyClick(this,300)"  class="btn btn-default col-md-1 col-xl-1 mb-1">300</button>
+                                    <button type="button" id="btnBody350" onclick="BtnBodyClick(this,350)"  class="btn btn-default col-md-1 col-xl-1 mb-1">350</button>
+                                    <button type="button" id="btnBody400" onclick="BtnBodyClick(this,400)"  class="btn btn-default col-md-1 col-xl-1 mb-1">400</button>
+                                    <button type="button" id="btnBody450" onclick="BtnBodyClick(this,450)"  class="btn btn-default col-md-1 col-xl-1 mb-1">450</button>
+                                    <button type="button" id="btnBody500" onclick="BtnBodyClick(this,500)"  class="btn btn-default col-md-1 col-xl-1 mb-1">500</button>
+                                    <button type="button" id="btnBody550" onclick="BtnBodyClick(this,550)"  class="btn btn-default col-md-1 col-xl-1 mb-1">550</button>
+                                    <button type="button" id="btnBody600" onclick="BtnBodyClick(this,600)"  class="btn btn-default col-md-1 col-xl-1 mb-1">600</button>
+                                    <button type="button" id="btnBody650" onclick="BtnBodyClick(this,650)"  class="btn btn-default col-md-1 col-xl-1 mb-1">650</button>
+                                    <button type="button" id="btnBody700" onclick="BtnBodyClick(this,700)"  class="btn btn-default col-md-1 col-xl-1 mb-1">700</button>
+                                    <button type="button" id="btnBody750" onclick="BtnBodyClick(this,750)" class="btn btn-default col-md-1 col-xl-1 mb-1">750</button>
+                                    <button type="button" id="btnBody800" onclick="BtnBodyClick(this,800)" class="btn btn-default col-md-1 col-xl-1 mb-1">800</button>
+                                    <button type="button" id="btnBody850" onclick="BtnBodyClick(this,850)" class="btn btn-default col-md-1 col-xl-1 mb-1">850</button>
+                                    <button type="button" id="btnBody900" onclick="BtnBodyClick(this,900)" class="btn btn-default col-md-1 col-xl-1 mb-1">900</button>
+                                    <button type="button" id="btnBody950" onclick="BtnBodyClick(this,950)" class="btn btn-default col-md-1 col-xl-1 mb-1">950</button>
+                                    <button type="button" id="btnBody1000"onclick="BtnBodyClick(this,1000)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1000</button>
+                                    <button type="button" id="btnBody1100"onclick="BtnBodyClick(this,1100)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1100</button>
+                                    <button type="button" id="btnBody1200"onclick="BtnBodyClick(this,1200)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1200</button>
+                                    <button type="button" id="btnBody1300"onclick="BtnBodyClick(this,1300)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1300</button>
+                                    <button type="button" id="btnBody1400"onclick="BtnBodyClick(this,1400)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1400</button>
+                                    <button type="button" id="btnBody1500"onclick="BtnBodyClick(this,1500)"  class="btn btn-default col-md-1 col-xl-1 mb-1">1500</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" id="card2">
+                            <div class="card-header bg-cyan">
+                                <h3 class="card-title">ဂိုးပေါ်</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <button type="button" id="btnGup30" onclick="BtnGoalClick(this,1,30)" class="btn btn-default col-md-1 col-xl-1 mb-1">30</button>
+                                    <button type="button" id="btnGup50" onclick="BtnGoalClick(this,1,50)" class="btn btn-default col-md-1 col-xl-1 mb-1">50</button>
+                                    <button type="button" id="btnGup100" onclick="BtnGoalClick(this,1,100)" class="btn btn-default col-md-1 col-xl-1 mb-1">100</button>
+                                    <button type="button" id="btnGup150" onclick="BtnGoalClick(this,1,150)" class="btn btn-default col-md-1 col-xl-1 mb-1">150</button>
+                                    <button type="button" id="btnGup200" onclick="BtnGoalClick(this,1,200)" class="btn btn-default col-md-1 col-xl-1 mb-1">200</button>
+                                    <button type="button" id="btnGup250" onclick="BtnGoalClick(this,1,250)" class="btn btn-default col-md-1 col-xl-1 mb-1">250</button>
+                                    <button type="button" id="btnGup300" onclick="BtnGoalClick(this,1,300)" class="btn btn-default col-md-1 col-xl-1 mb-1">300</button>
+                                    <button type="button" id="btnGup350" onclick="BtnGoalClick(this,1,350)" class="btn btn-default col-md-1 col-xl-1 mb-1">350</button>
+                                    <button type="button" id="btnGup400" onclick="BtnGoalClick(this,1,400)" class="btn btn-default col-md-1 col-xl-1 mb-1">400</button>
+                                    <button type="button" id="btnGup450" onclick="BtnGoalClick(this,1,450)" class="btn btn-default col-md-1 col-xl-1 mb-1">450</button>
+                                    <button type="button" id="btnGup500" onclick="BtnGoalClick(this,1,500)" class="btn btn-default col-md-1 col-xl-1 mb-1">500</button>
+                                    <button type="button" id="btnGup550" onclick="BtnGoalClick(this,1,550)" class="btn btn-default col-md-1 col-xl-1 mb-1">550</button>
+                                    <button type="button" id="btnGup600" onclick="BtnGoalClick(this,1,600)" class="btn btn-default col-md-1 col-xl-1 mb-1">600</button>
+                                    <button type="button" id="btnGup650" onclick="BtnGoalClick(this,1,650)" class="btn btn-default col-md-1 col-xl-1 mb-1">650</button>
+                                    <button type="button" id="btnGup700" onclick="BtnGoalClick(this,1,700)" class="btn btn-default col-md-1 col-xl-1 mb-1">700</button>
+                                    <button type="button" id="btnGup750" onclick="BtnGoalClick(this,1,750)" class="btn btn-default col-md-1 col-xl-1 mb-1">750</button>
+                                    <button type="button" id="btnGup800" onclick="BtnGoalClick(this,1,800)" class="btn btn-default col-md-1 col-xl-1 mb-1">800</button>
+                                    <button type="button" id="btnGup850" onclick="BtnGoalClick(this,1,850)" class="btn btn-default col-md-1 col-xl-1 mb-1">850</button>
+                                    <button type="button" id="btnGup900" onclick="BtnGoalClick(this,1,900)" class="btn btn-default col-md-1 col-xl-1 mb-1">900</button>
+                                    <button type="button" id="btnGup1000" onclick="BtnGoalClick(this,1,1000)" class="btn btn-default col-md-1 col-xl-1 mb-1">1000</button>
+                                    <button type="button" id="btnGup1100" onclick="BtnGoalClick(this,1,1100)" class="btn btn-default col-md-1 col-xl-1 mb-1">1100</button>
+                                    <button type="button" id="btnGup1200" onclick="BtnGoalClick(this,1,1200)" class="btn btn-default col-md-1 col-xl-1 mb-1">1200</button>
+                                    <button type="button" id="btnGup1300" onclick="BtnGoalClick(this,1,1300)" class="btn btn-default col-md-1 col-xl-1 mb-1">1300</button>
+                                    <button type="button" id="btnGup1400" onclick="BtnGoalClick(this,1,1400)" class="btn btn-default col-md-1 col-xl-1 mb-1">1400</button>
+                                    <button type="button" id="btnGup1500" onclick="BtnGoalClick(this,1,1500)" class="btn btn-default col-md-1 col-xl-1 mb-1">1500</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" id="card3">
+                            <div class="card-header bg-cyan">
+                                <h3 class="card-title">ဂိုးအောက်</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <button type="button" id="btnGDown30" onclick="BtnGoalClick(this,2,30)" class="btn btn-default col-md-1 col-xl-1 mb-1">30</button>
+                                    <button type="button" id="btnGDown50" onclick="BtnGoalClick(this,2,50)" class="btn btn-default col-md-1 col-xl-1 mb-1">50</button>
+                                    <button type="button" id="btnGDown100" onclick="BtnGoalClick(this,2,100)" class="btn btn-default col-md-1 col-xl-1 mb-1">100</button>
+                                    <button type="button" id="btnGDown150" onclick="BtnGoalClick(this,2,150)" class="btn btn-default col-md-1 col-xl-1 mb-1">150</button>
+                                    <button type="button" id="btnGDown200" onclick="BtnGoalClick(this,2,200)" class="btn btn-default col-md-1 col-xl-1 mb-1">200</button>
+                                    <button type="button" id="btnGDown250" onclick="BtnGoalClick(this,2,250)" class="btn btn-default col-md-1 col-xl-1 mb-1">250</button>
+                                    <button type="button" id="btnGDown300" onclick="BtnGoalClick(this,2,300)" class="btn btn-default col-md-1 col-xl-1 mb-1">300</button>
+                                    <button type="button" id="btnGDown350" onclick="BtnGoalClick(this,2,350)" class="btn btn-default col-md-1 col-xl-1 mb-1">350</button>
+                                    <button type="button" id="btnGDown400" onclick="BtnGoalClick(this,2,400)" class="btn btn-default col-md-1 col-xl-1 mb-1">400</button>
+                                    <button type="button" id="btnGDown450" onclick="BtnGoalClick(this,2,450)" class="btn btn-default col-md-1 col-xl-1 mb-1">450</button>
+                                    <button type="button" id="btnGDown500" onclick="BtnGoalClick(this,2,500)" class="btn btn-default col-md-1 col-xl-1 mb-1">500</button>
+                                    <button type="button" id="btnGDown550" onclick="BtnGoalClick(this,2,550)" class="btn btn-default col-md-1 col-xl-1 mb-1">550</button>
+                                    <button type="button" id="btnGDown600" onclick="BtnGoalClick(this,2,600)" class="btn btn-default col-md-1 col-xl-1 mb-1">600</button>
+                                    <button type="button" id="btnGDown650" onclick="BtnGoalClick(this,2,650)" class="btn btn-default col-md-1 col-xl-1 mb-1">650</button>
+                                    <button type="button" id="btnGDown700" onclick="BtnGoalClick(this,2,700)" class="btn btn-default col-md-1 col-xl-1 mb-1">700</button>
+                                    <button type="button" id="btnGDown750" onclick="BtnGoalClick(this,2,750)" class="btn btn-default col-md-1 col-xl-1 mb-1">750</button>
+                                    <button type="button" id="btnGDown800" onclick="BtnGoalClick(this,2,800)" class="btn btn-default col-md-1 col-xl-1 mb-1">800</button>
+                                    <button type="button" id="btnGDown850" onclick="BtnGoalClick(this,2,850)" class="btn btn-default col-md-1 col-xl-1 mb-1">850</button>
+                                    <button type="button" id="btnGDown900" onclick="BtnGoalClick(this,2,900)" class="btn btn-default col-md-1 col-xl-1 mb-1">900</button>
+                                    <button type="button" id="btnGDown1000" onclick="BtnGoalClick(this,2,1000)" class="btn btn-default col-md-1 col-xl-1 mb-1">1000</button>
+                                    <button type="button" id="btnGDown1100" onclick="BtnGoalClick(this,2,1100)" class="btn btn-default col-md-1 col-xl-1 mb-1">1100</button>
+                                    <button type="button" id="btnGDown1200" onclick="BtnGoalClick(this,2,1200)" class="btn btn-default col-md-1 col-xl-1 mb-1">1200</button>
+                                    <button type="button" id="btnGDown1300" onclick="BtnGoalClick(this,2,1300)" class="btn btn-default col-md-1 col-xl-1 mb-1">1300</button>
+                                    <button type="button" id="btnGDown1400" onclick="BtnGoalClick(this,2,1400)" class="btn btn-default col-md-1 col-xl-1 mb-1">1400</button>
+                                    <button type="button" id="btnGDown1500" onclick="BtnGoalClick(this,2,1500)" class="btn btn-default col-md-1 col-xl-1 mb-1">1500</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <button type="button" id="btnConfirm" onclick="Confirm();" class="btn btn-success">အတည်ပြုမည်</button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>
+
+@section Scripts{
+    <script src="@Url.Content("~/plugins/daterangepicker/moment.min.js")"></script>
+    <script src="@Url.Content("~/plugins/daterangepicker/daterangepicker.js")"></script>
+
+    <script type="text/javascript">
+        var t1ID;
+        var t2ID;
+        var tgid;
+        var tgName;
+        var tgAmt;
+        var tggType;
+        var tggAmt;
+        var gambling;
+
+        $(document).ready(function () {
+            $('#matchdate').daterangepicker({
+                timePicker: false, //<==MAKE THE CHANGE HERE
+                singleDatePicker: true, //<==MAKE THE CHANGE HERE
+                locale: {
+                    format: 'DD-MM-YYYY'
+                }
+            });
+
+            $("tbody", "#tblMatch").on("click", "td",
+                function () {
+
+                    if ($(this).hasClass("Home") || $(this).hasClass("Away")) {
+
+                        if ($(this).hasClass("Home")) {
+                            t1ID = $(this).closest('tr').find(".t1ID");
+                            tgid = t1ID;
+                        }
+                        else {
+                            t2ID = $(this).closest('tr').find(".t2ID");
+                            tgid = t2ID;
+                        }
+
+                        tgName = this;
+                        tgAmt = $(this).closest('tr').find('.tgAmt');
+                        tggType = $(this).closest('tr').find('.tggtype');
+                        tggAmt = $(this).closest('tr').find('.tggAmt');
+                        gambling = $(this).closest('tr').find('.gambling');
+
+                        RemoveBtnColor(1);
+                        RemoveBtnColor(2);
+                        RemoveBtnColor(3);
+
+                        $("#tgid").val($(tgid).html());
+                        $("#tgAmt").val($(tgAmt).html());
+                        $("#tggType").val($(tggType).html());
+                        $("#tggAmt").val($(tggAmt).html());
+
+                        if ($(tgName).html()) {
+                            $("#lbltgName").html($(tgName).html());
+                        }
+
+                        $('#card1').CardWidget('collapse');
+                        $('#card2').CardWidget('collapse');
+                        $('#card3').CardWidget('collapse');
+
+                        $('#modal-default').modal('show');
+                    }
+                });
+        });
+
+        function BtnBodyClick(btn,val) {
+            RemoveBtnColor(1)
+            $(btn).addClass('btn-danger');
+            $("#lbltgAmt").html($(btn).html());
+            $('#card1').CardWidget('collapse');
+            $('#card2').CardWidget('collapse');
+            $('#card3').CardWidget('collapse');
+        }
+
+        function BtnGoalClick(btn,type, val) {
+            RemoveBtnColor(2);
+            RemoveBtnColor(3);
+            $(btn).addClass('btn-danger');
+            if (type == 1) {
+                $("#lbltggType").html("↑");
+                $(tggType).html("1");
+            }
+            else {
+                $("#lbltggType").html("↓");
+                $(tggType).html("2");
+            }
+            
+            $("#lbltggAmt").html($(btn).html());
+            $('#card1').CardWidget('collapse');
+            $('#card2').CardWidget('collapse');
+            $('#card3').CardWidget('collapse');
+        }
+
+        function Confirm() {
+            $(Odds).closest('tr').find('.t1OddsID').html('');
+            $(Odds).closest('tr').find('.t1Odds').html('');
+            $(Odds).closest('tr').find('.t2OddsID').html('');
+            $(Odds).closest('tr').find('.t2Odds').html('');
+            $(Odds).closest('tr').find('.tdGoalOddsID').html('');
+            $(Odds).closest('tr').find('.tdGoalOdds').html('');
+
+
+            $(Odds).html($("#lblBodyOdds").html());
+            $(OddsID).html($("#BodyOddsId").val());
+
+            $(GoalOdds).html($("#lblGoalOdds").html());
+            $(GoalOddsID).html($("#GoalOddsId").val());
+
+            $('#modal-default').modal('hide');
+        }
+
+        function Save() {
+            var catchError = false;
+
+            var rows = [];
+            $('#tblMatch tbody tr').each(function (i, n) {
+                var $row = $(n);
+
+                rows.push({
+                    MatchID: $row.find('td:eq(0)').text(),
+                    Team1OddsID: $row.find('td:eq(2)').text(),
+                    Team2OddsID: $row.find('td:eq(6)').text(),
+                    GoalOddsID: $row.find('td:eq(8)').text()
+                });
+            });
+
+            if (!catchError) {
+                $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '@Url.Action("Match_OddsUpdate", "Match")?MatchDate='+$("#matchdate").val()+'',
+                data: { Table: JSON.stringify(rows) },
+                success: function (res) {
+                        if (res == true) {
+                            ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
+                        }
+                        else {
+                            ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                        }
+                    }
+                });
+            }
+        }
+
+        function RemoveBtnColor(CardID) {
+            $("#card"+CardID+ " .btn-danger").each(function () {
+                $(this).removeClass('btn-danger');
+                $(this).addClass('btn-default')
+            });
+        }
+
+        function Add(btn, OddsId, OddsTitleID, OddsTypeID) {
+            RemoveBtnColor(OddsTypeID)
+
+            if (!$(btn).hasClass('btn-danger')) {
+                $(btn).removeClass('btn-default');
+                $(btn).addClass('btn-danger');
+
+                if (OddsTypeID == 1) {
+                    $("#lblBodyOdds").html($(btn).html());
+                    $("#BodyOddsId").val(OddsId);
+
+                    $('#card1').CardWidget('collapse');
+                    $('#card2').CardWidget('expand');
+                }
+                else if (OddsTypeID == 2) {
+                    $("#lblGoalOdds").html($(btn).html());
+                    $("#GoalOddsId").val(OddsId);
+
+                    $('#card2').CardWidget('collapse');
+                }
+            }
+            else {
+                $(btn).removeClass('btn-danger');
+                $(btn).addClass('btn-default');
+                if (OddsTypeID == 1) {
+                    $("#lblBodyOdds").html('');
+                }
+                else if (OddsTypeID == 2) {
+                    $("#lblGoalOdds").html('');
+                }
+            }
+        }
+
+        function DateChange() {
+            BindMatch();
+        }
+
+        function ShowMessage(msg, status) {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                type: status,
+                title: msg
+            });
+        }
+
+        function BindMatch() {
+            var table = $('#tblMatch').DataTable(
+                {
+                    "language": {
+                        "info": "Display _START_ to _END_ of _TOTAL_ records",
+                    },
+                    "oLanguage": {
+                        "sLengthMenu": "Display _MENU_ records",
+                    },
+                    "ajax": {
+                        "url": '@Url.Action("GetMatch_UserGambling", "Match")?MatchDate='+$("#matchdate").val()+'',
+                        "type": "GET",
+                        "datatype": "json",
+                        "dataSrc": ""
+                    },
+                    "searching": false,
+                    "order": [[1, "desc"]],
+                    "autoWidth": false,
+                    "destroy": "true",
+                    "paging": false,
+                    "columns": [
+                        { "data": "MatchTime" ,"width":"7%"},
+                        { "data": "MatchID","className":"displayNone" },                        
+                        { "data": "GTeamID", "className": "tgid displayNone" },
+                        { "data": "BodyAmount", "className": "tgAmt displayNone" },
+                        { "data": "GoalType", "className": "tggType displayNone" },
+                        { "data": "GoalAmount", "className": "tggAmt displayNone" },
+                        { "data": "Team1ID", "className": "t1ID displayNone" },
+                        { "data": "Team2ID", "className": "t2ID displayNone" },
+                        { "data": "Gambling", "width": "10%","className":"gambling"},                        
+                        { "data": "Team1Odds", "className": "t1Odds", "width": "10%"},
+                        { "data": "Home", "width": "10%","className":"Home"},
+                        { "data": "Away", "width": "10%","className":"Away"},                        
+                        { "data": "Team2Odds", "className": "t2Odds", "width": "10%"},                        
+                        { "data": "GoalOdds", "className": "tdGoalOdds", "width": "10%"},
+                    ],
+                }
+            );
+        }
+    </script>
+}
+
+
