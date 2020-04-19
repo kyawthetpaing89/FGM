@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Odds_BL", "Odds_BL\Odds_BL.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserGambling_BL", "UserGambling_BL\UserGambling_BL.csproj", "{666C82FC-92B9-490B-AADC-34C435848BB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User_BL", "User_BL\User_BL.csproj", "{4CA5A206-7427-4C84-8761-33F5ADD602EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{666C82FC-92B9-490B-AADC-34C435848BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{666C82FC-92B9-490B-AADC-34C435848BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{666C82FC-92B9-490B-AADC-34C435848BB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CA5A206-7427-4C84-8761-33F5ADD602EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CA5A206-7427-4C84-8761-33F5ADD602EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CA5A206-7427-4C84-8761-33F5ADD602EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CA5A206-7427-4C84-8761-33F5ADD602EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

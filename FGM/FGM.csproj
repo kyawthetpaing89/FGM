@@ -128,6 +128,7 @@
     <Compile Include="Controllers\OddsController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserBalanceController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1984,6 +1985,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Odds\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -2033,6 +2035,10 @@
     <ProjectReference Include="..\UserGambling_BL\UserGambling_BL.csproj">
       <Project>{666c82fc-92b9-490b-aadc-34c435848bb8}</Project>
       <Name>UserGambling_BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\User_BL\User_BL.csproj">
+      <Project>{4ca5a206-7427-4c84-8761-33f5add602eb}</Project>
+      <Name>User_BL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

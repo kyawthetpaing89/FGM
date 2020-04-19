@@ -12,8 +12,8 @@
     if (System.Diagnostics.Debugger.IsAttached)
     {
 
-        loginID = "admin";
-        UserName = "Administrator";
+        loginID = "ktp";
+        UserName = "ကျော်သက်ပိုင်";
         UserType = "1";
 
         Session["UserInfo"] = loginID + '_' + UserName;
@@ -31,6 +31,7 @@
             Context.Response.Redirect("~/User/Login");
         }
     }
+    
 }
 <html>
 <head>
@@ -65,6 +66,7 @@
     <link href="@Url.Content("~/plugins/toastr/toastr.min.css")" rel="stylesheet" type="text/css" />
 </head>
 <body class="hold-transition sidebar-mini text-sm">
+    <input id="LoginUserID" type="hidden" value="@loginID">
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
@@ -211,7 +213,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
+                        with font-awesome or any other icon font library -->
                         <li class="nav-header">ရုပ်ရှင်</li>
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
@@ -338,15 +340,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="@Url.Action("UserTransitionEntry","UserBalance")" class="nav-link">
-                                        <i class="far fa-check-circle nav-icon text-info"></i>
-                                        <p>UserTransitionစာရင်း</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>                        
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
