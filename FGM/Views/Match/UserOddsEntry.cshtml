@@ -266,13 +266,33 @@
 
                     if ($(this).hasClass("Home") || $(this).hasClass("Away")) {
 
+
+
                         if ($(this).hasClass("Home")) {
                             t1ID = $(this).closest('tr').find(".t1ID");
                             tgid = t1ID;
+
+                            if (t1ID == $("#tgid").val()) {
+                                $("#tgid").val($(tgid).html());
+                                $("#tgAmt").val($(tgAmt).html());
+                            }
+                            else {
+                                $("#tgid").val('');
+                                $("#tgAmt").val('');
+                            }
                         }
                         else {
                             t2ID = $(this).closest('tr').find(".t2ID");
                             tgid = t2ID;
+
+                            if (t2ID == $("#tgid").val()) {
+                                $("#tgid").val($(tgid).html());
+                                $("#tgAmt").val($(tgAmt).html());
+                            }
+                            else {
+                                $("#tgid").val('');
+                                $("#tgAmt").val('');
+                            }
                         }
 
                         tgName = this;
@@ -285,8 +305,7 @@
                         RemoveBtnColor(2);
                         RemoveBtnColor(3);
 
-                        $("#tgid").val($(tgid).html());
-                        $("#tgAmt").val($(tgAmt).html());
+                        
                         $("#tggType").val($(tggType).html());
                         $("#tggAmt").val($(tggAmt).html());
 
