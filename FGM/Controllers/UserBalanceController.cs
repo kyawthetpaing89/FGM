@@ -25,6 +25,7 @@ namespace FGM.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public string GetUserBalance()
         {
