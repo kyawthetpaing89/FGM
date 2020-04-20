@@ -138,7 +138,7 @@
             cl.empty();
             var e = '';
             for (var i = 0; i < res.length; i++) {
-                e = e + '<button type="button" id="btn' + res[i].UserID + '" onclick="BtnUser(this,' + res[i].UserID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">'
+                e = e + '<button type="button" id="btn' + res[i].UserID + '" onclick="BtnUser(this,\'' + res[i].UserID + '\')" class="btn btn-default col-md-3 col-xl-2 mb-1">'
                     + res[i].UserName +
                     '</button>'
             }
