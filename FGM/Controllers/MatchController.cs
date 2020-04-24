@@ -68,12 +68,31 @@ namespace FGM.Controllers
         }
 
         [HttpGet]
-        public string GetMatch_UserGambling(string MatchDate)
+        public string GetMatch_UserGambling(string Param)
         {
             UserGamblingBL UGBL = new UserGamblingBL();
             MatchModel MModel = new MatchModel();
-            MModel.MatchDate = MatchDate;
+            MModel.MatchDate = Param.Split('_')[0];
+            MModel.UserID = Param.Split('_')[1];
             return UGBL.GetUserGambling(MModel);
+        }
+
+        [HttpPost]
+        public string UserGambling_Insert(string Table, string Param)
+        {
+            if (Session["UserInfo"] == null)
+                return "false";
+
+            string userInfo = Session["UserInfo"] as string;
+
+            UserGamblingBL UGBL = new UserGamblingBL();
+            MatchModel MModel = new MatchModel();
+            MModel.MatchDate = Param.Split('_')[0];
+            MModel.MatchJson = Table;
+            MModel.UserID = userInfo.Split('_')[0];
+            MModel.UserID1 = Param.Split('_')[1];
+
+            return UGBL.UserGambling_Insert(MModel);
         }
     }
 }
