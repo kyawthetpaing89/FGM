@@ -68,5 +68,24 @@ namespace FGM.Controllers
             UserBalanceBL ubbl = new UserBalanceBL();
             return ubbl.GetDailyUserBalance_List(ubm);
         }
+        [HttpPost]
+        public string GetUserTranstionEntry(string usEntry)
+        {
+            UserBalanceModel ubm = new UserBalanceModel();
+            UserBalanceBL ubbl = new UserBalanceBL();
+            if (Session["UserInfo"] == null)
+                return "false";
+
+            string userInfo = Session["UserInfo"] as string;
+            string UserID = userInfo.Split('_')[0];
+
+            string[] USEntry = usEntry.Split('/');
+            ubm.PayDate =USEntry[0].ToString();
+            ubm.UserID = USEntry[1].ToString();
+            ubm.TransitionType = USEntry[2].ToString();
+            ubm.Amount = USEntry[3].ToString();
+            ubm.OperatorMode = UserID;
+            return ubbl.GetUserTranstionEntry(ubm);
+        }
     }
 }

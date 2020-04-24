@@ -13,7 +13,7 @@
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-sm-6">               
                 <h1>UserTransition Entry</h1>
             </div>
             <div class="col-sm-6">
@@ -30,18 +30,19 @@
     <div class="card">
         <div class="card-body">
             <div class="form-row">
-                <div class="form-group col-xl-2 col-md-3">
-                    <label for="TransDate">Date:</label>
+                <div class="form-group col-xl-2 col-md-3">                    
+                    <label for="TransDate">PayDate:</label><label style="color:red">*</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
                         </div>
-                        <input readonly="readonly" type="text" class="form-control float-right" id="TransDate" >
+                        <input readonly="readonly" type="text" class="form-control float-right" id="TransDate">
                     </div>
                 </div>
             </div>
             <div class="card" id="card4">
                 <div class="card-header bg-cyan">
+                    <label style="color:red">*</label>
                     <h3 class="card-title">UserName</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -56,7 +57,7 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-xl-2 col-md-3">
-                    <label for="TransDate">Transition Type:</label>
+                    <label for="TranType">Transition Type:</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
@@ -93,7 +94,7 @@
             </div>
         </div>
     </div>
-    @*<input id="tdPlace" type="hidden" value="1" />*@
+    <input id="UserID" type="hidden" value="1" />
 </section>
 
 @section Scripts{
@@ -113,7 +114,7 @@
             GetUser();
         });
 
-        function DateChange() {
+        function ButtonRemoveColor() {
             $(".btn-danger").each(function () {
                 $(this).removeClass('btn-danger');
                 $(this).addClass('btn-default')
@@ -121,20 +122,21 @@
         }
 
           function GetUser() {
-             $.ajax({
-                url: '@Url.Action("GetUser", "UserBalance")',
-                type: "GET",
-                dataType: "JSON",
-                dataSrc: '',
-                 success: function (res) {
-                     BindUser(res);
-                 }
-             })
+              $.ajax({
+                  url: '@Url.Action("GetUser", "UserBalance")',
+                  type: "GET",
+                  dataType: "JSON",
+                  dataSrc: '',
+                  success: function (res) {
+                      BindUser(res);
+                  }
+              })
         }      
 
         function BindUser(res) {
             var val = $("#LoginUserID").val();
             var cl = $("#UserList");
+           
             cl.empty();
             var e = '';
             for (var i = 0; i < res.length; i++) {
@@ -150,53 +152,71 @@
         }
 
         function BtnUser(btn, UserID) {
-            alert('w');
+            ButtonRemoveColor();
             if (!$(btn).hasClass('btn-danger')) {
-                alert('a');
                 $(btn).removeClass('btn-default');
                 $(btn).addClass('btn-danger')
             }
-            else {
-                alert('b');
-            }
+
+            $("#UserID").val(UserID);
         }
 
         function Save() {
-            var ID = $("#TransDate").val() + '/' + $("#ddlTranType").val() + '/' + $("#Balance").val();
-            alert(ID);
+            var catchError = false;
+            if ($("#UserID").val() ==1) {
+                $("#UserID").val($("#LoginUserID").val());
+            }
+            //if ($("#TransDate").val() == '') {
+            //    ShowMessage('Please Enter PayDate!', 'warning')
+            //    return;
+            //}//Readonly no need
+            var US = $("#TransDate").val() + '/' + $("#UserID").val() + '/' + $("#ddlTranType").val() + '/' + $("#Balance").val();
+             if (!catchError) {
+                 $.ajax({
+                     url: '@Url.Action("GetUserTranstionEntry", "UserBalance")?usEntry=' + US + '',
+                     type: 'post',
+                     dataType: 'json',
+                     dataSrc: '',
+                    success: function (res) {
+                        if (res == true) {
+                            ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');                          
+                            Clear();
+                        }
+                        else {
+                            ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                        }
+                    }
+                });
+            } 
         }
 
+        function Clear() {
+            var d = new Date();
+            var day = d.getDate();
+            var month = d.getMonth() + 1;
+            var year = d.getFullYear();
+            var date = day + "-" + month + "-" + year;
+            alert(date);
+            $("#TransDate").val(date);
+            ButtonRemoveColor();
+            $("#btn" + $("#LoginUserID").val()).removeClass("btn-default");
+            $("#btn" + $("#LoginUserID").val()).addClass("btn-danger");
+            $("#ddlTranType").val('');
+            $("#Balance").val('');
+        }
+        function ShowMessage(msg, status) {
 
-        function CreateCardByUser(res) {
-            var val = $("#LoginUserID").val();
-            var ul = $("#UserList");
-            ul.empty();
-            var e = '';
-            var UserID = '';
-            e = e + '<div class="card collapsed-card" id="card">' +
-                '<div class="card-header bg-cyan">' +
-                '<h3 class="card-title">' + 'UserName' + '</h3>' +
-                '<div class="card-tools">' +
-                '<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">' +
-                '<i class="fas fa-plus"></i>' +
-                '</button>' +
-                '</div>' +
-                '</div>' +
-                '<div class="card-body">' 
-           
-            for (var i = 0; i < res.length; i++) {             
-                if (UserID != res[i].UserID) {                  
-                    if (UserID) {
-                        e = e + '</div>' +
-                            '</div>';
-                    }
-                    e = e +
-                        '<button type="button" id="btn' + res[i].UserID + '" onclick="Add(this,' + res[i].UserID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">' +
-                        res[i].UserName +
-                        '</button>'
-                }
-            }
-            ul.append(e);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                type: status,
+                title: msg
+            });
         }
 
         </script>
