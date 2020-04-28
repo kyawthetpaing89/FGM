@@ -25,8 +25,7 @@
 </section>
 <!-- Main content -->
 <section class="content">
-    <div id="TeamList">
-    </div>
+    <input id="UserID" type="hidden">
     <div class="card">
         <div class="card-body">
             <div class="form-row">
@@ -249,7 +248,7 @@
         var tggType;
         var tggAmt;
         var gambling;
-
+        
         $(document).ready(function () {
             $('#matchdate').daterangepicker({
                 timePicker: false, //<==MAKE THE CHANGE HERE
@@ -259,10 +258,16 @@
                 }
             });
 
+            $("#UserID").val($("#LoginUserID").val());
             GetUser();
 
             $("tbody", "#tblMatch").on("click", "td",
                 function () {
+
+                    $('#card1').CardWidget('collapse');
+                    $('#card2').CardWidget('collapse');
+                    $('#card3').CardWidget('collapse');
+
                     tgName = this;
                     tgAmt = $(this).closest('tr').find('.tgAmt');
                     tggType = $(this).closest('tr').find('.tggType');
@@ -285,40 +290,50 @@
                         RemoveBtnColor(2);
                         RemoveBtnColor(3);
 
-                        $("#lbltgAmt").html($(tgAmt).html());
+                        if ($(tgAmt).html()) {
+                            $("#lbltgAmt").html($(tgAmt).html());
+                            $("#btnBody" + $(tgAmt).html()).removeClass('btn-default');
+                            $("#btnBody" + $(tgAmt).html()).addClass('btn-danger');
+
+                            $('#card1').CardWidget('expand');
+                        }
+                        else {
+                            $("#lbltgAmt").html("");
+                        }
  
                             
                         if ($(tggType).html()) {
                             $("#tggType").val($(tggType).html());
                             if ($(tggType).html() == 1) {
                                 $("#lbltggType").html("↑");
+                                $("#btnGup" + $(tggAmt).html()).removeClass('btn-default');
+                                $("#btnGup" + $(tggAmt).html()).addClass('btn-danger');
+
+                                $('#card2').CardWidget('expand');
                             }
                             else {
                                 $("#lbltggType").html("↓");
+                                $("#btnGDown" + $(tggAmt).html()).removeClass('btn-default');
+                                $("#btnGDown" + $(tggAmt).html()).addClass('btn-danger');
+
+                                $('#card3').CardWidget('expand');
                             }
+
+                            $("#lbltggAmt").val($(tggAmt).html());
                         }
                         else {
                             $("#tggType").val('');
                             $("#lbltggType").html("");
-                        }
-                        
-
-
-                        $("#lbltggAmt").val($(tggAmt).html());
+                            $("#lbltggAmt").html("");
+                        }                                             
 
                         if ($(tgName).html()) {
                             $("#lbltgName").html($(tgName).html());
                         }
 
-                        $('#card1').CardWidget('collapse');
-                        $('#card2').CardWidget('collapse');
-                        $('#card3').CardWidget('collapse');
-
                         $('#modal-default').modal('show');
                     }
-                });
-
-            
+                });            
         });
 
         function GetUser() {
@@ -339,19 +354,25 @@
             cl.empty();
             var e = '';
             for (var i = 0; i < res.length; i++) {
-                e = e + '<button type="button" id="btn' + res[i].UserID + '" onclick="BtnUser(this,' + res[i].UserID + ')" class="btn btn-default col-md-3 col-xl-2 mb-1">'
+                e = e + '<button type="button" id="btn' + res[i].UserID + '" onclick="BtnUser(this,\'' + res[i].UserID + '\')" class="btn btn-default col-md-3 col-xl-2 mb-1">'
                       +  res[i].UserName +
                         '</button>'
-            }
-            
+            }            
             cl.append(e);
 
             $("#btn" + val).removeClass("btn-default");
             $("#btn" + val).addClass("btn-danger");
         }
 
-        function BtnBodyClick(btn, val) {
+        function BtnUser(btn, userID) {
+            RemoveBtnColor(4);
+            $(btn).removeClass('btn-default');
+            $(btn).addClass('btn-danger');
+            $("#UserID").val(userID);
+            BindMatch();
+        }
 
+        function BtnBodyClick(btn, val) {
             RemoveBtnColor(1);
             $(btn).removeClass('btn-default');
             $(btn).addClass('btn-danger');
@@ -378,6 +399,9 @@
             $('#card1').CardWidget('collapse');
             $('#card2').CardWidget('collapse');
             $('#card3').CardWidget('collapse');
+
+            $(btn).removeClass('btn-default');
+            $(btn).addClass('btn-danger');
         }
 
         function Confirm() {
@@ -396,6 +420,7 @@
         }
 
         function Save() {
+            var Param = $("#matchdate").val() + '_' + $("#UserID").val();
             var catchError = false;
 
             var rows = [];
@@ -403,10 +428,11 @@
                 var $row = $(n);
 
                 rows.push({
-                    MatchID: $row.find('td:eq(0)').text(),
-                    Team1OddsID: $row.find('td:eq(2)').text(),
-                    Team2OddsID: $row.find('td:eq(6)').text(),
-                    GoalOddsID: $row.find('td:eq(8)').text()
+                    MatchID: $row.find('td:eq(1)').text(),
+                    GTeamID: $row.find('td:eq(2)').text(),
+                    BodyAmount: $row.find('td:eq(3)').text(),
+                    GoalType: $row.find('td:eq(4)').text(),
+                    GoalAmount: $row.find('td:eq(5)').text()
                 });
             });
 
@@ -414,7 +440,7 @@
                 $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: '@Url.Action("Match_OddsUpdate", "Match")?MatchDate='+$("#matchdate").val()+'',
+                    url: '@Url.Action("UserGambling_Insert", "Match")?Param='+ Param+'',
                 data: { Table: JSON.stringify(rows) },
                 success: function (res) {
                         if (res == true) {
@@ -429,7 +455,7 @@
         }
 
         function RemoveBtnColor(CardID) {
-            $("#card"+CardID+ ".btn-danger").each(function () {
+            $("#card"+CardID+ " .btn-danger").each(function () {
                 $(this).removeClass('btn-danger');
                 $(this).addClass('btn-default')
             });
@@ -488,6 +514,7 @@
         }
 
         function BindMatch() {
+            var Param = $("#matchdate").val() + '_' + $("#UserID").val();
             var table = $('#tblMatch').DataTable(
                 {
                     "language": {
@@ -497,7 +524,7 @@
                         "sLengthMenu": "Display _MENU_ records",
                     },
                     "ajax": {
-                        "url": '@Url.Action("GetMatch_UserGambling", "Match")?MatchDate='+$("#matchdate").val()+'',
+                        "url": '@Url.Action("GetMatch_UserGambling", "Match")?Param='+ Param +'',
                         "type": "GET",
                         "datatype": "json",
                         "dataSrc": ""
