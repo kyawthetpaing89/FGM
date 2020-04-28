@@ -171,33 +171,47 @@
             //    return;
             //}//Readonly no need
             var US = $("#TransDate").val() + '/' + $("#UserID").val() + '/' + $("#ddlTranType").val() + '/' + $("#Balance").val();
-             if (!catchError) {
-                 $.ajax({
-                     url: '@Url.Action("GetUserTranstionEntry", "UserBalance")?usEntry=' + US + '',
-                     type: 'post',
-                     dataType: 'json',
-                     dataSrc: '',
+
+            if (!catchError) {                
+                  $.ajax({
+                      url: '@Url.Action("DataIsExists", "UserBalance")?data=' + US + '',
+                    type: 'post',
+                    dataType: 'json',
+                    dataSrc: '',
                     success: function (res) {
                         if (res == true) {
-                            ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');                          
-                            Clear();
+                            ShowMessage('UserName is Already Exists!', 'warning');
                         }
                         else {
-                            ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                            $.ajax({
+                                url: '@Url.Action("GetUserTranstionEntry", "UserBalance")?usEntry=' + US + '',
+                                type: 'post',
+                                dataType: 'json',
+                                dataSrc: '',
+                                success: function (res) {
+                                    if (res == true) {
+                                        ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
+                                        Clear();
+                                    }
+                                    else {
+                                        ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                                    }
+                                }
+                            });
                         }
                     }
                 });
-            } 
+            }
         }
 
         function Clear() {
             var d = new Date();
             var day = d.getDate();
-            var month = d.getMonth() + 1;
-            var year = d.getFullYear();
-            var date = day + "-" + month + "-" + year;
-            alert(date);
+            var month = d.getUTCMonth() + 1;
+            var date = (day < 10 ? "0" : "") + day + "-" + (month < 10 ? "0" : "") + month + "-" + new Date().getFullYear();
             $("#TransDate").val(date);
+            // var date = new Date().getFullYear() + "-" + (new Date().getUTCMonth + 1) + "-" + new Date().getDate();
+            //var date = $("#TransDate").val(new Date().toISOString().substring(0, 10));
             ButtonRemoveColor();
             $("#btn" + $("#LoginUserID").val()).removeClass("btn-default");
             $("#btn" + $("#LoginUserID").val()).addClass("btn-danger");

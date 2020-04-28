@@ -73,5 +73,20 @@ namespace UserBalance_BL
                 return "true";
             return "false";
         }
+
+        public string DataIsExists(UserBalanceModel UBModel)
+        {
+            BaseDL BDL = new BaseDL();
+            Function FUN = new Function();
+            SqlParameter[] prms = new SqlParameter[2];
+
+            DateTime dt = DateTime.ParseExact(UBModel.PayDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.GetCultureInfo("en-us"));
+            prms[0] = new SqlParameter("@PayDate", SqlDbType.Date) { Value = dt };
+            prms[1] = new SqlParameter("@UserID", SqlDbType.VarChar) { Value = string.IsNullOrWhiteSpace(UBModel.UserID) ? (object)DBNull.Value : UBModel.UserID };
+            DataTable DtResult = BDL.SelectData("User_Transition_DataExists", prms);
+            if (DtResult.Rows.Count > 0)
+                return "true";
+            return "false";
+        }
     }
 }
