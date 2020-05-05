@@ -474,3 +474,5 @@ D:\Project\kyawthetpaing89\FGM_system\FGM\obj\Debug\FGM.csproj.CoreCompileInputs
 D:\Project\kyawthetpaing89\FGM_system\FGM\obj\Debug\FGM.csproj.CopyComplete
 D:\Project\kyawthetpaing89\FGM_system\FGM\obj\Debug\FGM.dll
 D:\Project\kyawthetpaing89\FGM_system\FGM\obj\Debug\FGM.pdb
+D:\Project\FGM\FGM\bin\Bookie_BL.dll
+D:\Project\FGM\FGM\bin\Bookie_BL.pdb

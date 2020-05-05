@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserGambling_BL", "UserGamb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User_BL", "User_BL\User_BL.csproj", "{4CA5A206-7427-4C84-8761-33F5ADD602EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookie_BL", "Bookie_BL\Bookie_BL.csproj", "{667A7DA6-ECBD-420A-83E9-068384F2783C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{4CA5A206-7427-4C84-8761-33F5ADD602EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CA5A206-7427-4C84-8761-33F5ADD602EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CA5A206-7427-4C84-8761-33F5ADD602EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667A7DA6-ECBD-420A-83E9-068384F2783C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667A7DA6-ECBD-420A-83E9-068384F2783C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667A7DA6-ECBD-420A-83E9-068384F2783C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667A7DA6-ECBD-420A-83E9-068384F2783C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

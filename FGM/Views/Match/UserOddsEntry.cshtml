@@ -96,6 +96,7 @@
                     <div class="row">
                         <input id="tgid" type="hidden">
                         <input id="tggType" type="hidden">
+                        <input id="bType" type="hidden" />
                         <label style="padding-right:20px">ရွေးချယ်မှု</label>
                         <label id="lbltgName"></label> -
                         <label id="lbltgAmt" style="padding-right:10px;"></label>
@@ -248,6 +249,7 @@
         var tggType;
         var tggAmt;
         var gambling;
+        var bType;
         
         $(document).ready(function () {
             $('#matchdate').daterangepicker({
@@ -275,15 +277,18 @@
                     gambling = $(this).closest('tr').find('.gambling');
                     t1ID = $(this).closest('tr').find(".t1ID");           
                     t2ID = $(this).closest('tr').find(".t2ID");     
-                    tgid = $(this).closest('tr').find(".tgID");     
+                    tgid = $(this).closest('tr').find(".tgID"); 
+                    bType = $(this).closest('tr').find(".bType"); 
 
                     if ($(this).hasClass("Home") || $(this).hasClass("Away")) {   
 
                         if ($(this).hasClass("Home")) {                                             
                             $("#tgid").val($(t1ID).html());
+                            $("#bType").val("1");
                         }
                         else {
                             $("#tgid").val($(t2ID).html());
+                            $("#bType").val("2");
                         }                       
                         
                         RemoveBtnColor(1);
@@ -300,7 +305,6 @@
                         else {
                             $("#lbltgAmt").html("");
                         }
- 
                             
                         if ($(tggType).html()) {
                             $("#tggType").val($(tggType).html());
@@ -415,7 +419,7 @@
             $(tggType).html($("#tggType").val());
             $(tggAmt).html($("#lbltggAmt").html());
             $(gambling).html($("#lbltgName").html() + ' - ' + $("#lbltgAmt").html() + ' ' + $("#lbltggType").html() + $("#lbltggAmt").html());
-
+            $(bType).html($("#bType").val());
             $('#modal-default').modal('hide');
         }
 
@@ -432,7 +436,8 @@
                     GTeamID: $row.find('td:eq(2)').text(),
                     BodyAmount: $row.find('td:eq(3)').text(),
                     GoalType: $row.find('td:eq(4)').text(),
-                    GoalAmount: $row.find('td:eq(5)').text()
+                    GoalAmount: $row.find('td:eq(5)').text(),
+                    BodyType: $row.find('td:eq(14)').text(),
                 });
             });
 
@@ -548,7 +553,8 @@
                         { "data": "Home", "width": "10%","className":"Home"},
                         { "data": "Away", "width": "10%","className":"Away"},                        
                         { "data": "Team2Odds", "className": "t2Odds", "width": "10%"},                        
-                        { "data": "GoalOdds", "className": "tdGoalOdds", "width": "10%"},
+                        { "data": "GoalOdds", "className": "tdGoalOdds", "width": "10%" },
+                        { "data": "BodyType", "className": "bType displayNone"},
                     ],
                 }
             );

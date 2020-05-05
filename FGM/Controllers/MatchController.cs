@@ -14,6 +14,11 @@ namespace FGM.Controllers
             return View();
         }
 
+        public ActionResult MatchResultEntry()
+        {
+            return View();
+        }
+
         public ActionResult BookieOddsEntry()
         {
             return View();
@@ -93,6 +98,21 @@ namespace FGM.Controllers
             MModel.UserID1 = Param.Split('_')[1];
 
             return UGBL.UserGambling_Insert(MModel);
+        }
+
+        [HttpPost]
+        public string MatchResult_Update(string Table)
+        {
+            if (Session["UserInfo"] == null)
+                return "false";
+            string userInfo = Session["UserInfo"] as string;
+
+            MatchBL MBL = new MatchBL();
+            MatchModel MModel = new MatchModel();
+            MModel.MatchJson = Table;
+            MModel.UserID = userInfo.Split('_')[0];
+
+            return MBL.MatchResult_Update(MModel);
         }
     }
 }

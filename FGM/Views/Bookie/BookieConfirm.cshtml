@@ -1,0 +1,221 @@
+﻿
+@{
+    ViewBag.Title = "BookieConfirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/dist/css/jquery.bootstrap-touchspin.css")" rel="stylesheet" type="text/css" />
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>ဒိုင်ဆီတင်ရန်</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Match Entry</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-xl-2 col-md-3">
+                    <label for="matchdate">ပွဲကစားမည့်နေ့</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
+                        </div>
+                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate" onchange="DateChange();">
+                    </div>
+                </div>
+            </div>
+            <table id="tblMatch" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ပွဲချိန်</th>@*MatchTime*@
+                        <th></th>@*MatchID*@
+                        <th></th>@*Team1ID*@
+                        <th>ပွဲချိန်</th>@*Team2ID*@
+                        <th>Home</th>
+                        <th>Away</th>
+                        <th></th>@*TotalTeamID*@
+                        <th></th>@*TotalGoalType*@
+                        <th>Total Body</th>@*TotalBodyAmount*@
+                        <th>Total Goal</th>@*TotalGoalAmount*@
+                        <th></th>@*TTTeamID*@
+                        <th></th>@*TTGoalType*@
+                        <th>ဒိုင်(ဘော်ဒီတင်ရန်)</th>@*TTBodyAmount*@
+                        <th>ဒိုင်(ဂိုးပေါင်းတင်ရန်)</th>@*TTGoalAmount*@
+                        <th></th>@*HATeamID*@
+                        <th></th>@*HAGoalType*@
+                        <th>HA(ဘော်ဒီစားရန်)</th>@*HABodyAmount*@
+                        <th>HA(ဂိုးပေါင်းစားရန်)</th>@*HAGoalAmount*@
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div style="text-align:center;">
+                <button type="button" id="btnSave" onclick="Save();" class="btn btn-success">သိမ်းဆည်းမည်</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script src="@Url.Content("~/plugins/daterangepicker/moment.min.js")"></script>
+    <script src="@Url.Content("~/plugins/daterangepicker/daterangepicker.js")"></script>
+    <script src="@Url.Content("~/dist/js/jquery.bootstrap-touchspin.js")"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#matchdate').daterangepicker({
+                timePicker: false, //<==MAKE THE CHANGE HERE
+                singleDatePicker: true, //<==MAKE THE CHANGE HERE
+                locale: {
+                    format: 'DD-MM-YYYY'
+                }
+            });
+
+            BindMatch();
+        });
+
+
+        function Save() {
+            var catchError = false;
+
+            var rows = [];
+            $('#tblMatch tbody tr').each(function (i, n) {
+                var $row = $(n);
+
+                rows.push({
+                    MatchID: $row.find('td:eq(0)').text(),
+                    Team1Goal: $row.find('.t1').val(),
+                    Team2Goal: $row.find('.t2').val(),
+                });
+            });
+
+            if (!catchError) {
+                $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '@Url.Action("MatchResult_Update", "Match")',
+                data: { Table: JSON.stringify(rows) },
+                success: function (res) {
+                        if (res == true) {
+                            ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
+                        }
+                        else {
+                            ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                        }
+                    }
+                });
+            }
+        }
+
+        function RemoveBtnColor(OddsTypeID) {
+            $("#card"+OddsTypeID+ " .btn-danger").each(function () {
+                $(this).removeClass('btn-danger');
+                $(this).addClass('btn-default')
+            });
+        }
+
+        function DateChange() {
+            BindMatch();
+        }
+
+        function ShowMessage(msg, status) {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                type: status,
+                title: msg
+            });
+        }
+
+        function ButtonClick(type, btn,cName) {
+            if (type == 1) {
+                var txt = $(btn).closest('tr').find(cName);
+                if ($(txt).val() > 0) {
+                    var v1 = -1 + + $(txt).val();
+                    $(txt).val(v1);
+                }
+            }
+            else {
+                var txt = $(btn).closest('tr').find(cName);
+                if ($(txt).val() < 15) {
+                    var v1 = 1 + + $(txt).val();
+                    $(txt).val(v1);
+                }
+            }
+        }
+
+        function BindMatch() {
+            var table = $('#tblMatch').DataTable(
+                {
+                    "language": {
+                        "info": "Display _START_ to _END_ of _TOTAL_ records",
+                    },
+                    "oLanguage": {
+                        "sLengthMenu": "Display _MENU_ records",
+                    },
+                    "ajax": {
+                        "url": '@Url.Action("BookieConfirm_Select", "Bookie")?MatchDate='+$("#matchdate").val()+'',
+                        "type": "GET",
+                        "datatype": "json",
+                        "dataSrc": ""
+                    },
+                    "searching": false,
+                    "responsive": true,
+                    "order": [[0, "desc"]],
+                    "autoWidth": false,
+                    "destroy": "true",
+                    "paging": false,
+                    "columns": [
+                        { "data": "MatchTime" },
+                        { "data": "MatchID", "className": "displayNone" },
+                        { "data": "Team1ID", "className": "displayNone" },
+                        { "data": "Team2ID", "className": "displayNone" },
+                        { "data": "Home"},
+                        { "data": "Away" },
+                        { "data": "TotalTeamID", "className": "displayNone" },
+                        { "data": "TotalGoalType", "className": "displayNone" },
+                        { "data": "TotalBodyAmount" },
+                        { "data": "TotalGoalAmount" },
+                        { "data": "TTTeamID", "className": "displayNone" },
+                        { "data": "TTGoalType", "className": "displayNone" },
+                        { "data": "TTBodyAmount" },
+                        { "data": "TTGoalAmount" },
+                        { "data": "HATeamID", "className": "displayNone" },
+                        { "data": "HAGoalType", "className": "displayNone" },
+                        { "data": "HABodyAmount" },
+                        { "data": "HAGoalAmount" },
+                    ],
+                }
+            );
+        }
+    </script>
+}
+
+
+

@@ -36,7 +36,19 @@ namespace Match_BL
             if (bdl.InsertUpdateDeleteData("M_Match_OddsUpdate", prms))
                 return "true";
             return "false";
-        }     
+        }
+
+        public string MatchResult_Update(MatchModel MModel)
+        {
+            BaseDL bdl = new BaseDL();
+            SqlParameter[] prms = new SqlParameter[2];
+            prms[0] = new SqlParameter("@UserID", SqlDbType.VarChar) { Value = MModel.UserID };
+            prms[1] = new SqlParameter("@MatchJson", SqlDbType.VarChar) { Value = MModel.MatchJson };
+
+            if (bdl.InsertUpdateDeleteData("M_Match_ResultUpdate", prms))
+                return "true";
+            return "false";
+        }
 
         public string GetMatch(MatchModel MModel)
         {
