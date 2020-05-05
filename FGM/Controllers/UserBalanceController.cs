@@ -73,6 +73,16 @@ namespace FGM.Controllers
         {
             UserBalanceModel ubm = new UserBalanceModel();
             UserBalanceBL ubbl = new UserBalanceBL();
+
+            var IsExists = "";
+            if(ModelState.IsValid)
+            {
+                if(IsExists.Equals(null))
+                {
+                    ModelState.AddModelError("UserName", "Already exists");
+                   // return View(Object);
+                }
+            }
             if (Session["UserInfo"] == null)
                 return "false";
 
@@ -86,6 +96,24 @@ namespace FGM.Controllers
             ubm.Amount = USEntry[3].ToString();
             ubm.OperatorMode = UserID;
             return ubbl.GetUserTranstionEntry(ubm);
+        }
+
+        [HttpPost]
+        public string DataIsExists(string data)
+        {
+            UserBalanceModel ubm = new UserBalanceModel();
+            UserBalanceBL ubbl = new UserBalanceBL();
+
+            if (Session["UserInfo"] == null)
+                return "false";
+
+            
+            string[] USEntry = data.Split('/');
+            
+            ubm.PayDate = USEntry[0].ToString();
+
+            ubm.UserID = USEntry[1].ToString();
+            return ubbl.DataIsExists(ubm);
         }
     }
 }
