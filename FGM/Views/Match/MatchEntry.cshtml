@@ -79,6 +79,8 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            GetTeam();    
+
             $('#matchdate').daterangepicker({
                 timePicker: false, //<==MAKE THE CHANGE HERE
                 singleDatePicker: true, //<==MAKE THE CHANGE HERE
@@ -87,8 +89,7 @@
                 }
             });
 
-
-            GetTeam();
+               
         });
 
         function DateChange() {
@@ -117,8 +118,8 @@
 
             $.each(res, function (key, value) {
                 $("#tdPlace").val(1);
-                Add($("#btn" + value.TeamID1),value.TeamID1)
-                Add($("#btn" + value.TeamID2), value.TeamID2)              
+                Add($("#btn" + value.TeamID1), value.TeamID1);
+                Add($("#btn" + value.TeamID2), value.TeamID2);             
                 $('#ShowTime' + value.TeamID1).val(value.MatchTime)
             });
         }

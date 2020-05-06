@@ -46,21 +46,22 @@
                         <th>ပွဲချိန်</th>@*MatchTime*@
                         <th></th>@*MatchID*@
                         <th></th>@*Team1ID*@
-                        <th>ပွဲချိန်</th>@*Team2ID*@
-                        <th>Home</th>
-                        <th>Away</th>
+                        <th></th>@*Team2ID*@
                         <th></th>@*TotalTeamID*@
                         <th></th>@*TotalGoalType*@
-                        <th>Total Body</th>@*TotalBodyAmount*@
-                        <th>Total Goal</th>@*TotalGoalAmount*@
                         <th></th>@*TTTeamID*@
                         <th></th>@*TTGoalType*@
-                        <th>ဒိုင်(ဘော်ဒီတင်ရန်)</th>@*TTBodyAmount*@
-                        <th>ဒိုင်(ဂိုးပေါင်းတင်ရန်)</th>@*TTGoalAmount*@
                         <th></th>@*HATeamID*@
                         <th></th>@*HAGoalType*@
-                        <th>HA(ဘော်ဒီစားရန်)</th>@*HABodyAmount*@
-                        <th>HA(ဂိုးပေါင်းစားရန်)</th>@*HAGoalAmount*@
+                        <th>Total Body</th>@*TotalBodyAmount*@
+                        <th>Total Goal</th>@*TotalGoalAmount*@
+                        <th>Home</th>
+                        <th>Away</th>
+                        <th>အချုပ်</th>
+                        <th>ဒိုင်<br />(ဘော်ဒီ)</th>@*TTBodyAmount*@
+                        <th>ဒိုင်<br />(ဂိုးပေါင်း)</th>@*TTGoalAmount*@
+                        <th>HA<br />(ဘော်ဒီ)</th>@*HABodyAmount*@
+                        <th>HA<br />(ဂိုးပေါင်း)</th>@*HAGoalAmount*@
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -157,16 +158,14 @@
             if (type == 1) {
                 var txt = $(btn).closest('tr').find(cName);
                 if ($(txt).val() > 0) {
-                    var v1 = -1 + + $(txt).val();
+                    var v1 = -100 + + $(txt).val();
                     $(txt).val(v1);
                 }
             }
             else {
                 var txt = $(btn).closest('tr').find(cName);
-                if ($(txt).val() < 15) {
-                    var v1 = 1 + + $(txt).val();
-                    $(txt).val(v1);
-                }
+                var v1 = 100 + + $(txt).val();
+                $(txt).val(v1);
             }
         }
 
@@ -186,30 +185,66 @@
                         "dataSrc": ""
                     },
                     "searching": false,
-                    "responsive": true,
+                    "responsive": false,
                     "order": [[0, "desc"]],
                     "autoWidth": false,
                     "destroy": "true",
                     "paging": false,
+                    "ordering": false,
                     "columns": [
-                        { "data": "MatchTime" },
-                        { "data": "MatchID", "className": "displayNone" },
-                        { "data": "Team1ID", "className": "displayNone" },
-                        { "data": "Team2ID", "className": "displayNone" },
-                        { "data": "Home"},
-                        { "data": "Away" },
-                        { "data": "TotalTeamID", "className": "displayNone" },
-                        { "data": "TotalGoalType", "className": "displayNone" },
-                        { "data": "TotalBodyAmount" },
-                        { "data": "TotalGoalAmount" },
-                        { "data": "TTTeamID", "className": "displayNone" },
-                        { "data": "TTGoalType", "className": "displayNone" },
-                        { "data": "TTBodyAmount" },
-                        { "data": "TTGoalAmount" },
-                        { "data": "HATeamID", "className": "displayNone" },
-                        { "data": "HAGoalType", "className": "displayNone" },
-                        { "data": "HABodyAmount" },
-                        { "data": "HAGoalAmount" },
+                        { "data": "MatchTime","width":"10%" },
+                        { "data": "MatchID", "className": "displayNone", "width": "0%" },
+                        { "data": "Team1ID", "className": "displayNone", "width": "0%" },
+                        { "data": "Team2ID", "className": "displayNone", "width": "0%" },
+                        { "data": "TotalTeamID", "className": "displayNone", "width": "0%" },
+                        { "data": "TotalGoalType", "className": "displayNone", "width": "0%" },
+                        { "data": "TTTeamID", "className": "displayNone", "width": "0%" },
+                        { "data": "TTGoalType", "className": "displayNone", "width": "0%" },
+                        { "data": "HATeamID", "className": "displayNone", "width": "0%" },
+                        { "data": "HAGoalType", "className": "displayNone", "width": "0%" },
+                        { "data": "TotalBodyAmount", "className": "displayNone", "width": "0%" },
+                        { "data": "TotalGoalAmount", "className": "displayNone", "width": "0%" },
+                        { "data": "Home", "className": "displayNone" },
+                        { "data": "Away", "className": "displayNone" },                       
+                        { "data": "FullAmount","width":"20%" },                        
+                        { "data": "TTBodyAmount", "width": "13%" },
+                        { "data": "TTGoalAmount", "width": "13%" },
+                        {   
+                            "data": "HABodyAmount", render: function (data, type, row) {
+                                return '<div class="input-group">' +
+                                    '<div class="input-group-prepend">' +
+                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(1,this,\'.body\');">' +
+                                    '-' +
+                                    '</button>' +
+                                    '</div>' +
+                                    '<input type="number" inputmode="decimal" style="text-align: center" readonly="readonly" class="form-control body" placeholder="" value="' + row.HABodyAmount + '" />' +
+                                    '<div class="input-group-append">' +
+                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(2,this,\'.body\');">' +
+                                    '+' +
+                                    '</button>' +
+                                    '</div>' +
+                                    '</div>'
+                                //return '<button class="btn btn-info">+</button><input id="' + row.MatchID + '_1" class="form-control col-xl-12 col-md-12 aligncenter t1" min="0" max="15"  type="number" value="'+ row.Team1Goal +'" >'
+                            }, "width": "22%"
+                        },
+                        { 
+                            "data": "HAGoalAmount", render: function (data, type, row) {
+                                return '<div class="input-group">' +
+                                    '<div class="input-group-prepend">' +
+                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(1,this,\'.goal\');">' +
+                                    '-' +
+                                    '</button>' +
+                                    '</div>' +
+                                    '<input type="number" inputmode="decimal" style="text-align: center" readonly="readonly" class="form-control goal" placeholder="" value="' + row.HAGoalAmount + '" />' +
+                                    '<div class="input-group-append">' +
+                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(2,this,\'.goal\');">' +
+                                    '+' +
+                                    '</button>' +
+                                    '</div>' +
+                                    '</div>'
+                                //return '<button class="btn btn-info">+</button><input id="' + row.MatchID + '_1" class="form-control col-xl-12 col-md-12 aligncenter t1" min="0" max="15"  type="number" value="'+ row.Team1Goal +'" >'
+                            }, "width": "22%"
+                        },
                     ],
                 }
             );
