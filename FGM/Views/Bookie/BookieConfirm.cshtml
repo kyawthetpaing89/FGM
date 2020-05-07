@@ -58,10 +58,11 @@
                         <th>Home</th>
                         <th>Away</th>
                         <th>အချုပ်</th>
-                        <th>ဒိုင်<br />(ဘော်ဒီ)</th>@*TTBodyAmount*@
-                        <th>ဒိုင်<br />(ဂိုးပေါင်း)</th>@*TTGoalAmount*@
+                        <th>TT<br />(ဘော်ဒီ)</th>@*TTBodyAmount*@
+                        <th>TT<br />(ဂိုးပေါင်း)</th>@*TTGoalAmount*@
                         <th>HA<br />(ဘော်ဒီ)</th>@*HABodyAmount*@
                         <th>HA<br />(ဂိုးပေါင်း)</th>@*HAGoalAmount*@
+                        <th>တင်ပြီး</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -154,18 +155,29 @@
             });
         }
 
-        function ButtonClick(type, btn,cName) {
+        function ButtonClick(type,max, btn,cName,cName1) {
             if (type == 1) {
                 var txt = $(btn).closest('tr').find(cName);
+                var txt1 = $(btn).closest('tr').find(cName1);
                 if ($(txt).val() > 0) {
                     var v1 = -100 + + $(txt).val();
+                    var v2 = 100 + + $(txt1).html();
                     $(txt).val(v1);
+                    $(txt1).html(v2);
                 }
             }
             else {
                 var txt = $(btn).closest('tr').find(cName);
-                var v1 = 100 + + $(txt).val();
-                $(txt).val(v1);
+                var txt1 = $(btn).closest('tr').find(cName1);
+
+                if (100 + + $(txt).val() <= max) {
+                    var v1 = 100 + + $(txt).val();
+
+                    var v2 = $(txt1).html() - 100;
+
+                    $(txt).val(v1);
+                    $(txt1).html(v2);
+                }               
             }
         }
 
@@ -206,20 +218,20 @@
                         { "data": "TotalGoalAmount", "className": "displayNone", "width": "0%" },
                         { "data": "Home", "className": "displayNone" },
                         { "data": "Away", "className": "displayNone" },                       
-                        { "data": "FullAmount","width":"20%" },                        
-                        { "data": "TTBodyAmount", "width": "13%" },
-                        { "data": "TTGoalAmount", "width": "13%" },
+                        { "data": "FullAmount","width":"18%" },                        
+                        { "data": "TTBodyAmount", "width": "12%","className":"ttbody" },
+                        { "data": "TTGoalAmount", "width": "12%", "className": "ttgoal" },
                         {   
                             "data": "HABodyAmount", render: function (data, type, row) {
                                 return '<div class="input-group">' +
                                     '<div class="input-group-prepend">' +
-                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(1,this,\'.body\');">' +
+                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(1,' + row.TTBodyAmount +',this,\'.body\',\'.ttbody\');">' +
                                     '-' +
                                     '</button>' +
                                     '</div>' +
-                                    '<input type="number" inputmode="decimal" style="text-align: center" readonly="readonly" class="form-control body" placeholder="" value="' + row.HABodyAmount + '" />' +
+                                    '<input type="number" inputmode="decimal" min="0" style="text-align: center" readonly="readonly" class="form-control body" placeholder="" value="' + row.HABodyAmount + '" />' +
                                     '<div class="input-group-append">' +
-                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(2,this,\'.body\');">' +
+                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(2,' + row.TTBodyAmount +',this,\'.body\',\'.ttbody\');">' +
                                     '+' +
                                     '</button>' +
                                     '</div>' +
@@ -231,19 +243,24 @@
                             "data": "HAGoalAmount", render: function (data, type, row) {
                                 return '<div class="input-group">' +
                                     '<div class="input-group-prepend">' +
-                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(1,this,\'.goal\');">' +
+                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(1,' + row.TTGoalAmount +',this,\'.goal\',\'.ttgoal\');">' +
                                     '-' +
                                     '</button>' +
                                     '</div>' +
                                     '<input type="number" inputmode="decimal" style="text-align: center" readonly="readonly" class="form-control goal" placeholder="" value="' + row.HAGoalAmount + '" />' +
                                     '<div class="input-group-append">' +
-                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(2,this,\'.goal\');">' +
+                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(2,' + row.TTGoalAmount +',this,\'.goal\',\'.ttgoal\');">' +
                                     '+' +
                                     '</button>' +
                                     '</div>' +
                                     '</div>'
                                 //return '<button class="btn btn-info">+</button><input id="' + row.MatchID + '_1" class="form-control col-xl-12 col-md-12 aligncenter t1" min="0" max="15"  type="number" value="'+ row.Team1Goal +'" >'
                             }, "width": "22%"
+                        },
+                        {
+                            "data": "", render: function (data, type, row) {
+                                return '<input type="button" class="btn '+ row.IsConfirmClass +'" value="'+ row.IsConfirmText +'" />'
+                            },width:"4%"
                         },
                     ],
                 }
