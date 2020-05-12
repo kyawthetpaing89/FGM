@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "UserOddsHistory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css")" rel="stylesheet" type="text/css" />
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>User Odds History</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">UserOddsHistory</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="card">
+        <div class="card-body">
+            <div class="card" id="card4">
+                <div class="card-header bg-cyan">
+                    <label style="color:red">*</label>
+                    <h3 class="card-title">UserName</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="UserList" class="row">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-xl-2 col-md-3">
+                    <label for="TransDate">HistoryDate:</label><label style="color:red">*</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
+                        </div>
+                        <input readonly="readonly" type="text" class="form-control float-right" id="TransDate">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script src="@Url.Content("~/plugins/daterangepicker/moment.min.js")"></script>
+    <script src="@Url.Content("~/plugins/daterangepicker/daterangepicker.js")"></script>
+    <script src="@Url.Content("~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js")"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#TransDate').daterangepicker({
+                timePicker: false, //<==MAKE THE CHANGE HERE
+                singleDatePicker: true, //<==MAKE THE CHANGE HERE
+                locale: {
+                    format: 'DD-MM-YYYY'
+                }
+            });
+            GetUser();
+        });
+
+        function ButtonRemoveColor() {
+            $(".btn-danger").each(function () {
+                $(this).removeClass('btn-danger');
+                $(this).addClass('btn-default')
+            });
+        }
+
+        function GetUser() {
+            $.ajax({
+                url: '@Url.Action("GetUser", "UserBalance")',
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    BindUser(res);
+                }
+            });
+        }
+
+        function BindUser(res) {
+            var val = $("#LoginUserID").val();
+            var cl = $("#UserList");
+
+            cl.empty();
+            var e = '';
+            for (var i = 0; i < res.length; i++) {
+                e = e + '<button type="button" id="btn' + res[i].UserID + '" onclick="BtnUser(this,\'' + res[i].UserID + '\')" class="btn btn-default col-md-3 col-xl-2 mb-1">'
+                    + res[i].UserName +
+                    '</button>'
+            }
+
+            cl.append(e);
+
+            $("#btn" + val).removeClass("btn-default");
+            $("#btn" + val).addClass("btn-danger");
+        }
+
+        function BtnUser(btn, UserID) {
+            ButtonRemoveColor();
+            if (!$(btn).hasClass('btn-danger')) {
+                $(btn).removeClass('btn-default');
+                $(btn).addClass('btn-danger')
+            }
+            //$("#UserID").val(UserID);
+        }
+    </script>
+}
+

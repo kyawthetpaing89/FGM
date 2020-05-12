@@ -15,6 +15,11 @@ namespace FGM.Controllers
             return View();
         }
 
+        public ActionResult UserOddsHistory()
+        {
+            return View();
+        }
+
         [HttpGet]
         public string GetOdds()
         {

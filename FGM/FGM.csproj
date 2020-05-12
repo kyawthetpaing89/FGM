@@ -1980,11 +1980,11 @@
     <Content Include="Views\Match\UserOddsEntry.cshtml" />
     <Content Include="Views\UserBalance\DaliyUserBalanceList.cshtml" />
     <Content Include="Views\UserBalance\UserTransitionEntry.cshtml" />
+    <Content Include="Views\Odds\UserOddsHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Odds\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
