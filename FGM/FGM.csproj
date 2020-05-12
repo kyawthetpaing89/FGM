@@ -121,6 +121,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BookieController.cs" />
     <Compile Include="Controllers\CompetitionController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -154,6 +155,7 @@
     <Content Include="dist\css\alt\adminlte.plugins.css" />
     <Content Include="dist\css\alt\adminlte.plugins.min.css" />
     <Content Include="dist\css\Common.css" />
+    <Content Include="dist\css\jquery.bootstrap-touchspin.css" />
     <Content Include="dist\img\admin.png" />
     <Content Include="dist\img\AdminLTELogo.png" />
     <Content Include="dist\img\avatar.png" />
@@ -198,6 +200,7 @@
     <Content Include="dist\js\Cleave.js" />
     <Content Include="dist\js\Common.js" />
     <Content Include="dist\js\demo.js" />
+    <Content Include="dist\js\jquery.bootstrap-touchspin.js" />
     <Content Include="dist\js\pages\dashboard.js" />
     <Content Include="dist\js\pages\dashboard2.js" />
     <Content Include="dist\js\pages\dashboard3.js" />
@@ -1980,11 +1983,13 @@
     <Content Include="Views\Match\UserOddsEntry.cshtml" />
     <Content Include="Views\UserBalance\DaliyUserBalanceList.cshtml" />
     <Content Include="Views\UserBalance\UserTransitionEntry.cshtml" />
-    <Content Include="Views\Odds\UserOddsHistory.cshtml" />
+    <Content Include="Views\Match\MatchResultEntry.cshtml" />
+    <Content Include="Views\Bookie\BookieConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Odds\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
@@ -2004,13 +2009,13 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bookie_BL\Bookie_BL.csproj">
+      <Project>{667a7da6-ecbd-420a-83e9-068384f2783c}</Project>
+      <Name>Bookie_BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Competition_BL\Competition_BL.csproj">
       <Project>{8afc7462-7415-4f63-8d46-c7e247ac1de2}</Project>
       <Name>Competition_BL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Country_BL\Country_BL.csproj">
-      <Project>{4a0ef02a-fee8-4dc7-85d6-d470d859ed1c}</Project>
-      <Name>Country_BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\FGM_Model\FGM_Model.csproj">
       <Project>{abd67284-f94a-4bff-914d-e45a2b139e62}</Project>
