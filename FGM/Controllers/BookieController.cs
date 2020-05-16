@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Bookie_BL;
 using FGM_Model;
+using UserGambling_BL;
 
 namespace FGM.Controllers
 {
@@ -19,6 +20,30 @@ namespace FGM.Controllers
             BookieModel BModel = new BookieModel();
             BModel.MatchDate = MatchDate;
             return BBL.BookieConfirm_Select(BModel);
+        }
+
+        [HttpGet]
+        public string UserGambling_Select(string MatchID)
+        {
+            UserGamblingBL UGBL = new UserGamblingBL();
+            MatchModel MModel = new MatchModel();
+            MModel.MatchID = MatchID ;
+            return UGBL.UserGambling_Select(MModel);
+        }
+
+        [HttpPost]
+        public string BookieConfirmSave(string Table)
+        {
+            if (Session["UserInfo"] == null)
+                return "false";
+            string userInfo = Session["UserInfo"] as string;
+
+            BookieBL BBL = new BookieBL();
+            BookieModel BModel = new BookieModel();
+            BModel.BookieConfirmJson = Table;
+            BModel.UserID = userInfo.Split('_')[0];
+
+            return BBL.BookieConfirm_Insert(BModel);
         }
     }
 }

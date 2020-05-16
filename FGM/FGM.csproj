@@ -1866,6 +1866,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2016,6 +2017,10 @@
     <ProjectReference Include="..\Competition_BL\Competition_BL.csproj">
       <Project>{8afc7462-7415-4f63-8d46-c7e247ac1de2}</Project>
       <Name>Competition_BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Country_BL\Country_BL.csproj">
+      <Project>{4a0ef02a-fee8-4dc7-85d6-d470d859ed1c}</Project>
+      <Name>Country_BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\FGM_Model\FGM_Model.csproj">
       <Project>{abd67284-f94a-4bff-914d-e45a2b139e62}</Project>

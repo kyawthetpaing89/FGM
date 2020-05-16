@@ -20,5 +20,17 @@ namespace Bookie_BL
             DataTable DTBookieConfirm = bdl.SelectData("M_Match_BookieConfirm_Select", prms);
             return fun.DataTableToJSONWithJSONNet(DTBookieConfirm);
         }
+
+        public string BookieConfirm_Insert(BookieModel BModel)
+        {
+            BaseDL bdl = new BaseDL();
+            SqlParameter[] prms = new SqlParameter[2];
+            prms[0] = new SqlParameter("@UserID", SqlDbType.VarChar) { Value = BModel.UserID };
+            prms[1] = new SqlParameter("@BookieConfirmJson", SqlDbType.VarChar) { Value = BModel.BookieConfirmJson };
+
+            if (bdl.InsertUpdateDeleteData("BookieGambling_Insert", prms))
+                return "true";
+            return "false";
+        }
     }
 }

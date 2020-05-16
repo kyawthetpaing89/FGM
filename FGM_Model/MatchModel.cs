@@ -8,6 +8,7 @@ namespace FGM_Model
 {
     public class MatchModel : BaseModel
     {
+        public string MatchID { get; set; }
         public string MatchDate { get; set; }
         public string MatchTime { get; set; }
         public string TeamID1 { get; set; }

@@ -73,6 +73,33 @@ namespace FGM.Controllers
         }
 
         [HttpGet]
+        public string GetLastMatch(string MatchDate)
+        {
+            MatchBL MBL = new MatchBL();
+            MatchModel MModel = new MatchModel();
+            MModel.MatchDate = MatchDate;
+            return MBL.GetLastMatchDate(MModel);
+        }
+
+        [HttpGet]
+        public string GetPrevMatch(string MatchDate)
+        {
+            MatchBL MBL = new MatchBL();
+            MatchModel MModel = new MatchModel();
+            MModel.MatchDate = MatchDate;
+            return MBL.GetPrevMatchDate(MModel);
+        }
+
+        [HttpGet]
+        public string GetNextMatch(string MatchDate)
+        {
+            MatchBL MBL = new MatchBL();
+            MatchModel MModel = new MatchModel();
+            MModel.MatchDate = MatchDate;
+            return MBL.GetNextMatchDate(MModel);
+        }
+
+        [HttpGet]
         public string GetMatch_UserGambling(string Param)
         {
             UserGamblingBL UGBL = new UserGamblingBL();

@@ -60,5 +60,38 @@ namespace Match_BL
             DataTable DTMatch = bdl.SelectData("M_Match_Select", prms);
             return fun.DataTableToJSONWithJSONNet(DTMatch);
         }
+
+        public string GetLastMatchDate(MatchModel MModel)
+        {
+            BaseDL bdl = new BaseDL();
+            Function fun = new Function();
+            DateTime dt = DateTime.ParseExact(MModel.MatchDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.GetCultureInfo("en-us"));
+            SqlParameter[] prms = new SqlParameter[1];
+            prms[0] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
+            DataTable DTMatch = bdl.SelectData("M_Match_SelectLastMatchDate", prms);
+            return fun.DataTableToJSONWithJSONNet(DTMatch);
+        }
+
+        public string GetPrevMatchDate(MatchModel MModel)
+        {
+            BaseDL bdl = new BaseDL();
+            Function fun = new Function();
+            DateTime dt = DateTime.ParseExact(MModel.MatchDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.GetCultureInfo("en-us"));
+            SqlParameter[] prms = new SqlParameter[1];
+            prms[0] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
+            DataTable DTMatch = bdl.SelectData("M_Match_SelectPrevMatchDate", prms);
+            return fun.DataTableToJSONWithJSONNet(DTMatch);
+        }
+
+        public string GetNextMatchDate(MatchModel MModel)
+        {
+            BaseDL bdl = new BaseDL();
+            Function fun = new Function();
+            DateTime dt = DateTime.ParseExact(MModel.MatchDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.GetCultureInfo("en-us"));
+            SqlParameter[] prms = new SqlParameter[1];
+            prms[0] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
+            DataTable DTMatch = bdl.SelectData("M_Match_SelectNextMatchDate", prms);
+            return fun.DataTableToJSONWithJSONNet(DTMatch);
+        }
     }
 }

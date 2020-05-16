@@ -5,6 +5,8 @@
 }
 
 @section Styles {
+    <link href="@Url.Content("~/plugins/select2/css/select2.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/dist/css/jquery.bootstrap-touchspin.css")" rel="stylesheet" type="text/css" />
 }
@@ -30,14 +32,26 @@
     <div class="card">
         <div class="card-body">
             <div class="form-row">
-                <div class="form-group col-xl-2 col-md-3">
+                <div class="form-group col-xl-3 col-md-4">
                     <label for="matchdate">ပွဲကစားမည့်နေ့</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
+                            <button style="color:white" class="btn btn-danger" onclick="GetPrevMonth();" type="button">
+                                ☜
+                            </button>
                             <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
                         </div>
-                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate" onchange="DateChange();">
+                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate">
+                        <div class="input-group-append">
+                            <button style="color:white" class="btn btn-danger" onclick="GetNextMonth();" type="button">
+                                ☞
+                            </button>
+                        </div>
                     </div>
+                </div>
+                <div class="form-group col-xl-4 col-md-8">
+                    <label for="matchdate">ပွဲချိန်</label>
+                    <select id="selectMatchTime" class="form-control select2bs4 input-sm" multiple="multiple"></select>
                 </div>
             </div>
             <table id="tblMatch" class="table table-bordered table-striped">
@@ -57,6 +71,8 @@
                         <th>Total Goal</th>@*TotalGoalAmount*@
                         <th>Home</th>
                         <th>Away</th>
+                        <th></th>@*BodyOddsName*@
+                        <th></th>@*GoalOddsName*@
                         <th>အချုပ်</th>
                         <th>TT<br />(ဘော်ဒီ)</th>@*TTBodyAmount*@
                         <th>TT<br />(ဂိုးပေါင်း)</th>@*TTGoalAmount*@
@@ -76,9 +92,58 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">လောင်းထားသည်များ</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="HidMatchID" />
+                    <div class="row">
+                        <label class="col-xl-1 col-md-1">ဘော်ဒီ</label>
+                        <label id="lblBodyOdds" class="col-xl-2 col-md-4"></label>
+                    </div>
+                    <div class="row">
+                        <label class="col-xl-1 col-md-1">ဂိုးပေါင်း</label>
+                        <label id="lblGoalOdds" class="col-xl-2 col-md-4"></label>
+                    </div>
+                    <table id="tblMatchDetail" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th><label>လောင်းသူအမည်</label></th>
+                                <th><label id="lblHome"></label></th>
+                                <th><label id="lblAway"></label></th>
+                                <th><label>ဂိုးပေါင်း</label></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot style="background-color:lavenderblush;">
+                        </tfoot>
+                    </table>
+                    <div class="row">
+                        <label class="col-xl-1 col-md-1">စုစုပေါင်း</label>
+                        <label id="lblTotalOdds" class="col-xl-2 col-md-4"></label>
+                    </div>
+                </div>
+                @*<div class="modal-footer">
+                        <div>
+                            <button type="button" id="btnConfirm" onclick="Confirm();" class="btn btn-success">အတည်ပြုမည်</button>
+                        </div>
+                    </div>*@
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </section>
 
 @section Scripts{
+    <script src="@Url.Content("~/plugins/select2/js/select2.full.min.js")"></script>
     <script src="@Url.Content("~/plugins/daterangepicker/moment.min.js")"></script>
     <script src="@Url.Content("~/plugins/daterangepicker/daterangepicker.js")"></script>
     <script src="@Url.Content("~/dist/js/jquery.bootstrap-touchspin.js")"></script>
@@ -93,39 +158,186 @@
                 }
             });
 
+            $('#MatchTime').select2();
+
+            GetLastMonth();
+
             BindMatch();
-        });
 
+            $("tbody", "#tblMatch").on("click", "td",
+                function () {
+                    if ($(this).hasClass("FullAmount")) {
+                        $("#lblHome").html($(this).closest('tr').find('.Home').html());
+                        $("#lblAway").html($(this).closest('tr').find('.Away').html());
+                        $("#lblBodyOdds").html($(this).closest('tr').find('.BodyOdds').html());
+                        $("#lblGoalOdds").html($(this).closest('tr').find('.GoalOdds').html());
+                        $('#modal-default').modal('show');
 
-        function Save() {
-            var catchError = false;
-
-            var rows = [];
-            $('#tblMatch tbody tr').each(function (i, n) {
-                var $row = $(n);
-
-                rows.push({
-                    MatchID: $row.find('td:eq(0)').text(),
-                    Team1Goal: $row.find('.t1').val(),
-                    Team2Goal: $row.find('.t2').val(),
-                });
-            });
-
-            if (!catchError) {
-                $.ajax({
-                type: 'post',
-                dataType: 'json',
-                url: '@Url.Action("MatchResult_Update", "Match")',
-                data: { Table: JSON.stringify(rows) },
-                success: function (res) {
-                        if (res == true) {
-                            ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
-                        }
-                        else {
-                            ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
-                        }
+                        BindUserGambling($(this).closest('tr').find('.matchID').html())
                     }
                 });
+
+            $("#matchdate").change(function () {
+                DateChange();
+            });
+        });
+
+        function GetLastMonth() {
+            $.ajax({
+                url: '@Url.Action("GetLastMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    var matchDate;
+
+                    if (Object.keys(res).length > 0) {
+                        $('#selectMatchTime')
+                            .find('option')
+                            .remove();
+                    } 
+
+                    $.each(res, function (i, item) {
+                        matchDate = item.MatchDate;
+                        $("#selectMatchTime").append(
+                            $('<option></option>').val(item.MatchTime).html(item.MatchTime));
+                    });
+
+                    if (Object.keys(res).length > 0) {
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                        BindMatch();
+                    }                   
+                }
+            })
+        }
+
+        function GetPrevMonth() {
+            $.ajax({
+                url: '@Url.Action("GetPrevMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    var matchDate;
+
+                    if (Object.keys(res).length > 0) {
+                        $('#selectMatchTime')
+                            .find('option')
+                            .remove();
+                    } 
+
+                    $.each(res, function (i, item) {
+                        matchDate = item.MatchDate;
+                        $("#selectMatchTime").append(
+                            $('<option></option>').val(item.MatchTime).html(item.MatchTime));
+                    });
+
+      
+                    if (Object.keys(res).length > 0) {
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                        BindMatch();
+                    }      
+                }
+            })
+        }
+
+        function GetNextMonth() {
+            $.ajax({
+                url: '@Url.Action("GetNextMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    var matchDate;
+
+                    if (Object.keys(res).length > 0) {
+                        $('#selectMatchTime')
+                            .find('option')
+                            .remove();
+                    } 
+
+                    $.each(res, function (i, item) {
+                        matchDate = item.MatchDate;
+                        $("#selectMatchTime").append(
+                            $('<option></option>').val(item.MatchTime).html(item.MatchTime));
+                    });
+      
+                    if (Object.keys(res).length > 0) {
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                        BindMatch();
+                    }      
+                }
+            })
+        }
+
+        function BindUserGambling(matchid) {
+            $.ajax({
+                url: '@Url.Action("UserGambling_Select", "Bookie")?MatchID='+matchid,
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    SetDataToTable(res);
+                }
+            })
+        }
+
+        function SetDataToTable(res) {
+            $("#tblMatchDetail").find("tr:gt(0)").remove();
+
+            var HomeAmount = 0;
+            var AwayAmount = 0;
+            var GoalUp = 0;
+            var GoalDown = 0;
+            var GoalChar = '';
+            $.each(res, function (key, value) {
+
+                if (value.BodyType == '1') {
+                    HomeAmount = HomeAmount + value.BodyAmount;
+                    var trow = '<tr><td>' + value.UserName + '</td><td>' + value.BodyAmount + '</td><td></td><td>' + value.GoalAmountChar+'</td></tr>'
+                    var tableBody = $("#tblMatchDetail tbody");
+                    tableBody.append(trow);
+                }
+                else if(value.BodyType == '2'){
+                    AwayAmount = AwayAmount + value.BodyAmount;
+                    var trow = '<tr><td>' + value.UserName + '</td><td></td><td>' + value.BodyAmount + '</td><td>' + value.GoalAmountChar+'</td></tr>'
+                    var tableBody = $("#tblMatchDetail tbody");
+                    tableBody.append(trow);
+                }
+
+                if (value.GoalType = 1) {
+                    GoalUp = GoalUp + value.GoalAmount;
+                }
+                else if (value.GoalType = 2) {
+                    GoalDown = GoalDown + value.GoalAmount;
+                }
+            });
+
+            if (GoalUp > GoalDown) {
+                GoalChar = '↑' + (GoalUp - GoalDown);
+            }
+            else if (GoalDown > GoalUp) {
+                GoalChar = '↓' + (GoalDown - GoalUp);
+            }
+
+            var tableFoot = $("#tblMatchDetail tfoot");
+            var trow = '<tr><td></td><td>' + HomeAmount + '</td><td>' + AwayAmount + '</td><td>'+GoalChar+'</td></tr>';
+            tableFoot.append(trow);
+
+            if (HomeAmount > AwayAmount) {
+                $("#lblTotalOdds").html($("#lblHome").html() + ' ' + (HomeAmount - AwayAmount) + ' ' + GoalChar);
+            }
+            else if (AwayAmount > HomeAmount) {
+                $("#lblTotalOdds").html($("#lblAway").html() + ' ' + (AwayAmount - HomeAmount) + ' ' + GoalChar);
+            }
+            else {
+                $("#lblTotalOdds").html($("#lblHome").html() + ' ' + '0' + ' ' + GoalChar);
             }
         }
 
@@ -177,8 +389,53 @@
 
                     $(txt).val(v1);
                     $(txt1).html(v2);
-                }               
+                }
             }
+        }
+
+        function btnConfirmClick(btn) {
+            var matchID = $(btn).closest('tr').find('.matchID');
+            var teamID = $(btn).closest('tr').find('.teamID');
+            var ttbody = $(btn).closest('tr').find('.ttbody');
+            var goalType = $(btn).closest('tr').find('.goalType');
+            var ttgoal = $(btn).closest('tr').find('.ttgoal');
+            var habody = $(btn).closest('tr').find('.body');
+            var hagoal = $(btn).closest('tr').find('.hagoal');
+
+            jsonObj = [];
+
+            item = {}
+            item["matchID"] = $(matchID).html();
+            item["teamID"] = $(teamID).html();
+            item["ttbody"] = $(ttbody).html();
+            item["goalType"] = $(goalType).html();
+            item["ttgoal"] = $(ttgoal).html();
+            item["habody"] = $(habody).val();
+            item["hagoal"] = $(hagoal).val();
+
+            jsonObj.push(item);
+
+            var jsonString = JSON.stringify(jsonObj);
+
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '@Url.Action("BookieConfirmSave", "Bookie")',
+                data: { Table: jsonString },
+                success: function (res) {
+                        if (res == true) {
+                            ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
+                            if ($(btn).hasClass('btn-danger')) {
+                                $(btn).removeClass('btn-danger');
+                                $(btn).addClass('btn-success');
+                                $(btn).val('✔');
+                            }
+                        }
+                        else {
+                            ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                        }
+                    }
+                });
         }
 
         function BindMatch() {
@@ -205,23 +462,25 @@
                     "ordering": false,
                     "columns": [
                         { "data": "MatchTime","width":"10%" },
-                        { "data": "MatchID", "className": "displayNone", "width": "0%" },
+                        { "data": "MatchID", "className": "displayNone matchID", "width": "0%" },
                         { "data": "Team1ID", "className": "displayNone", "width": "0%" },
                         { "data": "Team2ID", "className": "displayNone", "width": "0%" },
                         { "data": "TotalTeamID", "className": "displayNone", "width": "0%" },
                         { "data": "TotalGoalType", "className": "displayNone", "width": "0%" },
-                        { "data": "TTTeamID", "className": "displayNone", "width": "0%" },
-                        { "data": "TTGoalType", "className": "displayNone", "width": "0%" },
+                        { "data": "TTTeamID", "className": "displayNone teamID", "width": "0%" },
+                        { "data": "TTGoalType", "className": "displayNone goalType", "width": "0%" },
                         { "data": "HATeamID", "className": "displayNone", "width": "0%" },
                         { "data": "HAGoalType", "className": "displayNone", "width": "0%" },
                         { "data": "TotalBodyAmount", "className": "displayNone", "width": "0%" },
                         { "data": "TotalGoalAmount", "className": "displayNone", "width": "0%" },
-                        { "data": "Home", "className": "displayNone" },
-                        { "data": "Away", "className": "displayNone" },                       
-                        { "data": "FullAmount","width":"18%" },                        
+                        { "data": "Home", "className": "Home displayNone" },
+                        { "data": "Away", "className": "Away displayNone" },
+                        { "data": "BodyOddsName", "className": "BodyOdds displayNone" },
+                        { "data": "GoalOddsName", "className": "GoalOdds displayNone" },
+                        { "data": "FullAmount","width":"18%","className":"FullAmount" },
                         { "data": "TTBodyAmount", "width": "12%","className":"ttbody" },
                         { "data": "TTGoalAmount", "width": "12%", "className": "ttgoal" },
-                        {   
+                        {
                             "data": "HABodyAmount", render: function (data, type, row) {
                                 return '<div class="input-group">' +
                                     '<div class="input-group-prepend">' +
@@ -239,7 +498,7 @@
                                 //return '<button class="btn btn-info">+</button><input id="' + row.MatchID + '_1" class="form-control col-xl-12 col-md-12 aligncenter t1" min="0" max="15"  type="number" value="'+ row.Team1Goal +'" >'
                             }, "width": "22%"
                         },
-                        { 
+                        {
                             "data": "HAGoalAmount", render: function (data, type, row) {
                                 return '<div class="input-group">' +
                                     '<div class="input-group-prepend">' +
@@ -259,7 +518,7 @@
                         },
                         {
                             "data": "", render: function (data, type, row) {
-                                return '<input type="button" class="btn '+ row.IsConfirmClass +'" value="'+ row.IsConfirmText +'" />'
+                                return '<input type="button" onclick="btnConfirmClick(this)" class="btn '+ row.IsConfirmClass +'" value="'+ row.IsConfirmText +'" />'
                             },width:"4%"
                         },
                     ],

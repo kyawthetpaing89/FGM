@@ -22,6 +22,17 @@ namespace UserGambling_BL
             return fun.DataTableToJSONWithJSONNet(DTMatch);
         }
 
+        public string UserGambling_Select(MatchModel MModel)
+        {
+            BaseDL bdl = new BaseDL();
+            Function fun = new Function();
+            SqlParameter[] prms = new SqlParameter[1];
+            prms[0] = new SqlParameter("@MatchID", SqlDbType.BigInt) { Value = MModel.MatchID };
+            DataTable DTMatch = bdl.SelectData("UserGambling_Select", prms);
+            return fun.DataTableToJSONWithJSONNet(DTMatch);
+        }
+        
+
         public string UserGambling_Insert(MatchModel MModel)
         {
             BaseDL bdl = new BaseDL();
