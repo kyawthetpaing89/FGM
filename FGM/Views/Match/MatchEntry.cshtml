@@ -155,6 +155,7 @@
             var catchError = false;
 
             var rows = [];
+            var i = 0;
             $('#tblTeam tbody tr').each(function (i, n) {
                 var $row = $(n);
                 if (!$row.find('.datetimepicker-input').val()) {
@@ -169,6 +170,7 @@
                 }
 
                 rows.push({
+                    MatchSEQ: ++i,
                     MatchTime: $row.find('.datetimepicker-input').val(),
                     Team1: $row.find('td:eq(1)').text(),
                     Team2: $row.find('td:eq(3)').text()

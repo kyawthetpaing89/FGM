@@ -1,0 +1,282 @@
+﻿
+@{
+    ViewBag.Title = "UserGamblingResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/dist/css/jquery.bootstrap-touchspin.css")" rel="stylesheet" type="text/css" />
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>ဒိုင်ဆီတင်ရန်</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Match Entry</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-xl-3 col-md-4">
+                    <label for="matchdate">ပွဲကစားသည့်နေ့</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button style="color:white" class="btn btn-danger" onclick="GetPrevMonth();" type="button">
+                                ☜
+                            </button>
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
+                        </div>
+                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate">
+                        <div class="input-group-append">
+                            <button style="color:white" class="btn btn-danger" onclick="GetNextMonth();" type="button">
+                                ☞
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-xl-4 col-md-8">
+                    <label for="Calc" style="color:red">*ပွဲရလာဒ်များအရင်ထည့်သွင်းရန်</label>
+                    <div class="input-group">
+                        <button type="button" id="btnSave" onclick="Calculate();" class="btn btn-success">စာရင်းတွက်မည်</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-xl-6 col-lg-6 col-md-6 sm-12">
+                    <table id="tblBookieGamblingResult" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>BookieID</th>
+                                <th>ဒိုင်အမည်</th>
+                                <th style="text-align:center;color:black;">နိုင်</th>
+                                <th style="text-align:center;color:black;">ရှုံး</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 sm-12">
+                    <table id="tblUserGamblingResult" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>UserID</th>
+                                <th>လောင်းသူအမည်</th>
+                                <th style="text-align:center;color:black;">နိုင်</th>
+                                <th style="text-align:center;color:black;">ရှုံး</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                        </tfoot>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script src="@Url.Content("~/plugins/select2/js/select2.full.min.js")"></script>
+    <script src="@Url.Content("~/plugins/daterangepicker/moment.min.js")"></script>
+    <script src="@Url.Content("~/plugins/daterangepicker/daterangepicker.js")"></script>
+    <script src="@Url.Content("~/dist/js/jquery.bootstrap-touchspin.js")"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#matchdate').daterangepicker({
+                timePicker: false, //<==MAKE THE CHANGE HERE
+                singleDatePicker: true, //<==MAKE THE CHANGE HERE
+                locale: {
+                    format: 'DD-MM-YYYY'
+                }
+            });
+
+            GetLastMonth();
+
+            $("#matchdate").change(function () {
+                DateChange();
+            });
+        });
+
+        function GetLastMonth() {
+            $.ajax({
+                url: '@Url.Action("GetLastMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {                   
+
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                    }
+
+                    BindUserGamblingResult();
+                    BindBookieGamblingResult();
+                }
+            })
+        }
+
+        function GetPrevMonth() {
+            $.ajax({
+                url: '@Url.Action("GetPrevMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    var matchDate;
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                    }
+                }
+            })
+        }
+
+        function GetNextMonth() {
+            $.ajax({
+                url: '@Url.Action("GetNextMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    var matchDate;
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                    }
+                }
+            })
+        }
+
+        function DateChange() {
+            BindUserGamblingResult();
+            BindBookieGamblingResult();
+        }
+
+        function ShowMessage(msg, status) {
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            Toast.fire({
+                type: status,
+                title: msg
+            });
+        }
+
+        function BindUserGamblingResult() {
+            var table = $('#tblUserGamblingResult').DataTable(
+                {
+                    "language": {
+                        "info": "Display _START_ to _END_ of _TOTAL_ records",
+                    },
+                    "oLanguage": {
+                        "sLengthMenu": "Display _MENU_ records",
+                    },
+                    "ajax": {
+                        "url": '@Url.Action("UserGamblingResult_Select", "User")?MatchDate='+$("#matchdate").val()+'',
+                        "type": "GET",
+                        "datatype": "json",
+                        "dataSrc": ""
+                    },
+                    "searching": false,
+                    "responsive": false,
+                    "order": [[0, "desc"]],
+                    "autoWidth": false,
+                    "destroy": "true",
+                    "paging": false,
+                    "ordering": false,
+                    "columns": [
+                        { "data": "UserID","class":"displayNone", "width": "50%" },
+                        { "data": "UserName", "width": "50%" },
+                        { "data": "NetAmountPlus", "class": "alignright blue", "width": "25%" },
+                        { "data": "NetAmountMinus", "class": "alignright red", "width": "25%" },
+                    ],
+                }
+            );
+        }
+
+        function BindBookieGamblingResult() {
+            var table = $('#tblBookieGamblingResult').DataTable(
+                {
+                    "language": {
+                        "info": "Display _START_ to _END_ of _TOTAL_ records",
+                    },
+                    "oLanguage": {
+                        "sLengthMenu": "Display _MENU_ records",
+                    },
+                    "ajax": {
+                        "url": '@Url.Action("BookieGamblingResult_Select", "User")?MatchDate='+$("#matchdate").val()+'',
+                        "type": "GET",
+                        "datatype": "json",
+                        "dataSrc": ""
+                    },
+                    "searching": false,
+                    "responsive": false,
+                    "order": [[0, "desc"]],
+                    "autoWidth": false,
+                    "destroy": "true",
+                    "paging": false,
+                    "ordering": false,
+                    "columns": [
+                        { "data": "BookieID","class":"displayNone", "width": "50%" },
+                        { "data": "BookieName", "width": "50%" },
+                        { "data": "NetAmountPlus", "class":"alignright blue", "width": "25%" },
+                        { "data": "NetAmountMinus", "class": "alignright red", "width": "25%" },
+                    ],
+                }
+            );
+        }
+
+        function Calculate() {
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: '@Url.Action("UserGamblingCalculate", "User")?MatchDate='+$("#matchdate").val()+'',
+                data: '',
+                success: function (res) {
+                    if (res == "true") {
+                        ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
+                        BindUserGamblingResult();
+                        BindBookieGamblingResult();
+                    }
+                    else if (res == "false") {
+                        ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                    }
+                    else {
+                        window.location.href = "http://3.133.30.8/User_Synchronization";
+                    }
+                }
+            });
+        }
+    </script>
+}
+

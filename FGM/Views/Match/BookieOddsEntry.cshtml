@@ -30,13 +30,21 @@
     <div class="card">
         <div class="card-body">
             <div class="form-row">
-                <div class="form-group col-xl-2 col-md-3">
-                    <label for="matchdate">ပွဲကစားမည့်နေ့</label>
+                <div class="form-group col-xl-3 col-md-4">
+                    <label for="matchdate">ပွဲကစားသည့်နေ့</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
+                            <button style="color:white" class="btn btn-danger" onclick="GetPrevMonth();" type="button">
+                                ☜
+                            </button>
                             <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
                         </div>
-                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate" onchange="DateChange();">
+                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate">
+                        <div class="input-group-append">
+                            <button style="color:white" class="btn btn-danger" onclick="GetNextMonth();" type="button">
+                                ☞
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,9 +158,69 @@
                     }                                                         
                 });
 
+            GetLastMonth();
+
+            $("#matchdate").change(function () {
+                DateChange();
+            });
+            BindMatch();
             GetOdds();
 
         });
+
+        function GetLastMonth() {
+            $.ajax({
+                url: '@Url.Action("GetLastMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {                   
+
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                    }
+                }
+            })
+        }
+
+        function GetPrevMonth() {
+            $.ajax({
+                url: '@Url.Action("GetPrevMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    var matchDate;
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                    }
+                }
+            })
+        }
+
+        function GetNextMonth() {
+            $.ajax({
+                url: '@Url.Action("GetNextMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    var matchDate;
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                    }
+                }
+            })
+        }
 
         function Confirm() {
             $(Odds).closest('tr').find('.t1OddsID').html('');

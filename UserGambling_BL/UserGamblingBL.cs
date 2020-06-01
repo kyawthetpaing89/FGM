@@ -31,7 +31,29 @@ namespace UserGambling_BL
             DataTable DTMatch = bdl.SelectData("UserGambling_Select", prms);
             return fun.DataTableToJSONWithJSONNet(DTMatch);
         }
-        
+
+        public string UserGamblingResult_Select(MatchModel MModel)
+        {
+            DateTime dt = DateTime.ParseExact(MModel.MatchDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.GetCultureInfo("en-us"));
+            BaseDL bdl = new BaseDL();
+            Function fun = new Function();
+            SqlParameter[] prms = new SqlParameter[1];
+            prms[0] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
+            DataTable DTMatch = bdl.SelectData("UserGamblingResult_Select", prms);
+            return fun.DataTableToJSONWithJSONNet(DTMatch);
+        }
+
+        public string BookieGamblingResult_Select(MatchModel MModel)
+        {
+            DateTime dt = DateTime.ParseExact(MModel.MatchDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.GetCultureInfo("en-us"));
+            BaseDL bdl = new BaseDL();
+            Function fun = new Function();
+            SqlParameter[] prms = new SqlParameter[1];
+            prms[0] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
+            DataTable DTMatch = bdl.SelectData("BookieGamblingResult_Select", prms);
+            return fun.DataTableToJSONWithJSONNet(DTMatch);
+        }
+
 
         public string UserGambling_Insert(MatchModel MModel)
         {
@@ -47,6 +69,17 @@ namespace UserGambling_BL
                 return "true";
             return "false";
         }
-        
+
+        public string UserGambling_Calculate(MatchModel MModel)
+        {
+            BaseDL bdl = new BaseDL();
+            DateTime dt = DateTime.ParseExact(MModel.MatchDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.GetCultureInfo("en-us"));
+            SqlParameter[] prms = new SqlParameter[1];
+            prms[0] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
+
+            if (bdl.InsertUpdateDeleteData("UserGambling_Calculate", prms))
+                return "true";
+            return "false";
+        }
     }
 }

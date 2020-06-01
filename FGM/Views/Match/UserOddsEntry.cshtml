@@ -29,13 +29,21 @@
     <div class="card">
         <div class="card-body">
             <div class="form-row">
-                <div class="form-group col-xl-2 col-md-3">
-                    <label for="matchdate">ပွဲကစားမည့်နေ့</label>
+                <div class="form-group col-xl-3 col-md-4">
+                    <label for="matchdate">ပွဲကစားသည့်နေ့</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
+                            <button style="color:white" class="btn btn-danger" onclick="GetPrevMonth();" type="button">
+                                ☜
+                            </button>
                             <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
                         </div>
-                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate" onchange="DateChange();">
+                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate">
+                        <div class="input-group-append">
+                            <button style="color:white" class="btn btn-danger" onclick="GetNextMonth();" type="button">
+                                ☞
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,6 +78,7 @@
                         <th>Away</th>
                         <th>ဘော်ဒီကြေး</th>
                         <th>ဂိုးပေါင်းကြေး</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -296,6 +305,7 @@
                         RemoveBtnColor(3);
 
                         if ($(tgAmt).html()) {
+                            
                             $("#lbltgAmt").html($(tgAmt).html());
                             $("#btnBody" + $(tgAmt).html()).removeClass('btn-default');
                             $("#btnBody" + $(tgAmt).html()).addClass('btn-danger');
@@ -305,7 +315,7 @@
                         else {
                             $("#lbltgAmt").html("");
                         }
-                            
+
                         if ($(tggType).html()) {
                             $("#tggType").val($(tggType).html());
                             if ($(tggType).html() == 1) {
@@ -323,7 +333,8 @@
                                 $('#card3').CardWidget('expand');
                             }
 
-                            $("#lbltggAmt").val($(tggAmt).html());
+                            $("#lbltggAmt").html($(tggAmt).html());
+                            
                         }
                         else {
                             $("#tggType").val('');
@@ -337,8 +348,68 @@
 
                         $('#modal-default').modal('show');
                     }
-                });            
+                });  
+
+            GetLastMonth();
+
+            $("#matchdate").change(function () {
+                DateChange();
+            });
         });
+
+        function GetLastMonth() {
+            $.ajax({
+                url: '@Url.Action("GetLastMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {                   
+
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                    }
+                }
+            })
+        }
+
+        function GetPrevMonth() {
+            $.ajax({
+                url: '@Url.Action("GetPrevMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    var matchDate;
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                    }
+                }
+            })
+        }
+
+        function GetNextMonth() {
+            $.ajax({
+                url: '@Url.Action("GetNextMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    var matchDate;
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                    }
+                }
+            })
+        }
 
         function GetUser() {
             $.ajax({
@@ -448,11 +519,14 @@
                     url: '@Url.Action("UserGambling_Insert", "Match")?Param='+ Param+'',
                 data: { Table: JSON.stringify(rows) },
                 success: function (res) {
-                        if (res == true) {
+                        if (res == "true") {
                             ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
                         }
-                        else {
+                        else if (res == "false"){
                             ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                        }
+                        else{
+                            window.location.href = "http://3.133.30.8/User_Synchronization";
                         }
                     }
                 });
@@ -535,7 +609,7 @@
                         "dataSrc": ""
                     },
                     "searching": false,
-                    "order": [[1, "desc"]],
+                    "order": [[15, "asc"]],
                     "autoWidth": false,
                     "destroy": "true",
                     "paging": false,
@@ -554,7 +628,8 @@
                         { "data": "Away", "width": "10%","className":"Away"},                        
                         { "data": "Team2Odds", "className": "t2Odds", "width": "10%"},                        
                         { "data": "GoalOdds", "className": "tdGoalOdds", "width": "10%" },
-                        { "data": "BodyType", "className": "bType displayNone"},
+                        { "data": "BodyType", "className": "bType displayNone" },
+                        { "data": "SEQ", "className": "displayNone" },
                     ],
                 }
             );

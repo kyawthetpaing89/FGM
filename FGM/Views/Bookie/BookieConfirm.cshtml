@@ -86,11 +86,6 @@
                 </tfoot>
             </table>
         </div>
-        <div class="card-footer">
-            <div style="text-align:center;">
-                <button type="button" id="btnSave" onclick="Save();" class="btn btn-success">သိမ်းဆည်းမည်</button>
-            </div>
-        </div>
     </div>
 
     <div class="modal fade" id="modal-default">
@@ -162,8 +157,6 @@
 
             GetLastMonth();
 
-            BindMatch();
-
             $("tbody", "#tblMatch").on("click", "td",
                 function () {
                     if ($(this).hasClass("FullAmount")) {
@@ -174,6 +167,8 @@
                         $('#modal-default').modal('show');
 
                         BindUserGambling($(this).closest('tr').find('.matchID').html())
+
+                        $("#tblMatchDetail tbody").prepend("<tr><td></td><td></td><td></td><td></td></tr>");
                     }
                 });
 
@@ -205,10 +200,10 @@
 
                     if (Object.keys(res).length > 0) {
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
-                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);                       
+                    }  
 
-                        BindMatch();
-                    }                   
+                    BindMatch();
                 }
             })
         }
@@ -237,10 +232,10 @@
       
                     if (Object.keys(res).length > 0) {
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
-                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);                        
+                    }     
 
-                        BindMatch();
-                    }      
+                    BindMatch();
                 }
             })
         }
@@ -269,9 +264,8 @@
                     if (Object.keys(res).length > 0) {
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
-
-                        BindMatch();
-                    }      
+                    } 
+                    BindMatch();
                 }
             })
         }
@@ -372,8 +366,8 @@
                 var txt = $(btn).closest('tr').find(cName);
                 var txt1 = $(btn).closest('tr').find(cName1);
                 if ($(txt).val() > 0) {
-                    var v1 = -100 + + $(txt).val();
-                    var v2 = 100 + + $(txt1).html();
+                    var v1 = -50 + + $(txt).val();
+                    var v2 = 50 + + $(txt1).html();
                     $(txt).val(v1);
                     $(txt1).html(v2);
                 }
@@ -382,10 +376,10 @@
                 var txt = $(btn).closest('tr').find(cName);
                 var txt1 = $(btn).closest('tr').find(cName1);
 
-                if (100 + + $(txt).val() <= max) {
-                    var v1 = 100 + + $(txt).val();
+                if (50 + + $(txt).val() <= max) {
+                    var v1 = 50 + + $(txt).val();
 
-                    var v2 = $(txt1).html() - 100;
+                    var v2 = $(txt1).html() - 50;
 
                     $(txt).val(v1);
                     $(txt1).html(v2);
@@ -400,11 +394,12 @@
             var goalType = $(btn).closest('tr').find('.goalType');
             var ttgoal = $(btn).closest('tr').find('.ttgoal');
             var habody = $(btn).closest('tr').find('.body');
-            var hagoal = $(btn).closest('tr').find('.hagoal');
+            var hagoal = $(btn).closest('tr').find('.goal');
 
             jsonObj = [];
 
             item = {}
+            item["matchDate"] = $('#matchdate').val();
             item["matchID"] = $(matchID).html();
             item["teamID"] = $(teamID).html();
             item["ttbody"] = $(ttbody).html();
@@ -423,16 +418,19 @@
                 url: '@Url.Action("BookieConfirmSave", "Bookie")',
                 data: { Table: jsonString },
                 success: function (res) {
-                        if (res == true) {
+                        if (res == "true") {
                             ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
                             if ($(btn).hasClass('btn-danger')) {
                                 $(btn).removeClass('btn-danger');
                                 $(btn).addClass('btn-success');
-                                $(btn).val('✔');
+                                $(btn).val('✓');
                             }
                         }
+                        else if (res == "false") {
+                            ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error');
+                        }
                         else {
-                            ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                            window.location.href = "http://3.133.30.8/User_Synchronization";
                         }
                     }
                 });

@@ -113,7 +113,7 @@ namespace FGM.Controllers
         public string UserGambling_Insert(string Table, string Param)
         {
             if (Session["UserInfo"] == null)
-                return "false";
+                return "STO";
 
             string userInfo = Session["UserInfo"] as string;
 
@@ -131,7 +131,7 @@ namespace FGM.Controllers
         public string MatchResult_Update(string Table)
         {
             if (Session["UserInfo"] == null)
-                return "false";
+                return "STO";
             string userInfo = Session["UserInfo"] as string;
 
             MatchBL MBL = new MatchBL();

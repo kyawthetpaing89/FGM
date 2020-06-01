@@ -28,10 +28,10 @@
 
         else
         {
-            Context.Response.Redirect("~/User/Login");
+            Response.Redirect("http://3.133.30.8/User_Synchronization");
         }
     }
-    
+
 }
 <html>
 <head>
@@ -313,7 +313,7 @@
                                 <li class="nav-item">
                                     <a href="@Url.Action("BookieOddsEntry","Match")" class="nav-link">
                                         <i class="far fa-check-circle nav-icon text-info"></i>
-                                        <p>လောင်းကြေးများ ဖြည့်သွင်းရန်</p>
+                                        <p>ကြေးထည့်ရန်</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -323,15 +323,15 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("MatchResultEntry","Match")" class="nav-link">
-                                        <i class="far fa-check-circle nav-icon text-info"></i>
-                                        <p>ပွဲပြီးရလာဒ်များဖြည့်သွင်းရန်</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="@Url.Action("BookieConfirm","Bookie")" class="nav-link">
                                         <i class="far fa-check-circle nav-icon text-info"></i>
                                         <p>ဒိုင်ဆီတင်ရန်</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("MatchResultEntry","Match")" class="nav-link">
+                                        <i class="far fa-check-circle nav-icon text-info"></i>
+                                        <p>ရလာဒ်များဖြည့်သွင်းရန်</p>
                                     </a>
                                 </li>
                             </ul>
@@ -344,6 +344,14 @@
                                     <i class="right fas fa-angle-right"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("UserGamblingResult","User")" class="nav-link">
+                                        <i class="far fa-check-circle nav-icon text-info"></i>
+                                        <p>စာရင်းတွက်/ကြည့်မည်</p>
+                                    </a>
+                                </li>
+                            </ul>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="@Url.Action("UserBalanceList","UserBalance")" class="nav-link">

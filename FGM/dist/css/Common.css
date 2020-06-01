@@ -1,4 +1,16 @@
-﻿.displayNone{
+﻿.alignright{
+    text-align:right;
+}
+
+.blue{
+    color:blue;
+}
+
+.red{
+    color:red;
+}
+
+.displayNone{
     display:none;
 }
 

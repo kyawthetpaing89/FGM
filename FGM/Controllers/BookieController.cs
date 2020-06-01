@@ -32,14 +32,15 @@ namespace FGM.Controllers
         }
 
         [HttpPost]
-        public string BookieConfirmSave(string Table)
+        public string BookieConfirmSave(string Table,string MatchDate)
         {
             if (Session["UserInfo"] == null)
-                return "false";
+                return "STO";//session time out
             string userInfo = Session["UserInfo"] as string;
 
             BookieBL BBL = new BookieBL();
             BookieModel BModel = new BookieModel();
+            BModel.MatchDate = MatchDate;
             BModel.BookieConfirmJson = Table;
             BModel.UserID = userInfo.Split('_')[0];
 
