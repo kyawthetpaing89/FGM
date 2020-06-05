@@ -34,3 +34,15 @@ D:\Project\kyawthetpaing89\FGM_system\FGM_DL\obj\Debug\FGM_DL.csproj.CoreCompile
 D:\Project\kyawthetpaing89\FGM_system\FGM_DL\obj\Debug\FGM_DL.csproj.CopyComplete
 D:\Project\kyawthetpaing89\FGM_system\FGM_DL\obj\Debug\FGM_DL.dll
 D:\Project\kyawthetpaing89\FGM_system\FGM_DL\obj\Debug\FGM_DL.pdb
+E:\Projects\FGM\FGM_DL\bin\Debug\FGM_DL.dll.config
+E:\Projects\FGM\FGM_DL\bin\Debug\FGM_DL.dll
+E:\Projects\FGM\FGM_DL\bin\Debug\FGM_DL.pdb
+E:\Projects\FGM\FGM_DL\bin\Debug\EntityFramework.dll
+E:\Projects\FGM\FGM_DL\bin\Debug\EntityFramework.SqlServer.dll
+E:\Projects\FGM\FGM_DL\bin\Debug\EntityFramework.xml
+E:\Projects\FGM\FGM_DL\bin\Debug\EntityFramework.SqlServer.xml
+E:\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.csprojAssemblyReference.cache
+E:\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.csproj.CoreCompileInputs.cache
+E:\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.csproj.CopyComplete
+E:\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.dll
+E:\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.pdb

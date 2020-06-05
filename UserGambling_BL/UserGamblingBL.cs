@@ -22,6 +22,18 @@ namespace UserGambling_BL
             return fun.DataTableToJSONWithJSONNet(DTMatch);
         }
 
+        public string UserGamblingResultDetail(MatchModel MModel)
+        {
+            BaseDL bdl = new BaseDL();
+            Function fun = new Function();
+            DateTime dt = DateTime.ParseExact(MModel.MatchDate.Replace("-", "/"), "dd/MM/yyyy", CultureInfo.GetCultureInfo("en-us"));
+            SqlParameter[] prms = new SqlParameter[2];
+            prms[0] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
+            prms[1] = new SqlParameter("@UserID", SqlDbType.VarChar) { Value = MModel.UserID };
+            DataTable DTMatch = bdl.SelectData("UserGambling_DetailSelect", prms);
+            return fun.DataTableToJSONWithJSONNet(DTMatch);
+        }
+      
         public string UserGambling_Select(MatchModel MModel)
         {
             BaseDL bdl = new BaseDL();

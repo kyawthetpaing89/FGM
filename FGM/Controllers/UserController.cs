@@ -68,5 +68,15 @@ namespace FGM.Controllers
 
             return UGBL.UserGambling_Calculate(MModel);
         }
+
+        [HttpGet]
+        public string UserGamblingResult_Detail(string Param)
+        {
+            UserGamblingBL UGBL = new UserGamblingBL();
+            MatchModel MModel = new MatchModel();
+            MModel.MatchDate = Param.Split('_')[0];
+            MModel.UserID = Param.Split('_')[1];
+            return UGBL.UserGamblingResultDetail(MModel);
+        }
     }
 }

@@ -28,3 +28,9 @@ D:\Project\kyawthetpaing89\FGM_system\FGM_Model\obj\Debug\FGM_Model.csprojAssemb
 D:\Project\kyawthetpaing89\FGM_system\FGM_Model\obj\Debug\FGM_Model.csproj.CoreCompileInputs.cache
 D:\Project\kyawthetpaing89\FGM_system\FGM_Model\obj\Debug\FGM_Model.dll
 D:\Project\kyawthetpaing89\FGM_system\FGM_Model\obj\Debug\FGM_Model.pdb
+E:\Projects\FGM\FGM_Model\bin\Debug\FGM_Model.dll
+E:\Projects\FGM\FGM_Model\bin\Debug\FGM_Model.pdb
+E:\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.csprojAssemblyReference.cache
+E:\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.csproj.CoreCompileInputs.cache
+E:\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.dll
+E:\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.pdb
