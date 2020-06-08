@@ -418,7 +418,8 @@
                 url: '@Url.Action("BookieConfirmSave", "Bookie")',
                 data: { Table: jsonString },
                 success: function (res) {
-                        if (res == "true") {
+
+                        if (res == "1") {
                             ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
                             if ($(btn).hasClass('btn-danger')) {
                                 $(btn).removeClass('btn-danger');
@@ -426,7 +427,7 @@
                                 $(btn).val('✓');
                             }
                         }
-                        else if (res == "false") {
+                        else if (res == "0") {
                             ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error');
                         }
                         else {

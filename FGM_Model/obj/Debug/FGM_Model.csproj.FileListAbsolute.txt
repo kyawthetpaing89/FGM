@@ -34,3 +34,9 @@ E:\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.csprojAssemblyReference.cache
 E:\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.csproj.CoreCompileInputs.cache
 E:\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.dll
 E:\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.pdb
+C:\Users\kyawt\Documents\Projects\FGM\FGM_Model\bin\Debug\FGM_Model.dll
+C:\Users\kyawt\Documents\Projects\FGM\FGM_Model\bin\Debug\FGM_Model.pdb
+C:\Users\kyawt\Documents\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.csprojAssemblyReference.cache
+C:\Users\kyawt\Documents\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.csproj.CoreCompileInputs.cache
+C:\Users\kyawt\Documents\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.dll
+C:\Users\kyawt\Documents\Projects\FGM\FGM_Model\obj\Debug\FGM_Model.pdb

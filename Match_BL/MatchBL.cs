@@ -20,8 +20,8 @@ namespace Match_BL
             prms[2] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
 
             if (bdl.InsertUpdateDeleteData("M_Match_Insert", prms))
-                return "true";
-            return "false";
+                return "1";
+            return "0";
         }
 
         public string Match_OddsUpdate(MatchModel MModel)
@@ -34,8 +34,8 @@ namespace Match_BL
             prms[2] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
 
             if (bdl.InsertUpdateDeleteData("M_Match_OddsUpdate", prms))
-                return "true";
-            return "false";
+                return "1";
+            return "0";
         }
 
         public string MatchResult_Update(MatchModel MModel)
@@ -46,8 +46,8 @@ namespace Match_BL
             prms[1] = new SqlParameter("@MatchJson", SqlDbType.VarChar) { Value = MModel.MatchJson };
 
             if (bdl.InsertUpdateDeleteData("M_Match_ResultUpdate", prms))
-                return "true";
-            return "false";
+                return "1";
+            return "0";
         }
 
         public string GetMatch(MatchModel MModel)

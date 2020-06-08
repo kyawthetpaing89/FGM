@@ -78,8 +78,8 @@ namespace UserGambling_BL
             prms[3] = new SqlParameter("@UserID1", SqlDbType.VarChar) { Value = MModel.UserID1 };
 
             if (bdl.InsertUpdateDeleteData("UserGambling_Insert", prms))
-                return "true";
-            return "false";
+                return "1";
+            return "0";
         }
 
         public string UserGambling_Calculate(MatchModel MModel)
@@ -90,8 +90,8 @@ namespace UserGambling_BL
             prms[0] = new SqlParameter("@MatchDate", SqlDbType.Date) { Value = dt };
 
             if (bdl.InsertUpdateDeleteData("UserGambling_Calculate", prms))
-                return "true";
-            return "false";
+                return "1";
+            return "0";
         }
     }
 }

@@ -58,7 +58,7 @@ namespace FGM.Controllers
         public string UserGamblingCalculate(string MatchDate)
         {
             if (Session["UserInfo"] == null)
-                return "STO";
+                return "2";
             string userInfo = Session["UserInfo"] as string;
 
             UserGamblingBL UGBL = new UserGamblingBL();

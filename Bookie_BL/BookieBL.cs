@@ -29,8 +29,8 @@ namespace Bookie_BL
             prms[1] = new SqlParameter("@BookieConfirmJson", SqlDbType.VarChar) { Value = BModel.BookieConfirmJson };
 
             if (bdl.InsertUpdateDeleteData("BookieGambling_Insert", prms))
-                return "true";
-            return "false";
+                return "1";
+            return "0";
         }
     }
 }

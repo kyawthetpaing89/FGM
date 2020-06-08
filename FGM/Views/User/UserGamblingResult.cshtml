@@ -262,12 +262,12 @@
                 url: '@Url.Action("UserGamblingCalculate", "User")?MatchDate='+$("#matchdate").val()+'',
                 data: '',
                 success: function (res) {
-                    if (res == "true") {
+                    if (res == "1") {
                         ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
                         BindUserGamblingResult();
                         BindBookieGamblingResult();
                     }
-                    else if (res == "false") {
+                    else if (res == "0") {
                         ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
                     }
                     else {

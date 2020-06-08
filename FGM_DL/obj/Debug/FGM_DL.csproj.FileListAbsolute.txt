@@ -46,3 +46,15 @@ E:\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.csproj.CoreCompileInputs.cache
 E:\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.csproj.CopyComplete
 E:\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.dll
 E:\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.pdb
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\bin\Debug\FGM_DL.dll.config
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\bin\Debug\FGM_DL.dll
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\bin\Debug\FGM_DL.pdb
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\bin\Debug\EntityFramework.dll
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\bin\Debug\EntityFramework.xml
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.csprojAssemblyReference.cache
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.csproj.CoreCompileInputs.cache
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.csproj.CopyComplete
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.dll
+C:\Users\kyawt\Documents\Projects\FGM\FGM_DL\obj\Debug\FGM_DL.pdb

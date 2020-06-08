@@ -57,6 +57,7 @@
                         <th></th>
                         <th></th>
                         <th>Away</th>
+                        <th style="display:none">SEQ</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -172,10 +173,10 @@
                 url: '@Url.Action("MatchResult_Update", "Match")',
                 data: { Table: JSON.stringify(rows) },
                 success: function (res) {
-                        if (res == "true") {
+                        if (res == "1") {
                             ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
                         }
-                        else if (res == "false") {
+                        else if (res == "0") {
                             ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
                         }
                         else {
@@ -246,7 +247,7 @@
                     },
                     "searching": false,
                     "responsive": true,
-                    "order": [[1, "desc"]],
+                    "order": [[6, "asc"]],
                     "autoWidth": false,
                     "destroy": "true",
                     "paging": false,
@@ -290,7 +291,8 @@
                                 //return '<input id="' + row.MatchID + '_2" class="form-control col-xl-12 col-md-12 aligncenter t2" min="0" max="15" type="number" value="' + row.Team2Goal + '">'
                             }, "width": "18%"
                         },
-                        { "data": "Away", "width": "25%"},
+                        { "data": "Away", "width": "25%" },
+                        { "data": "SEQ", "className":"displayNone"},
                     ],
                 }
             );

@@ -239,71 +239,36 @@
                         "datatype": "json",
                         "dataSrc": ""
                     },
+                    "order":0,
                     "searching": false,
                     "autoWidth": false,
                     "destroy": "true",
                     "paging": false,
                     "columns": [
+                        {"data": "MatchID","className":"displayNone"},
                         { "data": "TeamNameMM", "width": "40%" },
                         { "data": "Odds" ,"width":"20%"},
                         { "data": "WinResult","width":"20%" },
                         { "data": "LoseResult","width": "20%" },
                     ],
-                    footerCallback: function (row, data, start, end, display) {
-                        var api = this.api();
-                        // Remove the formatting to get integer data for summation
-                        var intVal = function (i) {
-                            return typeof i === 'string' ?
-                                i.replace(/[\$,]/g, '') * 1 :
-                                typeof i === 'number' ?
-                                    i : 0;
-                        };
-
-                        // Total over all pages
-                        var total = api
-                            .column(2)
-                            .data()
-                            .reduce(function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0);
-
-                        //// Total over this page
-                        var pageTotal = api
-                            .column(2, { page: 'current' })
-                            .data()
-                            .reduce(function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0);
-
-                        // Update footer
-                        $(api.column(2).footer()).html(
-                            pageTotal.toLocaleString()
-                        );
-
-                        // Total over all pages
-                        var total = api
-                            .column(1)
-                            .data()
-                            .reduce(function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0);
-
-                        //// Total over this page
-                        var pageTotal = api
-                            .column(1, { page: 'current' })
-                            .data()
-                            .reduce(function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0);
-
-                        // Update footer
-                        $(api.column(1).footer()).html(
-                            pageTotal.toLocaleString()
-                        );
+                    "rowCallback": function (row, data, index) {
+                        if (data.MatchID == "9223372036854775806") {
+                            $('td', row).css('background-color', 'oldlace');
+                        }
+                        if (data.MatchID == "9223372036854775807") {
+                            $('td', row).css('background-color', 'oldlace');
+                        }
                     }
                 }
             );
         }
+
+        //$.when(DateChange()).done(function (a1) {
+        //    alert("a");
+        //    // the code here will be executed when all four ajax requests resolve.
+        //    // a1, a2, a3 and a4 are lists of length 3 containing the response text,
+        //    // status, and jqXHR object for each of the four ajax calls respectively.
+        //});
     </script>
 }
 

@@ -61,6 +61,7 @@
                         <th>ဘော်ဒီကြေး</th>
                         <th style="display:none"></th>
                         <th>ဂိုးပေါင်းကြေး</th>
+                        <th style="display:none">SEQ</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -373,7 +374,8 @@
             cl.append(e);
         }
 
-        function DateChange() {          
+        function DateChange() {     
+            alert("a");
             BindMatch();
         }
 
@@ -409,7 +411,7 @@
                     },
                     "searching": false,
                     "responsive": true,
-                    "order": [[1, "desc"]],
+                    "order": [[10, "asc"]],
                     "autoWidth": false,
                     "destroy": "true",
                     "paging": false,
@@ -423,7 +425,8 @@
                         { "data": "Team2OddsID", "className":"t2OddsID displayNone"},
                         { "data": "Team2Odds","className":"t2Odds" },
                         { "data": "GoalOddsID", "className": "tdGoalOddsID displayNone" },
-                        { "data": "GoalOdds", "className":"tdGoalOdds"},
+                        { "data": "GoalOdds", "className": "tdGoalOdds" },
+                        { "data": "SEQ", "className": "displayNone" },
                     ],
                 }
             );

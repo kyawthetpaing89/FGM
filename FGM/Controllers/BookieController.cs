@@ -35,7 +35,7 @@ namespace FGM.Controllers
         public string BookieConfirmSave(string Table,string MatchDate)
         {
             if (Session["UserInfo"] == null)
-                return "STO";//session time out
+                return "2";//session time out
             string userInfo = Session["UserInfo"] as string;
 
             BookieBL BBL = new BookieBL();

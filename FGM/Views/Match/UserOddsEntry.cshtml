@@ -65,20 +65,20 @@
                 <thead>
                     <tr>
                         <th>ပွဲချိန်</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th style="display:none;"></th>
+                        <th style="display:none;"></th>
+                        <th style="display:none;"></th>
+                        <th style="display:none;"></th>
+                        <th style="display:none;"></th>
+                        <th style="display:none;"></th>
+                        <th style="display:none;"></th>
                         <th>လောင်းမည်</th>
                         <th>ဘော်ဒီကြေး</th>
                         <th>Home</th>
                         <th>Away</th>
                         <th>ဘော်ဒီကြေး</th>
                         <th>ဂိုးပေါင်းကြေး</th>
-                        <th></th>
+                        <th style="display:none;"></th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -369,7 +369,6 @@
                         var matchDate = res[0].MatchDate;
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
-
                     }
                 }
             })
@@ -519,10 +518,10 @@
                     url: '@Url.Action("UserGambling_Insert", "Match")?Param='+ Param+'',
                 data: { Table: JSON.stringify(rows) },
                 success: function (res) {
-                        if (res == "true") {
+                        if (res == "1") {
                             ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
                         }
-                        else if (res == "false"){
+                        else if (res == "0"){
                             ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
                         }
                         else{
