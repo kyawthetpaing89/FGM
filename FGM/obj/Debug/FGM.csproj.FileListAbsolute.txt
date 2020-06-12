@@ -686,3 +686,11 @@ C:\Users\kyawt\Documents\Projects\FGM\FGM\bin\roslyn\System.Net.Http.dll
 C:\Users\kyawt\Documents\Projects\FGM\FGM\bin\roslyn\System.Net.Sockets.dll
 C:\Users\kyawt\Documents\Projects\FGM\FGM\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
 C:\Users\kyawt\Documents\Projects\FGM\FGM\bin\roslyn\System.Threading.Tasks.Extensions.dll
+E:\Projects\FGM\FGM\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\Projects\FGM\FGM\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+E:\Projects\FGM\FGM\bin\roslyn\System.Globalization.Calendars.dll
+E:\Projects\FGM\FGM\bin\roslyn\System.IO.Compression.ZipFile.dll
+E:\Projects\FGM\FGM\bin\roslyn\System.Net.Http.dll
+E:\Projects\FGM\FGM\bin\roslyn\System.Net.Sockets.dll
+E:\Projects\FGM\FGM\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Projects\FGM\FGM\bin\roslyn\System.Threading.Tasks.Extensions.dll
