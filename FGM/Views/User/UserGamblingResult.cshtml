@@ -9,23 +9,7 @@
     <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/dist/css/jquery.bootstrap-touchspin.css")" rel="stylesheet" type="text/css" />
 }
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>ဒိုင်ဆီတင်ရန်</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Match Entry</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
-<!-- Main content -->
+
 <section class="content">
 
     <div class="card">
@@ -107,10 +91,6 @@
             });
 
             GetLastMonth();
-
-            $("#matchdate").change(function () {
-                DateChange();
-            });
         });
 
         function GetLastMonth() {
@@ -126,10 +106,9 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindUserGamblingResult();
+                        BindBookieGamblingResult();
                     }
-
-                    BindUserGamblingResult();
-                    BindBookieGamblingResult();
                 }
             })
         }
@@ -147,6 +126,8 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindUserGamblingResult();
+                        BindBookieGamblingResult();
                     }
                 }
             })
@@ -165,14 +146,11 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindUserGamblingResult();
+                        BindBookieGamblingResult();
                     }
                 }
             })
-        }
-
-        function DateChange() {
-            BindUserGamblingResult();
-            BindBookieGamblingResult();
         }
 
         function ShowMessage(msg, status) {

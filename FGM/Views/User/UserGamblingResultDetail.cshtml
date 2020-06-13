@@ -82,10 +82,6 @@
             GetUser();
 
             GetLastMonth();
-
-            $("#matchdate").change(function () {
-                DateChange();
-            });
         });
 
         function GetLastMonth() {
@@ -101,6 +97,7 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindUserGamblingResultDetail();
                     }
                 }
             })
@@ -119,6 +116,7 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindUserGamblingResultDetail();
                     }
                 }
             })
@@ -137,6 +135,7 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindUserGamblingResultDetail();
                     }
                 }
             })
@@ -216,10 +215,6 @@
                     $("#lblGoalOdds").html('');
                 }
             }
-        }
-
-        function DateChange() {
-            BindUserGamblingResultDetail();
         }
 
         function BindUserGamblingResultDetail() {

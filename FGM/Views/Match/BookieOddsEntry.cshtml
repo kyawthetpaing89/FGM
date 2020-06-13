@@ -8,21 +8,6 @@
     <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
 }
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>လောင်းကြေးများ ဖြည့်သွင်းရန်</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Match Entry</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
 <!-- Main content -->
 <section class="content">
     <div id="TeamList">
@@ -75,7 +60,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -122,6 +106,7 @@
         var GoalOdds;      
         
         $(document).ready(function () {
+            $("#IsLoad").val("1");
             $('#matchdate').daterangepicker({
                 timePicker: false, //<==MAKE THE CHANGE HERE
                 singleDatePicker: true, //<==MAKE THE CHANGE HERE
@@ -160,11 +145,6 @@
                 });
 
             GetLastMonth();
-
-            $("#matchdate").change(function () {
-                DateChange();
-            });
-            BindMatch();
             GetOdds();
 
         });
@@ -182,6 +162,7 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindMatch();
                     }
                 }
             })
@@ -200,6 +181,7 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindMatch();
                     }
                 }
             })
@@ -218,6 +200,7 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindMatch();
                     }
                 }
             })
@@ -372,11 +355,6 @@
 
             }
             cl.append(e);
-        }
-
-        function DateChange() {     
-            alert("a");
-            BindMatch();
         }
 
         function ShowMessage(msg, status) {
