@@ -10,6 +10,14 @@ namespace Bookie_BL
 {
     public class BookieBL
     {
+        public string GetBookie()
+        {
+            BaseDL bdl = new BaseDL();
+            Function fun = new Function();
+            SqlParameter[] prms = new SqlParameter[0];
+            DataTable DTGamblers = bdl.SelectData("M_Bookie_Select", prms);
+            return fun.DataTableToJSONWithJSONNet(DTGamblers);
+        }
         public string BookieConfirm_Select(BookieModel BModel)
         {
             BaseDL bdl = new BaseDL();

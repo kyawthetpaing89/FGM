@@ -1,0 +1,268 @@
+﻿
+@{
+    ViewBag.Title = "BookieGamblingResultDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
+}
+
+<section class="content">
+    <input id="UserID" type="hidden">
+    <div class="card">
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-xl-3 col-md-4">
+                    <label for="matchdate">ပွဲကစားသည့်နေ့</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button style="color:white" class="btn btn-danger" onclick="GetPrevMonth();" type="button">
+                                ☜
+                            </button>
+                            <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
+                        </div>
+                        <input readonly="readonly" type="text" class="form-control float-right" id="matchdate">
+                        <div class="input-group-append">
+                            <button style="color:white" class="btn btn-danger" onclick="GetNextMonth();" type="button">
+                                ☞
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" id="card4">
+                <div class="card-header bg-cyan">
+                    <h3 class="card-title">ဒိုင်အမည်</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="divUser" class="row">
+                    </div>
+                </div>
+            </div>
+            <table id="tblMatch" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th style="display:none;">MatchID</th>
+                        <th>‌တင်ထားသည့်ပွဲများ</th>
+                        <th>တင်သည့်ပမာဏ</th>
+                        <th>နိုင်</th>
+                        <th>ရှုံး</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script src="@Url.Content("~/plugins/daterangepicker/moment.min.js")"></script>
+    <script src="@Url.Content("~/plugins/daterangepicker/daterangepicker.js")"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#matchdate').daterangepicker({
+                timePicker: false, //<==MAKE THE CHANGE HERE
+                singleDatePicker: true, //<==MAKE THE CHANGE HERE
+                locale: {
+                    format: 'DD-MM-YYYY'
+                }
+            });
+
+            $("#UserID").val($("#LoginUserID").val());
+            GetUser();
+
+            GetLastMonth();
+        });
+
+        function GetLastMonth() {
+            $.ajax({
+                url: '@Url.Action("GetLastMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                        BindUserGamblingResultDetail();
+                    }
+                }
+            })
+        }
+
+        function GetPrevMonth() {
+            $.ajax({
+                url: '@Url.Action("GetPrevMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    var matchDate;
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                        BindUserGamblingResultDetail();
+                    }
+                }
+            })
+        }
+
+        function GetNextMonth() {
+            $.ajax({
+                url: '@Url.Action("GetNextMatch", "Match")?MatchDate=' + $("#matchdate").val(),
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    var matchDate;
+                    if (Object.keys(res).length > 0) {
+                        var matchDate = res[0].MatchDate;
+                        $('#matchdate').data('daterangepicker').setStartDate(matchDate);
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+
+                        BindUserGamblingResultDetail();
+                    }
+                }
+            })
+        }
+
+        function GetUser() {
+            $.ajax({
+                url: '@Url.Action("Get_Bookie", "Bookie")',
+                type: "GET",
+                dataType: "JSON",
+                dataSrc: '',
+                success: function (res) {
+                    BindUser(res);
+                }
+            })
+        }
+
+        function BindUser(res) {
+            var val = "HA";
+            var cl = $("#divUser");
+            cl.empty();
+            var e = '';
+            for (var i = 0; i < res.length; i++) {
+                e = e + '<button type="button" id="btn' + res[i].BookieID + '" onclick="BtnUser(this,\'' + res[i].BookieID + '\')" class="btn btn-default col-md-3 col-xl-2 mb-1">'
+                      +  res[i].BookieName +
+                        '</button>'
+            }
+            cl.append(e);
+
+            $("#btn" + val).removeClass("btn-default");
+            $("#btn" + val).addClass("btn-danger");
+        }
+
+        function BtnUser(btn, userID) {
+            RemoveBtnColor(4);
+            $(btn).removeClass('btn-default');
+            $(btn).addClass('btn-danger');
+            $("#UserID").val(userID);
+            BindUserGamblingResultDetail();
+        }
+
+        function RemoveBtnColor(CardID) {
+            $("#card"+CardID+ " .btn-danger").each(function () {
+                $(this).removeClass('btn-danger');
+                $(this).addClass('btn-default')
+            });
+        }
+
+        function Add(btn, OddsId, OddsTitleID, OddsTypeID) {
+            RemoveBtnColor(OddsTypeID)
+
+            if (!$(btn).hasClass('btn-danger')) {
+                $(btn).removeClass('btn-default');
+                $(btn).addClass('btn-danger');
+
+                if (OddsTypeID == 1) {
+                    $("#lblBodyOdds").html($(btn).html());
+                    $("#BodyOddsId").val(OddsId);
+
+                    $('#card1').CardWidget('collapse');
+                    $('#card2').CardWidget('expand');
+                }
+                else if (OddsTypeID == 2) {
+                    $("#lblGoalOdds").html($(btn).html());
+                    $("#GoalOddsId").val(OddsId);
+
+                    $('#card2').CardWidget('collapse');
+                }
+            }
+            else {
+                $(btn).removeClass('btn-danger');
+                $(btn).addClass('btn-default');
+                if (OddsTypeID == 1) {
+                    $("#lblBodyOdds").html('');
+                }
+                else if (OddsTypeID == 2) {
+                    $("#lblGoalOdds").html('');
+                }
+            }
+        }
+
+        function BindUserGamblingResultDetail() {
+            var Param = $("#matchdate").val() + '_' + $("#UserID").val();
+
+            var table = $('#tblMatch').DataTable(
+                {
+                    "language": {
+                        "info": "Display _START_ to _END_ of _TOTAL_ records",
+                    },
+                    "oLanguage": {
+                        "sLengthMenu": "Display _MENU_ records",
+                    },
+                    "ajax": {
+                        "url": '@Url.Action("UserGamblingResult_Detail", "User")?Param='+ Param +'',
+                        "type": "GET",
+                        "datatype": "json",
+                        "dataSrc": ""
+                    },
+                    "order":0,
+                    "searching": false,
+                    "autoWidth": false,
+                    "destroy": "true",
+                    "paging": false,
+                    "columns": [
+                        {"data": "MatchID","className":"displayNone"},
+                        { "data": "TeamNameMM", "width": "40%" },
+                        { "data": "Odds" ,"width":"20%"},
+                        { "data": "WinResult","width":"20%" },
+                        { "data": "LoseResult","width": "20%" },
+                    ],
+                    "rowCallback": function (row, data, index) {
+                        if (data.MatchID == "9223372036854775806") {
+                            $('td', row).css('background-color', 'oldlace');
+                        }
+                        if (data.MatchID == "9223372036854775807") {
+                            $('td', row).css('background-color', 'oldlace');
+                        }
+                    }
+                }
+            );
+        }
+
+        //$.when(DateChange()).done(function (a1) {
+        //    alert("a");
+        //    // the code here will be executed when all four ajax requests resolve.
+        //    // a1, a2, a3 and a4 are lists of length 3 containing the response text,
+        //    // status, and jqXHR object for each of the four ajax calls respectively.
+        //});
+    </script>
+}
+

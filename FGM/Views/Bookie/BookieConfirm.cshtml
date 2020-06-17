@@ -42,6 +42,7 @@
             <table id="tblMatch" class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th style="display:None"></th>
                         <th>ပွဲချိန်</th>@*MatchTime*@
                         <th style="display:None"></th>@*MatchID*@
                         <th style="display:None"></th>@*Team1ID*@
@@ -434,12 +435,12 @@
                     },
                     "searching": false,
                     "responsive": false,
-                    "order": [[0, "desc"]],
+                    "order": [[0, "asc"]],
                     "autoWidth": false,
                     "destroy": "true",
                     "paging": false,
-                    "ordering": false,
                     "columns": [
+                        {"data": "SEQ","className":"displayNone"},
                         { "data": "MatchTime","width":"10%" },
                         { "data": "MatchID", "className": "displayNone matchID", "width": "0%" },
                         { "data": "Team1ID", "className": "displayNone", "width": "0%" },

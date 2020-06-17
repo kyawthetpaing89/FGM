@@ -106,7 +106,6 @@
         var GoalOdds;      
         
         $(document).ready(function () {
-            $("#IsLoad").val("1");
             $('#matchdate').daterangepicker({
                 timePicker: false, //<==MAKE THE CHANGE HERE
                 singleDatePicker: true, //<==MAKE THE CHANGE HERE
@@ -118,12 +117,12 @@
             $("tbody", "#tblMatch").on("click", "td",
                 function () {
 
-                    if ($(this).hasClass("t1Odds") || $(this).hasClass("t2Odds")) {
+                    if ($(this).hasClass("t1Odds") || $(this).hasClass("HomeTeam") || $(this).hasClass("t2Odds") || $(this).hasClass("AwayTeam")) {
 
-                        if ($(this).hasClass("t1Odds")) {
+                        if ($(this).hasClass("t1Odds") || $(this).hasClass("HomeTeam")) {
                             OddsID = $(this).closest('tr').find(".t1OddsID");
                         }
-                        else {
+                        else  {
                             OddsID = $(this).closest('tr').find(".t2OddsID");
                         }
                       
@@ -398,8 +397,8 @@
                         { "data": "MatchTime" },
                         { "data": "Team1OddsID", "className":"t1OddsID displayNone"},
                         { "data": "Team1Odds","className":"t1Odds"},
-                        { "data": "Home"},
-                        { "data": "Away"},
+                        { "data": "Home","className":"HomeTeam"},
+                        { "data": "Away", "className": "AwayTeam"},
                         { "data": "Team2OddsID", "className":"t2OddsID displayNone"},
                         { "data": "Team2Odds","className":"t2Odds" },
                         { "data": "GoalOddsID", "className": "tdGoalOddsID displayNone" },

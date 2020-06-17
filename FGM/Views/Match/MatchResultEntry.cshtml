@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <table id="tblMatch" class="table table-bordered table-striped">
+            <table id="tblMatch" class="table table-bordered table-striped disable-dbl-tap-zoom">
                 <thead>
                     <tr>
                         <th style="display:none"></th>
@@ -237,13 +237,13 @@
                             "data": "TeamGoals1", render: function (data, type, row) {
                                 return '<div class="input-group">'+
                                             '<div class="input-group-prepend">'+
-                                            '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(1,this,\'.t1\');">'+
+                                            '<button style="color:white" class="btn btn-danger disable-dbl-tap-zoom" type="button" onclick="ButtonClick(1,this,\'.t1\');">'+
                                                     '-'+
                                                 '</button>'+
                                             '</div>'+
                                             '<input type="number" inputmode="decimal" style="text-align: center" readonly="readonly" class="form-control t1" placeholder="" value="' + row.Team1Goal +'" />'+
                                             '<div class="input-group-append">'+
-                                                '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(2,this,\'.t1\');">'+
+                                                '<button style="color:white" class="btn btn-danger .disable-dbl-tap-zoom" type="button" onclick="ButtonClick(2,this,\'.t1\');">'+
                                                     '+'+
                                                 '</button>'+
                                             '</div>'+
@@ -255,13 +255,13 @@
                             "data": "TeamGoals2", render: function (data, type, row) {
                                 return '<div class="input-group">' +
                                     '<div class="input-group-prepend">' +
-                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(1,this,\'.t2\');">' +
+                                    '<button style="color:white" class="btn btn-danger disable-dbl-tap-zoom" type="button" onclick="ButtonClick(1,this,\'.t2\');">' +
                                     '-' +
                                     '</button>' +
                                     '</div>' +
                                     '<input type="number" inputmode="decimal" style="text-align: center" readonly="readonly" class="form-control t2" placeholder="" value="' + row.Team2Goal + '" />' +
                                     '<div class="input-group-append">' +
-                                    '<button style="color:white" class="btn btn-danger" type="button" onclick="ButtonClick(2,this,\'.t2\');">' +
+                                    '<button style="color:white" class="btn btn-danger disable-dbl-tap-zoom" type="button" onclick="ButtonClick(2,this,\'.t2\');">' +
                                     '+' +
                                     '</button>' +
                                     '</div>' +

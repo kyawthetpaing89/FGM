@@ -12,6 +12,17 @@ namespace FGM.Controllers
         {
             return View();
         }
+        public ActionResult BookieGamblingResultDetail()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public string Get_Bookie()
+        {
+            BookieBL BBL = new BookieBL();
+            return BBL.GetBookie();
+        }
 
         [HttpGet]
         public string BookieConfirm_Select(string MatchDate)

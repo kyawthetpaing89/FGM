@@ -1,4 +1,8 @@
-﻿.alignright{
+﻿.disable-dbl-tap-zoom {
+    touch-action: manipulation;
+}
+
+.alignright{
     text-align:right;
 }
 

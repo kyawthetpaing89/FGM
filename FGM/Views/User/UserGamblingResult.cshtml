@@ -241,12 +241,12 @@
                 data: '',
                 success: function (res) {
                     if (res == "1") {
-                        ShowMessage('သိမ်းဆည်းခြင်း အောင်မြင်ပါသည်', 'success');
+                        ShowMessage('တွက်ချက်မှု အောင်မြင်ပါသည်', 'success');
                         BindUserGamblingResult();
                         BindBookieGamblingResult();
                     }
                     else if (res == "0") {
-                        ShowMessage('သိမ်းဆည်းခြင်း မအောင်မြင်ပါ', 'error')
+                        ShowMessage('တွက်ချက်မှု မအောင်မြင်ပါ', 'error')
                     }
                     else {
                         window.location.href = "http://3.133.30.8/User_Synchronization";

@@ -37,6 +37,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- Page Title Icon-->
     <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/dist/img/Dollar.png")" />
 
@@ -354,9 +355,17 @@
                             </ul>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    <a href="@Url.Action("BookieGamblingResultDetail","Bookie")" class="nav-link">
+                                        <i class="far fa-check-circle nav-icon text-info"></i>
+                                        <p>စာရင်းအသေးစိပ်(ဒိုင်)</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
                                     <a href="@Url.Action("UserGamblingResultDetail","User")" class="nav-link">
                                         <i class="far fa-check-circle nav-icon text-info"></i>
-                                        <p>စာရင်းအသေးစိပ်ကြည့်မည်</p>
+                                        <p>စာရင်းအသေးစိပ်(ထိုးသား)</p>
                                     </a>
                                 </li>
                             </ul>
