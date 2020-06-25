@@ -121,12 +121,13 @@
 
                         if ($(this).hasClass("t1Odds") || $(this).hasClass("HomeTeam")) {
                             OddsID = $(this).closest('tr').find(".t1OddsID");
+                            Odds = $(this.closest('tr')).find(".t1Odds");
                         }
                         else  {
                             OddsID = $(this).closest('tr').find(".t2OddsID");
+                            Odds = $(this.closest('tr')).find(".t2Odds");
                         }
-                      
-                        Odds = this;
+
                         GoalOddsID = $(this).closest('tr').find('.tdGoalOddsID');
                         GoalOdds = $(this).closest('tr').find('.tdGoalOdds');
 
@@ -134,7 +135,7 @@
                         RemoveBtnColor(2);
 
                         $("#BodyOddsId").val($(OddsID).html());
-                        $("#lblBodyOdds").html($(this).html());
+                        $("#lblBodyOdds").html($(Odds).html());
 
                         $("#GoalOddsId").val($(GoalOddsID).html());
                         $("#lblGoalOdds").html($(GoalOdds).html());

@@ -15,7 +15,7 @@ namespace FGM.Controllers
             return View();
         }
 
-        public ActionResult UserOddsHistory()
+        public ActionResult OddsEntry()
         {
             return View();
         }
@@ -26,5 +26,7 @@ namespace FGM.Controllers
             OddsBL OBL = new OddsBL();
             return OBL.GetOdds();
         }
+
+
     }
 }
