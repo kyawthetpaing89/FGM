@@ -10,22 +10,7 @@
     <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/dist/css/jquery.bootstrap-touchspin.css")" rel="stylesheet" type="text/css" />
 }
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>ဒိုင်ဆီတင်ရန်</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Match Entry</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+
 <!-- Main content -->
 <section class="content">
 
@@ -57,22 +42,23 @@
             <table id="tblMatch" class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th style="display:None"></th>
                         <th>ပွဲချိန်</th>@*MatchTime*@
-                        <th></th>@*MatchID*@
-                        <th></th>@*Team1ID*@
-                        <th></th>@*Team2ID*@
-                        <th></th>@*TotalTeamID*@
-                        <th></th>@*TotalGoalType*@
-                        <th></th>@*TTTeamID*@
-                        <th></th>@*TTGoalType*@
-                        <th></th>@*HATeamID*@
-                        <th></th>@*HAGoalType*@
-                        <th>Total Body</th>@*TotalBodyAmount*@
-                        <th>Total Goal</th>@*TotalGoalAmount*@
+                        <th style="display:None"></th>@*MatchID*@
+                        <th style="display:None"></th>@*Team1ID*@
+                        <th style="display:None"></th>@*Team2ID*@
+                        <th style="display:None"></th>@*TotalTeamID*@
+                        <th style="display:None"></th>@*TotalGoalType*@
+                        <th style="display:None"></th>@*TTTeamID*@
+                        <th style="display:None"></th>@*TTGoalType*@
+                        <th style="display:None"></th>@*HATeamID*@
+                        <th style="display:None"></th>@*HAGoalType*@
+                        <th style="display:None">Total Body</th>@*TotalBodyAmount*@
+                        <th style="display:None">Total Goal</th>@*TotalGoalAmount*@
                         <th>Home</th>
                         <th>Away</th>
-                        <th></th>@*BodyOddsName*@
-                        <th></th>@*GoalOddsName*@
+                        <th style="display:None"></th>@*BodyOddsName*@
+                        <th style="display:None"></th>@*GoalOddsName*@
                         <th>အချုပ်</th>
                         <th>TT<br />(ဘော်ဒီ)</th>@*TTBodyAmount*@
                         <th>TT<br />(ဂိုးပေါင်း)</th>@*TTGoalAmount*@
@@ -171,10 +157,6 @@
                         $("#tblMatchDetail tbody").prepend("<tr><td></td><td></td><td></td><td></td></tr>");
                     }
                 });
-
-            $("#matchdate").change(function () {
-                DateChange();
-            });
         });
 
         function GetLastMonth() {
@@ -200,10 +182,10 @@
 
                     if (Object.keys(res).length > 0) {
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
-                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);                       
-                    }  
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate); 
 
-                    BindMatch();
+                        BindMatch();
+                    }                      
                 }
             })
         }
@@ -232,10 +214,9 @@
       
                     if (Object.keys(res).length > 0) {
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
-                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);                        
-                    }     
-
-                    BindMatch();
+                        $('#matchdate').data('daterangepicker').setEndDate(matchDate);   
+                        BindMatch();
+                    }                         
                 }
             })
         }
@@ -264,8 +245,8 @@
                     if (Object.keys(res).length > 0) {
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
+                        BindMatch();
                     } 
-                    BindMatch();
                 }
             })
         }
@@ -305,10 +286,10 @@
                     tableBody.append(trow);
                 }
 
-                if (value.GoalType = 1) {
+                if (value.GoalType == 1) {
                     GoalUp = GoalUp + value.GoalAmount;
                 }
-                else if (value.GoalType = 2) {
+                else if (value.GoalType == 2) {
                     GoalDown = GoalDown + value.GoalAmount;
                 }
             });
@@ -454,12 +435,12 @@
                     },
                     "searching": false,
                     "responsive": false,
-                    "order": [[0, "desc"]],
+                    "order": [[0, "asc"]],
                     "autoWidth": false,
                     "destroy": "true",
                     "paging": false,
-                    "ordering": false,
                     "columns": [
+                        {"data": "SEQ","className":"displayNone"},
                         { "data": "MatchTime","width":"10%" },
                         { "data": "MatchID", "className": "displayNone matchID", "width": "0%" },
                         { "data": "Team1ID", "className": "displayNone", "width": "0%" },

@@ -8,21 +8,6 @@
     <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
 }
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>လောင်းကြေးများ ဖြည့်သွင်းရန်</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Match Entry</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
 <!-- Main content -->
 <section class="content">
     <div id="TeamList">
@@ -75,7 +60,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -133,12 +117,12 @@
             $("tbody", "#tblMatch").on("click", "td",
                 function () {
 
-                    if ($(this).hasClass("t1Odds") || $(this).hasClass("t2Odds")) {
+                    if ($(this).hasClass("t1Odds") || $(this).hasClass("HomeTeam") || $(this).hasClass("t2Odds") || $(this).hasClass("AwayTeam")) {
 
-                        if ($(this).hasClass("t1Odds")) {
+                        if ($(this).hasClass("t1Odds") || $(this).hasClass("HomeTeam")) {
                             OddsID = $(this).closest('tr').find(".t1OddsID");
                         }
-                        else {
+                        else  {
                             OddsID = $(this).closest('tr').find(".t2OddsID");
                         }
                       
@@ -160,11 +144,6 @@
                 });
 
             GetLastMonth();
-
-            $("#matchdate").change(function () {
-                DateChange();
-            });
-            BindMatch();
             GetOdds();
 
         });
@@ -182,6 +161,7 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindMatch();
                     }
                 }
             })
@@ -200,6 +180,7 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindMatch();
                     }
                 }
             })
@@ -218,6 +199,7 @@
                         $('#matchdate').data('daterangepicker').setStartDate(matchDate);
                         $('#matchdate').data('daterangepicker').setEndDate(matchDate);
 
+                        BindMatch();
                     }
                 }
             })
@@ -374,11 +356,6 @@
             cl.append(e);
         }
 
-        function DateChange() {     
-            alert("a");
-            BindMatch();
-        }
-
         function ShowMessage(msg, status) {
 
             const Toast = Swal.mixin({
@@ -420,8 +397,8 @@
                         { "data": "MatchTime" },
                         { "data": "Team1OddsID", "className":"t1OddsID displayNone"},
                         { "data": "Team1Odds","className":"t1Odds"},
-                        { "data": "Home"},
-                        { "data": "Away"},
+                        { "data": "Home","className":"HomeTeam"},
+                        { "data": "Away", "className": "AwayTeam"},
                         { "data": "Team2OddsID", "className":"t2OddsID displayNone"},
                         { "data": "Team2Odds","className":"t2Odds" },
                         { "data": "GoalOddsID", "className": "tdGoalOddsID displayNone" },

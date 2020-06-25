@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "UserGamblingResultDetail";
+    ViewBag.Title = "BookieGamblingResultDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -33,7 +33,7 @@
             </div>
             <div class="card" id="card4">
                 <div class="card-header bg-cyan">
-                    <h3 class="card-title">လောင်းသူအမည်</h3>
+                    <h3 class="card-title">ဒိုင်အမည်</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -49,8 +49,8 @@
                 <thead>
                     <tr>
                         <th style="display:none;">MatchID</th>
-                        <th>‌လောင်းထားသည့်ပွဲများ</th>
-                        <th>လောင်းသည့်ပမာဏ</th>
+                        <th>‌တင်ထားသည့်ပွဲများ</th>
+                        <th>တင်သည့်ပမာဏ</th>
                         <th>နိုင်</th>
                         <th>ရှုံး</th>
                     </tr>
@@ -62,7 +62,6 @@
         </div>
     </div>
 </section>
-
 
 @section Scripts{
     <script src="@Url.Content("~/plugins/daterangepicker/moment.min.js")"></script>
@@ -143,7 +142,7 @@
 
         function GetUser() {
             $.ajax({
-                url: '@Url.Action("Get_User", "User")',
+                url: '@Url.Action("Get_Bookie", "Bookie")',
                 type: "GET",
                 dataType: "JSON",
                 dataSrc: '',
@@ -154,13 +153,13 @@
         }
 
         function BindUser(res) {
-            var val = $("#LoginUserID").val();
+            var val = "HA";
             var cl = $("#divUser");
             cl.empty();
             var e = '';
             for (var i = 0; i < res.length; i++) {
-                e = e + '<button type="button" id="btn' + res[i].UserID + '" onclick="BtnUser(this,\'' + res[i].UserID + '\')" class="btn btn-default col-md-3 col-xl-2 mb-1">'
-                      +  res[i].UserName +
+                e = e + '<button type="button" id="btn' + res[i].BookieID + '" onclick="BtnUser(this,\'' + res[i].BookieID + '\')" class="btn btn-default col-md-3 col-xl-2 mb-1">'
+                      +  res[i].BookieName +
                         '</button>'
             }
             cl.append(e);
@@ -176,7 +175,7 @@
             $("#UserID").val(userID);
             BindUserGamblingResultDetail();
         }
-             
+
         function RemoveBtnColor(CardID) {
             $("#card"+CardID+ " .btn-danger").each(function () {
                 $(this).removeClass('btn-danger');
@@ -266,5 +265,4 @@
         //});
     </script>
 }
-
 

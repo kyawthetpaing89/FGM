@@ -14,22 +14,21 @@
     <div class="card">
         <div class="card-body">
             <div class="form-row">
-                <div class="form-group col-xl-2 col-md-3">
-                    <label for="matchdate">ပွဲကစားမည့်နေ့</label>
+                <div class="form-group col-xl-4 col-md-5">
+                    <div class="form-group">
+                        <label for="matchdate">ပွဲကစားမည့်နေ့</label>
+                    </div>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
                         </div>
                         <input readonly="readonly" type="text" class="form-control float-right" id="matchdate" onchange="DateChange();">
+                        <button type="button" id="btnEngland" onclick="ShowTeam();" class="btn btn-outline-info">
+                            အသင်း‌ရွေးရန်
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>  
-    <div id="TeamList">
-    </div>
-    <div class="card">
-        <div class="card-body">
             <table id="tblTeam" class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -52,8 +51,30 @@
             </div>
         </div>
     </div>
-
     <input id="tdPlace" type="hidden" value="1" />
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">အသင်းရွေးချယ်ရန်</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="TeamList">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <button type="button" id="btnConfirm" onclick="Confirm();" class="btn btn-success">အတည်ပြုမည်</button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </section>
 
 
@@ -76,6 +97,14 @@
 
                
         });
+
+        function ShowTeam() {
+            $('#modal-default').modal('show');
+        }
+
+        function Confirm() {
+            $('#modal-default').modal('hide');
+        }
 
         function DateChange() {
             $(".btn-danger").each(function () {
