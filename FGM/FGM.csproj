@@ -1992,6 +1992,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Odds\OddsEntry.cshtml" />
+    <Content Include="Views\Odds\MatchDetailInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

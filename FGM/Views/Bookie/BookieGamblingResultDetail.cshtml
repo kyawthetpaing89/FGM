@@ -17,14 +17,14 @@
                     <label for="matchdate">ပွဲကစားသည့်နေ့</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <button style="color:white" class="btn btn-danger" onclick="GetPrevMonth();" type="button">
+                            <button style="color:white" class="btn btn-danger" onclick="GetPrevMatch();" type="button">
                                 ☜
                             </button>
                             <span class="input-group-text text-custom2" id="basic-addon1"><i class="fa fa-calendar-alt"></i></span>
                         </div>
                         <input readonly="readonly" type="text" class="form-control float-right" id="matchdate">
                         <div class="input-group-append">
-                            <button style="color:white" class="btn btn-danger" onclick="GetNextMonth();" type="button">
+                            <button style="color:white" class="btn btn-danger" onclick="GetNextMatch();" type="button">
                                 ☞
                             </button>
                         </div>
@@ -80,10 +80,10 @@
             $("#UserID").val($("#LoginUserID").val());
             GetUser();
 
-            GetLastMonth();
+            GetLastMatch();
         });
 
-        function GetLastMonth() {
+        function GetLastMatch() {
             $.ajax({
                 url: '@Url.Action("GetLastMatch", "Match")?MatchDate=' + $("#matchdate").val(),
                 type: "GET",
@@ -102,7 +102,7 @@
             })
         }
 
-        function GetPrevMonth() {
+        function GetPrevMatch() {
             $.ajax({
                 url: '@Url.Action("GetPrevMatch", "Match")?MatchDate=' + $("#matchdate").val(),
                 type: "GET",
@@ -121,7 +121,7 @@
             })
         }
 
-        function GetNextMonth() {
+        function GetNextMatch() {
             $.ajax({
                 url: '@Url.Action("GetNextMatch", "Match")?MatchDate=' + $("#matchdate").val(),
                 type: "GET",
