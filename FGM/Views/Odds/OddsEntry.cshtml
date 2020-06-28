@@ -87,10 +87,11 @@
                     '<table id="tblMatch'+value.MatchID+'" class="table table-bordered table-striped">' +
                     '<thead>' +
                     '<tr>' +
-                    '<th style="width:20%">'+value.MatchTime+'</th>' +
-                    '<th style="width:33%">'+value.Home+'</th>' +
-                    '<th style="width:32%">' + value.Away + '</th>' +
-                    '<th style="width:15">ဂိုးပေါင်း</th>'+
+                    '<th style="width:25%">'+value.MatchTime+'</th>' +
+                    '<th style="width:30%">'+value.Home+'</th>' +
+                    '<th style="width:30%">' + value.Away + '</th>' +
+                    '<th style="width:15">ဂိုးပေါင်း</th>' +
+                    '<th>HA</th>'+
                     '</tr>' +
                     '</thead>' +
                     '<tbody></tbody>' +
@@ -137,13 +138,13 @@
 
                 if (value.BodyType == '1') {
                     HomeAmount = HomeAmount + value.BodyAmount;
-                    var trow = '<tr><td>' + value.UserName + '</td><td>' + value.BodyAmount + '</td><td></td><td>' + value.GoalAmountChar + '</td></tr>'
+                    var trow = '<tr><td>' + value.UserName + '</td><td>' + value.BodyAmount + '</td><td></td><td>' + value.GoalAmountChar + '</td><td></td></tr>'
                     var tableBody = $('#tblMatch' + matchid + ' tbody')
                     tableBody.append(trow);
                 }
                 else if (value.BodyType == '2') {
                     AwayAmount = AwayAmount + value.BodyAmount;
-                    var trow = '<tr><td>' + value.UserName + '</td><td></td><td>' + value.BodyAmount + '</td><td>' + value.GoalAmountChar + '</td></tr>'
+                    var trow = '<tr><td>' + value.UserName + '</td><td></td><td>' + value.BodyAmount + '</td><td>' + value.GoalAmountChar + '</td><td></td></tr>'
                     var tableBody = $('#tblMatch'+matchid+' tbody');
                     tableBody.append(trow);
                 }
@@ -164,7 +165,7 @@
             }
 
             var tableFoot = $('#tblMatch' + matchid + ' tfoot')
-            var trow = '<tr><td></td><td>' + HomeAmount + '</td><td>' + AwayAmount + '</td><td>' + GoalChar + '</td></tr>';
+            var trow = '<tr><td></td><td>' + HomeAmount + '</td><td>' + AwayAmount + '</td><td>' + GoalChar + '</td><td></td></tr>';
             tableFoot.append(trow);
         }
 
