@@ -38,10 +38,12 @@ namespace FGM.Controllers
             string userInfo = Session["UserInfo"] as string;
 
             MatchBL MBL = new MatchBL();
-            MatchModel MModel = new MatchModel();
-            MModel.MatchDate = MatchDate;
-            MModel.MatchJson = Table;
-            MModel.UserID = userInfo.Split('_')[0];
+            MatchModel MModel = new MatchModel
+            {
+                MatchDate = MatchDate,
+                MatchJson = Table,
+                UserID = userInfo.Split('_')[0]
+            };
 
             return MBL.Match_Save(MModel);        
         }
@@ -55,10 +57,12 @@ namespace FGM.Controllers
             string userInfo = Session["UserInfo"] as string;
 
             MatchBL MBL = new MatchBL();
-            MatchModel MModel = new MatchModel();
-            MModel.MatchDate = MatchDate;
-            MModel.MatchJson = Table;
-            MModel.UserID = userInfo.Split('_')[0];
+            MatchModel MModel = new MatchModel
+            {
+                MatchDate = MatchDate,
+                MatchJson = Table,
+                UserID = userInfo.Split('_')[0]
+            };
 
             return MBL.Match_OddsUpdate(MModel);
         }
@@ -67,8 +71,10 @@ namespace FGM.Controllers
         public string GetMatch(string MatchDate)
         {
             MatchBL MBL = new MatchBL();
-            MatchModel MModel = new MatchModel();
-            MModel.MatchDate = MatchDate;
+            MatchModel MModel = new MatchModel
+            {
+                MatchDate = MatchDate
+            };
             return MBL.GetMatch(MModel);
         }
 
@@ -76,8 +82,10 @@ namespace FGM.Controllers
         public string GetLastMatch(string MatchDate)
         {
             MatchBL MBL = new MatchBL();
-            MatchModel MModel = new MatchModel();
-            MModel.MatchDate = MatchDate;
+            MatchModel MModel = new MatchModel
+            {
+                MatchDate = MatchDate
+            };
             return MBL.GetLastMatchDate(MModel);
         }
 
@@ -85,8 +93,10 @@ namespace FGM.Controllers
         public string GetPrevMatch(string MatchDate)
         {
             MatchBL MBL = new MatchBL();
-            MatchModel MModel = new MatchModel();
-            MModel.MatchDate = MatchDate;
+            MatchModel MModel = new MatchModel
+            {
+                MatchDate = MatchDate
+            };
             return MBL.GetPrevMatchDate(MModel);
         }
 
@@ -94,8 +104,10 @@ namespace FGM.Controllers
         public string GetNextMatch(string MatchDate)
         {
             MatchBL MBL = new MatchBL();
-            MatchModel MModel = new MatchModel();
-            MModel.MatchDate = MatchDate;
+            MatchModel MModel = new MatchModel
+            {
+                MatchDate = MatchDate
+            };
             return MBL.GetNextMatchDate(MModel);
         }
 
@@ -103,9 +115,11 @@ namespace FGM.Controllers
         public string GetMatch_UserGambling(string Param)
         {
             UserGamblingBL UGBL = new UserGamblingBL();
-            MatchModel MModel = new MatchModel();
-            MModel.MatchDate = Param.Split('_')[0];
-            MModel.UserID = Param.Split('_')[1];
+            MatchModel MModel = new MatchModel
+            {
+                MatchDate = Param.Split('_')[0],
+                UserID = Param.Split('_')[1]
+            };
             return UGBL.GetUserGambling(MModel);
         }
 
@@ -118,11 +132,13 @@ namespace FGM.Controllers
             string userInfo = Session["UserInfo"] as string;
 
             UserGamblingBL UGBL = new UserGamblingBL();
-            MatchModel MModel = new MatchModel();
-            MModel.MatchDate = Param.Split('_')[0];
-            MModel.MatchJson = Table;
-            MModel.UserID = userInfo.Split('_')[0];
-            MModel.UserID1 = Param.Split('_')[1];
+            MatchModel MModel = new MatchModel
+            {
+                MatchDate = Param.Split('_')[0],
+                MatchJson = Table,
+                UserID = userInfo.Split('_')[0],
+                UserID1 = Param.Split('_')[1]
+            };
 
             return UGBL.UserGambling_Insert(MModel);
         }
@@ -135,9 +151,11 @@ namespace FGM.Controllers
             string userInfo = Session["UserInfo"] as string;
 
             MatchBL MBL = new MatchBL();
-            MatchModel MModel = new MatchModel();
-            MModel.MatchJson = Table;
-            MModel.UserID = userInfo.Split('_')[0];
+            MatchModel MModel = new MatchModel
+            {
+                MatchJson = Table,
+                UserID = userInfo.Split('_')[0]
+            };
 
             return MBL.MatchResult_Update(MModel);
         }
