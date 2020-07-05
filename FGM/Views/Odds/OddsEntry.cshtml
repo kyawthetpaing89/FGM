@@ -7,11 +7,11 @@
 
 @section Styles {
     <link href="@Url.Content("~/plugins/daterangepicker/daterangepicker.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/plugins/icheck-bootstrap/icheck-bootstrap.min.css")" rel="stylesheet" type="text/css" />
 }
 
 <!-- Main content -->
     <section class="content">
-        <input id="UserID" type="hidden">
         <div class="card">
             <div class="card-body">
                 <div class="form-row">
@@ -43,6 +43,7 @@
 
             </div>
         </div>
+        
     </section>
 
 @section Scripts{
@@ -82,24 +83,38 @@
             var card;
             var divid = '1';
             $.each(res, function (key, value) {
-                card = '<div class="card card-primary" id="'+value.MatchID+'>' +
-                    '<div class="card-body">' +
-                    '<table id="tblMatch'+value.MatchID+'" class="table table-bordered table-striped">' +
-                    '<thead>' +
-                    '<tr>' +
-                    '<th style="width:25%">'+value.MatchTime+'</th>' +
-                    '<th style="width:30%">'+value.Home+'</th>' +
-                    '<th style="width:30%">' + value.Away + '</th>' +
-                    '<th style="width:15">ဂိုးပေါင်း</th>' +
-                    '<th>HA</th>'+
-                    '</tr>' +
-                    '</thead>' +
-                    '<tbody></tbody>' +
-                    '<tfoot>' +
-                    '</tfoot>' +
-                    '</table>' +
-                    '</div>' +
-                    '</div>';
+                card = '<div class="card card-primary collapsed-card" id="card' + value.MatchID + '">' +
+                            '<div class="card-header">'+
+                                '<div class="row">'+
+                                    '<div class="col-xl-2 col-md-2">'+ value.MatchTime +'</div>'+
+                                    '<div class="col-xl-2 col-md-2">'+value.Home+'</div>'+
+                                    '<div class="col-xl-1 col-md-1">Vs</div>' +
+                                    '<div class="col-xl-6 col-md-6">'+value.Away+'</div>' +
+                                    '<div class="col-xl-1 col-md-1" style="text-align:right;">' +
+                                        '<button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>' +
+                            '<div class="card-body">' +
+                                '<table id="tblMatch'+value.MatchID+'" class="table table-bordered table-striped">' +
+                                '<thead>' +
+                                '<tr>' +
+                                '<th style="display:None"></th>' +
+                                '<th style="display:None"></th>' +
+                                '<th style="width:18%"></th>' +
+                                '<th style="width:20%">'+value.Home+'</th>' +
+                                '<th style="width:21%">' + value.Away + '</th>' +
+                                '<th style="width:15%">ဂိုးပေါင်း</th>' +
+                                '<th style="width:13%">HA ဘော်ဒီ</th>' +
+                                '<th style="width:13%">HA ဂိုး</th>' +
+                                '</tr>' +
+                                '</thead>' +
+                                '<tbody></tbody>' +
+                                '<tfoot>' +
+                                '</tfoot>' +
+                                '</table>' +
+                            '</div>' +
+                        '</div>';
 
                 if (divid == '1') {
                     $('#div1').append(card);
@@ -127,24 +142,61 @@
             })
         }
 
-        function SetDataToTable(res,matchid) {
+        function CalculateBookie(tableid) {
+            var totalHome = 0;
+            var home = 0;
+            var totalAway = 0;
+            var away = 0;
+            $("#" + tableid).find('tr').each(function (i, el) {
+                var $tds = $(this).find('td');
+                if ($tds.eq(3).text())
+                    home = Number($tds.eq(3).text());
+                else
+                    home = 0;
+                totalHome += home;
 
+                if ($tds.eq(4).text())
+                    away = Number($tds.eq(4).text());
+                else
+                    away = 0;
+                totalAway += away;
+            })
+
+        }
+
+        function checkClick(chk, matchid) {           
+            //$('#tblMatch' + matchid).empty();
+            //BindUserGambling(matchid);
+        }
+
+        function SetDataToTable(res,matchid) {
             var HomeAmount = 0;
             var AwayAmount = 0;
             var GoalUp = 0;
             var GoalDown = 0;
             var GoalChar = '';
+            var HABodyCheck = '';
+            var HAGoalCheck = '';
             $.each(res, function (key, value) {
-
+                HABodyCheck = '<div class="icheck-success d-inline">' +
+                    '<input type="checkbox" onclick="checkClick(this,'+matchid+');" id="chkHABody' + value.UserID + '">' +
+                    '<label for="chkHABody' + value.UserID + '">' +
+                    '</label>' +
+                    '</div>';
+                HAGoalCheck = '<div class="icheck-success d-inline">' +
+                    '<input type="checkbox" id="chkHAGoal' + value.UserID + '">' +
+                    '<label for="chkHAGoal' + value.UserID + '">' +
+                    '</label>' +
+                    '</div>'
                 if (value.BodyType == '1') {
-                    HomeAmount = HomeAmount + value.BodyAmount;
-                    var trow = '<tr><td>' + value.UserName + '</td><td>' + value.BodyAmount + '</td><td></td><td>' + value.GoalAmountChar + '</td><td></td></tr>'
+                    HomeAmount = HomeAmount + value.BodyAmount;                   
+                    var trow = '<tr><td style="display:None">' + value.BodyType + '</td><td style="display:None">' + value.GoalType +'</td><td>' + value.UserName + '</td><td>' + value.BodyAmount + '</td><td></td><td>' + value.GoalAmountChar + '</td><td>' + HABodyCheck +'</td><td>' + HAGoalCheck+'</td></tr>'
                     var tableBody = $('#tblMatch' + matchid + ' tbody')
                     tableBody.append(trow);
                 }
                 else if (value.BodyType == '2') {
                     AwayAmount = AwayAmount + value.BodyAmount;
-                    var trow = '<tr><td>' + value.UserName + '</td><td></td><td>' + value.BodyAmount + '</td><td>' + value.GoalAmountChar + '</td><td></td></tr>'
+                    var trow = '<tr><td style="display:None">' + value.BodyType + '</td><td style="display:None">' + value.GoalType +'</td><td>' + value.UserName + '</td><td></td><td>' + value.BodyAmount + '</td><td>' + value.GoalAmountChar + '</td><td>'+HABodyCheck+'</td><td>'+HAGoalCheck+'</td></tr>'
                     var tableBody = $('#tblMatch'+matchid+' tbody');
                     tableBody.append(trow);
                 }
@@ -157,16 +209,19 @@
                 }
             });
 
-            if (GoalUp > GoalDown) {
-                GoalChar = '↑' + (GoalUp - GoalDown);
-            }
-            else if (GoalDown > GoalUp) {
-                GoalChar = '↓' + (GoalDown - GoalUp);
-            }
+            CalculateBookie('tblMatch' + matchid);
+            //if (res.length > 0) {
+            //    if (GoalUp > GoalDown) {
+            //        GoalChar = '↑' + (GoalUp - GoalDown);
+            //    }
+            //    else if (GoalDown > GoalUp) {
+            //        GoalChar = '↓' + (GoalDown - GoalUp);
+            //    }
 
-            var tableFoot = $('#tblMatch' + matchid + ' tfoot')
-            var trow = '<tr><td></td><td>' + HomeAmount + '</td><td>' + AwayAmount + '</td><td>' + GoalChar + '</td><td></td></tr>';
-            tableFoot.append(trow);
+            //    var tableFoot = $('#tblMatch' + matchid + ' tfoot')
+            //    var trow = '<tr><td></td><td>' + HomeAmount + '</td><td>' + AwayAmount + '</td><td>' + GoalChar + '</td><td></td><td></td></tr>';
+            //    tableFoot.append(trow);
+            //}            
         }
 
         function GetLastMatch() {
@@ -175,7 +230,7 @@
                 type: "GET",
                 dataType: "JSON",
                 dataSrc: '',
-                success: function (res) {                   
+                success: function (res) {
 
                     if (Object.keys(res).length > 0) {
                         var matchDate = res[0].MatchDate;
